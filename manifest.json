@@ -5959,6 +5959,9 @@
     ".gitattributes": {
       "checksum": "05bdb783ee6514c8c072e47680af8ff7"
     },
+    ".vscode/settings.json": {
+      "checksum": "b2a03828d816f7e2dc6a80a316a1c3c4"
+    },
     "app.R": {
       "checksum": "9fbd930fd65c994d040d0b3643955d80"
     },
@@ -5986,29 +5989,8 @@
     "pages/avail_data.R": {
       "checksum": "7a664b1d7b901dfc0e9e5035addf6b3a"
     },
-    "pages/components/data_desc.R": {
-      "checksum": "3e54e26a54d1a04a34986fae15072142"
-    },
-    "pages/components/data/census_items.yaml": {
-      "checksum": "d37f2d643e95e724783cd3650cf23996"
-    },
-    "pages/components/data/census_level_to_results.yaml": {
-      "checksum": "ff1d9a126ed7c3af84bf3f4ecf601271"
-    },
-    "pages/components/data/survey_questions.yaml": {
-      "checksum": "5ee5bef69fc0c3f388407368f7e53f29"
-    },
     "pages/components/functions/table.R": {
       "checksum": "c0a3b4bf3e594ea4917eb5e78d861d3e"
-    },
-    "pages/components/graphics_representative.R": {
-      "checksum": "a66f24626f223255332e4ddbbf496d38"
-    },
-    "pages/components/representative_table.R": {
-      "checksum": "a0d44c03737bfcc197d44c6b7d50fd0d"
-    },
-    "pages/components/selection_box.R": {
-      "checksum": "544d0a16fdf9b6f8451f23db39b9b6c7"
     },
     "pages/home_page.R": {
       "checksum": "96bcbc7cd50387b839770afbd388807f"
