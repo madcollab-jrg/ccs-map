@@ -1,0 +1,17 @@
+Q1: What do you think are the most urgent environmental issues facting your community?
+Q2: I would like to learn more about how environmental issues impact my community.
+Q3: When I have questions about climate change or environmental issues, I know where to go for the information.
+Q4: How informed would you now say you are about environmental issues in your community?
+Q5: How much do you now feel like you know about climate change?
+Q6: People like me can have a say in the environment justice issues related to my community.
+Q7: People like me can have an impact on the environment policymaking process in my community. 
+Q8: I have the knowledge and skills I need to improve environment in my community. 
+Q9: I have the knowledge and skills I need to respond to the collective problems facing my community. 
+Q10: I want to work with other community members to take actions to improve environment in my community. 
+Q11: I can create positive changes in my life. 
+Q12: I have the ownership over environment problems facing my community. 
+Q13: What are your goals to improve the quality of environment?
+Q14: Climate change affects my health.
+Q15: In the future, what is the most convenient way for you to share your opinions about environmental issues and other social issues?
+Q16: Do you agree or disagree with the statement that climate change is happening?
+Q17: Do you agree or disagree with the statement that climate change is caused by human activities?
