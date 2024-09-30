@@ -120,12 +120,12 @@ about_tab_body <- function() {
         class = "page-para"
       ),
     ),
-    column(
-      4,
-      img(
-        src = "assets/about-bg.png", width = "100%", height = 300,
-        style = "object-fit: cover"
-      )
-    )
+    # column(
+    #   4,
+    #   img(
+    #     src = "assets/about-bg.png", width = "100%", height = 300,
+    #     style = "object-fit: cover"
+    #   )
+    # )
   )
 }

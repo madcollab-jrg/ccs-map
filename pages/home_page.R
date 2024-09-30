@@ -7,7 +7,7 @@ tags$head(
 
 # Home Page
 home_tab_body <- function() {
-  fluidRow(# nolint
+  fluidRow( # nolint
     class = "home-row",
     column(
       6,
@@ -30,7 +30,7 @@ home_tab_body <- function() {
     column(
       6,
       img(
-        src = "assets/home-bg.jpg", width = "100%", height = 400,
+        src = "assets/home.png", width = "100%", height = 400,
         style = "object-fit: cover"
       )
     )

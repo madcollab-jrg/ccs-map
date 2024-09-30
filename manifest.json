@@ -5975,7 +5975,7 @@
       "checksum": "9bc082190c78b78be4f2d5a7263596f4"
     },
     "pages/about.R": {
-      "checksum": "ceaf90e518ffe33dad32d74ef5457c14"
+      "checksum": "eaa1da405a6524e602d613cbaa7c891f"
     },
     "pages/avail_data.R": {
       "checksum": "7a664b1d7b901dfc0e9e5035addf6b3a"
@@ -6005,7 +6005,7 @@
       "checksum": "544d0a16fdf9b6f8451f23db39b9b6c7"
     },
     "pages/home_page.R": {
-      "checksum": "0e7af4c8892f62aed1d335059c406d8f"
+      "checksum": "87be98bebff62d157e7e9d6fdc15956e"
     },
     "pages/info_page.R": {
       "checksum": "bd322676be605281049a9f7a0b4db1d7"
@@ -6015,6 +6015,9 @@
     },
     "pages/strategies_page.R": {
       "checksum": "e229142c85e8e53b8b7b7ab99fc74fa6"
+    },
+    "README.md": {
+      "checksum": "1efa4b3f840261b0d1fe0f8aced64300"
     },
     "reporting_tool.R": {
       "checksum": "148a3d6af27f0425500db3bd5a60f55a"
@@ -6090,6 +6093,9 @@
     },
     "www/assets/home-bg.jpg": {
       "checksum": "bd01a336f85117182df1a1437b6692ec"
+    },
+    "www/assets/home.jpg": {
+      "checksum": "fe07d44da882b8bb1c71d2a1983c72ec"
     },
     "www/assets/logo.png": {
       "checksum": "60c4501d420435b2e21b37217df50f56"
