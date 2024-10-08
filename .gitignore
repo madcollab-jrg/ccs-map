@@ -14,7 +14,7 @@ cleaning-ccs-responses.html
 cleaning-ccs-responses copy.html
 Rplot.pdf
 *.html
-*.RData
+# *.RData
 *.rdb
 *.rdx
 *.png
@@ -25,5 +25,5 @@ Rplot.pdf
 *.html
 ccs-analysis/urban-heat_cache/html/__packages
 ccs-analysis/urban-heat_cache/html/__packages
-*.RData
+# *.RData
 ccs-analysis/heat_survey_check.csv
