@@ -94,7 +94,7 @@ perform_topic_modeling <- function(
     num_topics = 4) {
   # Import stoplist
   malletwords <-
-    scan("/Volumes/cbjackson2/ccs-knowledge/ccs-data/report_data/mallet.txt",
+    scan("./data/report_data/mallet.txt",
       character(),
       quote = ""
     )

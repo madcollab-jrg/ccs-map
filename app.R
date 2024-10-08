@@ -223,13 +223,17 @@ server <- function(input, output, session) {
     paste(input$census_level)
   })
 
-  demographic_data_loc <-
-    "/Volumes/cbjackson2/ccs-knowledge/ccs-data-demographic_unprocessed/"
+  # demographic_data_loc <-
+  #   "/Volumes/cbjackson2/ccs-knowledge/ccs-data-demographic_unprocessed/"
   # survey_data_loc <- "/Volumes/cbjackson2/ccs-knowledge/ccs-data/"
 
-  survey_data_loc <- "/Volumes/cbjackson2/ccs-knowledge/ccs-data-updated/"
+  # survey_data_loc <- "/Volumes/cbjackson2/ccs-knowledge/ccs-data-updated/"
+
+  survey_data_loc <- "./data/ccs-data-updated/"
+
 
   # import survey data
+
   survey_data <- eventReactive(
     list(input$run_report),
     {

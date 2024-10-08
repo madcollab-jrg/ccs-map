@@ -86,13 +86,17 @@ get_data_desc_rep_reaction <- function(
 
       if (input$census_level != "") {
         data_loc <-
-          paste("/Volumes/cbjackson2/ccs-knowledge/results_summary/",
+          paste(
+            # "/Volumes/cbjackson2/ccs-knowledge/results_summary/",
+            "./data/results_summary/",
             file_loc(),
             sep = ""
           )
 
         data_loc_rep <-
-          paste("/Volumes/cbjackson2/ccs-knowledge/results_representativeness/",
+          paste(
+            # "/Volumes/cbjackson2/ccs-knowledge/results_representativeness/",
+            "./data/results_representativeness/",
             file_loc(),
             sep = ""
           )
