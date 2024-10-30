@@ -1,0 +1,2 @@
+csvs_path: "/translation"  # Optional path if needed
+default_lang: "en"  # Default language to use
