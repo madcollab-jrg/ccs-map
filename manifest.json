@@ -4478,6 +4478,33 @@
         "Built": "R 4.3.1; ; 2023-11-18 01:58:45 UTC; unix"
       }
     },
+    "shiny.i18n": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "shiny.i18n",
+        "Title": "Shiny Applications Internationalization",
+        "Version": "0.3.0",
+        "Authors@R": "\n  c(\n    person(\"Jakub\", \"Nowicki\", email = \"opensource+kuba@appsilon.com\", role = c(\"cre\", \"aut\")),\n    person(\"Dominik\", \"Krzemiński\", email = \"raymon92@gmail.com\", role = c(\"aut\")),\n    person(\"Krystian\", \"Igras\", email = \"krystian8207@gmail.com\", role = c(\"aut\")),\n    person(\"Jakub\", \"Sobolewski\", email = \"jakub.sobolewski@appsilon.com\", role = c(\"aut\")),\n    person(\"Appsilon Sp. z o.o.\", role = \"cph\", email = \"opensource@appsilon.com\")\n  )",
+        "Description": "It provides easy internationalization of Shiny\n    applications. It can be used as standalone translation package\n    to translate reports, interactive visualizations or\n    graphical elements as well.",
+        "Depends": "R (>= 3.3.0)",
+        "Imports": "yaml, jsonlite, methods, stringr, R6, glue, shiny, rstudioapi,\nutils",
+        "License": "MIT + file LICENSE",
+        "Encoding": "UTF-8",
+        "URL": "https://appsilon.github.io/shiny.i18n/,\nhttps://github.com/Appsilon/shiny.i18n",
+        "BugReports": "https://github.com/Appsilon/shiny.i18n/issues",
+        "RoxygenNote": "7.2.1",
+        "Suggests": "covr, googleLanguageR, knitr, lintr, rcmdcheck, rmarkdown,\nspelling, testthat, withr, quarto",
+        "Language": "en-US",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-01-13 14:30:28 UTC; kuba",
+        "Author": "Jakub Nowicki [cre, aut],\n  Dominik Krzemiński [aut],\n  Krystian Igras [aut],\n  Jakub Sobolewski [aut],\n  Appsilon Sp. z o.o. [cph]",
+        "Maintainer": "Jakub Nowicki <opensource+kuba@appsilon.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-01-16 10:40:02 UTC",
+        "Built": "R 4.3.0; ; 2023-04-06 18:15:48 UTC; unix"
+      }
+    },
     "shinydashboard": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5963,7 +5990,7 @@
       "checksum": "b2a03828d816f7e2dc6a80a316a1c3c4"
     },
     "app.R": {
-      "checksum": "66f1a2593dc56337481ef6280e3ee5ea"
+      "checksum": "6e93c4c51bd414fbd0e35bd3035e9c07"
     },
     "census_items/census_items.yaml": {
       "checksum": "7d244749fe1837691408125d7893432e"
@@ -13549,6 +13576,15 @@
     "graphics_representative.R": {
       "checksum": "a136387ee44be7fb73417b2c0e2eaa12"
     },
+    "helpers/global/server.R": {
+      "checksum": "0b0a821369ec2fcfccfa36bbf68c1606"
+    },
+    "helpers/global/ui.R": {
+      "checksum": "fc9df03c2efc18fc20b17e147eef0937"
+    },
+    "helpers/utils/survey_declarations.R": {
+      "checksum": "c786e91d4789cf456c9b7e01f9760202"
+    },
     "pages/about.R": {
       "checksum": "eaa1da405a6524e602d613cbaa7c891f"
     },
@@ -13641,6 +13677,12 @@
     },
     "table.R": {
       "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"
+    },
+    "translation_config.yaml": {
+      "checksum": "ffdf2c6eacc2febd1c5f258b252453b2"
+    },
+    "translation.csv": {
+      "checksum": "077b757b8f594313b76691ad4cf85b8b"
     },
     "www/assets/about-bg.png": {
       "checksum": "d2c7aac89882d9cbe36dcffd7c059b5c"
