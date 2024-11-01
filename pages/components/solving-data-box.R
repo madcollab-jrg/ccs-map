@@ -40,9 +40,13 @@ get_data_description_ui <- function(survey, demographic, geography, demo) {
       </div>"
     )),
     gt_output("new_table"),
-    actionButton(
-      inputId = "downloadTable", label = "Save Table",
-      gradient = TRUE, class = "button-common"
+    # actionButton(
+    #   inputId = "downloadTable", label = "Save Table",
+    #   gradient = TRUE, class = "button-common"
+    # ),
+    downloadButton(
+      outputId = "downloadTable", label = "Save Table",
+      class = "button-common"
     ),
     callout(
       title = HTML(paste(
@@ -94,6 +98,8 @@ get_data_desc_rep_reaction <- function(
     input, output, surveyIds,
     survey_data = NA, census_data = NA, file_loc = NA, file_sum = NA,
     demographic_desc) {
+  tbl_data_reactive <- reactiveVal()
+
   # When run report is pressed populate the data description box with table.
   # Table should have counts of people who answered the survey within wisconsin,
   # and split up into sub categories.
@@ -226,6 +232,10 @@ get_data_desc_rep_reaction <- function(
         # Create gt table from the merged data
         gt_tbl <- gt(merged_tbl_data, rownames_to_stub = FALSE)
 
+        # Store the merged table data in the reactive variable
+        tbl_data_reactive(merged_tbl_data)
+
+
         # Formatting decimals
         gt_tbl <- gt_tbl %>%
           fmt_number(
@@ -266,5 +276,46 @@ get_data_desc_rep_reaction <- function(
       }
     }
   })
+
+  # Download Handler for CSV export
+  output$downloadTable <- downloadHandler(
+    filename = function() {
+      paste("table-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      data_to_download <- tbl_data_reactive()
+      if (!is.null(data_to_download)) {
+        # Inspect the structure
+        print("Structure of data_to_download:")
+        print(str(data_to_download))
+
+        # Identify columns that are lists
+        list_cols <- sapply(data_to_download, is.list)
+
+        if (any(list_cols)) {
+          # Convert list columns to vectors
+          data_to_download[list_cols] <-
+            lapply(
+              data_to_download[list_cols],
+              unlist
+            )
+        }
+
+        # Re-inspect the structure after conversion
+        print("Structure after converting list columns:")
+        print(str(data_to_download))
+
+        # Write CSV file
+        write.csv(data_to_download, file, row.names = FALSE)
+      } else {
+        showNotification("No data available to download.", type = "error")
+        write.csv(data.frame(Message = "No data available"), file,
+          row.names = FALSE
+        )
+      }
+    }
+  )
+
+
   return(reaction)
 }
