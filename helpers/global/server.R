@@ -194,6 +194,9 @@ server <- function(input, output, session) {
   # })
 
   # all button and action link interaction on UI
+  observeEvent(input$examineDataBtn, {
+    updateTabItems(session, "navmenu", "reporting_tool")
+  })
   observeEvent(input$availDataBtn, {
     updateTabItems(session, "navmenu", "avail_data")
   })

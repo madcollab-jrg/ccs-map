@@ -1,5 +1,6 @@
 :root {
   --primary-color: #2884f9;
+  --primary-hover-color: rgb(20, 101, 207);
   --bg-color: #fff;
   --breakpoint-sm: 600px;
   --breakpoint-md: 900px;
@@ -17,6 +18,14 @@
   font-weight: 600;
   font-size: 0.85rem;
   margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .button-filled:hover,
+.button-filled:hover {
+  background: var(--primary-hover-color);
+  border-color: var(--primary-hover-color);
+  color: var(--bg-color);
 }
 
 .dark-mode .button-outlined,
@@ -29,6 +38,7 @@
   font-weight: 600;
   font-size: 0.85rem;
   margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
 }
 
 .dark-mode .button-common,
@@ -40,6 +50,14 @@
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .button-common:hover,
+.button-common:hover {
+  background: var(--primary-hover-color);
+  border-color: var(--primary-hover-color);
+  color: var(--bg-color);
 }
 
 .font-sm {
@@ -120,7 +138,7 @@
   background-color: #000;
 }
 
-:not(.dark-mode) .callout.strategies-banner h5, 
+:not(.dark-mode) .callout.strategies-banner h5,
 :not(.dark-mode) .callout.strategies-banner p {
   display: inline;
 }
@@ -165,4 +183,3 @@
     font-size: 0.75rem;
   }
 }
-

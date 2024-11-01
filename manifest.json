@@ -1209,6 +1209,30 @@
         "Archs": "curl.so.dSYM"
       }
     },
+    "cyclocomp": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "cyclocomp",
+        "Title": "Cyclomatic Complexity of R Code",
+        "Version": "1.1.1",
+        "Author": "Gabor Csardi",
+        "Maintainer": "Gabor Csardi <csardi.gabor@gmail.com>",
+        "Description": "Cyclomatic complexity is a software metric (measurement),\n    used to indicate the complexity of a program. It is a quantitative\n    measure of the number of linearly independent paths through a program's\n    source code. It was developed by Thomas J. McCabe, Sr. in 1976.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/gaborcsardi/cyclocomp",
+        "BugReports": "https://github.com/gaborcsardi/cyclocomp/issues",
+        "Imports": "callr, crayon, desc, remotes, withr",
+        "Suggests": "testthat",
+        "RoxygenNote": "7.2.3",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-08-30 12:49:50 UTC; gaborcsardi",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-08-30 17:00:22 UTC",
+        "Built": "R 4.3.0; ; 2023-08-30 18:05:29 UTC; unix"
+      }
+    },
     "data.table": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -1268,6 +1292,36 @@
         "Repository": "CRAN",
         "Date/Publication": "2024-03-19 17:00:05 UTC",
         "Built": "R 4.3.1; ; 2024-03-19 18:07:41 UTC; unix"
+      }
+    },
+    "desc": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "desc",
+        "Title": "Manipulate DESCRIPTION Files",
+        "Version": "1.4.3",
+        "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Kirill\", \"Müller\", role = \"aut\"),\n    person(\"Jim\", \"Hester\", , \"james.f.hester@gmail.com\", role = \"aut\"),\n    person(\"Maëlle\", \"Salmon\", role = \"ctb\",\n           comment = c(ORCID = \"0000-0002-2815-0399\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Description": "Tools to read, write, create, and manipulate DESCRIPTION\n    files.  It is intended for packages that create or manipulate other\n    packages.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://desc.r-lib.org/, https://github.com/r-lib/desc",
+        "BugReports": "https://github.com/r-lib/desc/issues",
+        "Depends": "R (>= 3.4)",
+        "Imports": "cli, R6, utils",
+        "Suggests": "callr, covr, gh, spelling, testthat, whoami, withr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.2.3",
+        "Collate": "'assertions.R' 'authors-at-r.R' 'built.R' 'classes.R'\n'collate.R' 'constants.R' 'deps.R' 'desc-package.R'\n'description.R' 'encoding.R' 'find-package-root.R' 'latex.R'\n'non-oo-api.R' 'package-archives.R' 'read.R' 'remotes.R'\n'str.R' 'syntax_checks.R' 'urls.R' 'utils.R' 'validate.R'\n'version.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-12-10 11:07:50 UTC; gaborcsardi",
+        "Author": "Gábor Csárdi [aut, cre],\n  Kirill Müller [aut],\n  Jim Hester [aut],\n  Maëlle Salmon [ctb] (<https://orcid.org/0000-0002-2815-0399>),\n  Posit Software, PBC [cph, fnd]",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-12-10 11:40:08 UTC",
+        "Built": "R 4.3.1; ; 2023-12-10 11:59:18 UTC; unix"
       }
     },
     "digest": {
@@ -2968,6 +3022,38 @@
         "Built": "R 4.3.1; ; 2023-11-15 03:32:00 UTC; unix"
       }
     },
+    "lintr": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "lintr",
+        "Title": "A 'Linter' for R Code",
+        "Version": "3.1.2",
+        "Authors@R": "c(\n    person(\"Jim\", \"Hester\", , role = \"aut\"),\n    person(\"Florent\", \"Angly\", role = \"aut\",\n           comment = \"fangly\"),\n    person(\"Russ\", \"Hyde\", role = \"aut\"),\n    person(\"Michael\", \"Chirico\", email = \"michaelchirico4@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Kun\", \"Ren\", role = \"aut\"),\n    person(\"Alexander\", \"Rosenstock\", role = \"aut\",\n           comment = \"AshesITR\"),\n    person(\"Indrajeet\", \"Patil\", , \"patilindrajeet.science@gmail.com\", role = \"aut\",\n           comment = c(ORCID = \"0000-0003-1995-6531\", Twitter = \"@patilindrajeets\"))\n  )",
+        "Description": "Checks adherence to a given style, syntax errors and possible\n    semantic issues.  Supports on the fly checking of R code edited with\n    'RStudio IDE', 'Emacs', 'Vim', 'Sublime Text', 'Atom' and 'Visual\n    Studio Code'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/lintr, https://lintr.r-lib.org",
+        "BugReports": "https://github.com/r-lib/lintr/issues",
+        "Depends": "R (>= 3.5)",
+        "Imports": "backports (>= 1.1.7), codetools, cyclocomp, digest, glue,\nknitr, rex, stats, utils, xml2 (>= 1.0.0), xmlparsedata (>=\n1.0.5)",
+        "Suggests": "bookdown, crayon, httr (>= 1.2.1), jsonlite, mockery,\npatrick, rlang, rmarkdown, rstudioapi (>= 0.2), testthat (>=\n3.1.5), tibble, tufte, withr (>= 2.5.0)",
+        "Enhances": "data.table",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.1",
+        "Collate": "'make_linter_from_xpath.R' 'xp_utils.R' 'utils.R' 'AAA.R'\n'T_and_F_symbol_linter.R' 'absolute_path_linter.R' 'actions.R'\n'addins.R' 'any_duplicated_linter.R' 'any_is_na_linter.R'\n'assignment_linter.R' 'backport_linter.R'\n'boolean_arithmetic_linter.R' 'brace_linter.R' 'cache.R'\n'class_equals_linter.R' 'commas_linter.R' 'comment_linters.R'\n'comments.R' 'condition_message_linter.R'\n'conjunct_test_linter.R' 'consecutive_assertion_linter.R'\n'cyclocomp_linter.R' 'declared_functions.R' 'deprecated.R'\n'duplicate_argument_linter.R' 'empty_assignment_linter.R'\n'equals_na_linter.R' 'exclude.R' 'expect_comparison_linter.R'\n'expect_identical_linter.R' 'expect_length_linter.R'\n'expect_lint.R' 'expect_named_linter.R' 'expect_not_linter.R'\n'expect_null_linter.R' 'expect_s3_class_linter.R'\n'expect_s4_class_linter.R' 'expect_true_false_linter.R'\n'expect_type_linter.R' 'extract.R'\n'extraction_operator_linter.R' 'fixed_regex_linter.R'\n'for_loop_index_linter.R' 'function_argument_linter.R'\n'function_left_parentheses_linter.R' 'function_return_linter.R'\n'get_source_expressions.R' 'ids_with_token.R'\n'if_not_else_linter.R' 'ifelse_censor_linter.R'\n'implicit_assignment_linter.R' 'implicit_integer_linter.R'\n'indentation_linter.R' 'infix_spaces_linter.R'\n'inner_combine_linter.R' 'is_lint_level.R'\n'is_numeric_linter.R' 'keyword_quote_linter.R'\n'length_levels_linter.R' 'length_test_linter.R'\n'lengths_linter.R' 'library_call_linter.R'\n'line_length_linter.R' 'lint.R' 'linter_tag_docs.R'\n'linter_tags.R' 'lintr-deprecated.R' 'lintr-package.R'\n'literal_coercion_linter.R' 'make_linter_from_regex.R'\n'matrix_apply_linter.R' 'methods.R' 'missing_argument_linter.R'\n'missing_package_linter.R' 'namespace.R' 'namespace_linter.R'\n'nested_ifelse_linter.R' 'nonportable_path_linter.R'\n'numeric_leading_zero_linter.R' 'object_length_linter.R'\n'object_name_linter.R' 'object_usage_linter.R'\n'outer_negation_linter.R' 'package_hooks_linter.R'\n'paren_body_linter.R' 'paste_linter.R' 'path_utils.R'\n'pipe_call_linter.R' 'pipe_consistency_linter.R'\n'pipe_continuation_linter.R' 'quotes_linter.R'\n'redundant_equals_linter.R' 'redundant_ifelse_linter.R'\n'regex_subset_linter.R' 'repeat_linter.R'\n'routine_registration_linter.R' 'scalar_in_linter.R'\n'semicolon_linter.R' 'seq_linter.R' 'settings.R'\n'settings_utils.R' 'shared_constants.R' 'sort_linter.R'\n'spaces_inside_linter.R' 'spaces_left_parentheses_linter.R'\n'sprintf_linter.R' 'string_boundary_linter.R'\n'strings_as_factors_linter.R' 'system_file_linter.R'\n'trailing_blank_lines_linter.R' 'trailing_whitespace_linter.R'\n'tree_utils.R' 'undesirable_function_linter.R'\n'undesirable_operator_linter.R'\n'unnecessary_concatenation_linter.R'\n'unnecessary_lambda_linter.R' 'unnecessary_nested_if_linter.R'\n'unnecessary_placeholder_linter.R' 'unreachable_code_linter.R'\n'unused_import_linter.R' 'use_lintr.R' 'vector_logic_linter.R'\n'whitespace_linter.R' 'with.R' 'with_id.R'\n'xml_nodes_to_lints.R' 'yoda_test_linter.R' 'zzz.R'",
+        "Language": "en-US",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-03-24 22:09:44 UTC; michael",
+        "Author": "Jim Hester [aut],\n  Florent Angly [aut] (fangly),\n  Russ Hyde [aut],\n  Michael Chirico [aut, cre],\n  Kun Ren [aut],\n  Alexander Rosenstock [aut] (AshesITR),\n  Indrajeet Patil [aut] (<https://orcid.org/0000-0003-1995-6531>,\n    @patilindrajeets)",
+        "Maintainer": "Michael Chirico <michaelchirico4@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-03-25 06:10:02 UTC",
+        "Built": "R 4.3.1; ; 2024-03-25 06:58:19 UTC; unix"
+      }
+    },
     "lubridate": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -4005,6 +4091,36 @@
         "Built": "R 4.3.0; ; 2023-04-11 04:46:33 UTC; unix"
       }
     },
+    "remotes": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "remotes",
+        "Title": "R Package Installation from Remote Repositories, Including\n'GitHub'",
+        "Version": "2.5.0",
+        "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Jim\", \"Hester\", role = \"aut\"),\n    person(\"Hadley\", \"Wickham\", role = \"aut\"),\n    person(\"Winston\", \"Chang\", role = \"aut\"),\n    person(\"Martin\", \"Morgan\", role = \"aut\"),\n    person(\"Dan\", \"Tenenbaum\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(\"Ascent Digital Services\", role = \"cph\")\n  )",
+        "Description": "Download and install R packages stored in 'GitHub', 'GitLab',\n    'Bitbucket', 'Bioconductor', or plain 'subversion' or 'git'\n    repositories.  This package provides the 'install_*' functions in\n    'devtools'. Indeed most of the code was copied over from 'devtools'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://remotes.r-lib.org, https://github.com/r-lib/remotes#readme",
+        "BugReports": "https://github.com/r-lib/remotes/issues",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "methods, stats, tools, utils",
+        "Suggests": "brew, callr, codetools, covr, curl, git2r (>= 0.23.0), knitr,\nmockery, pingr, pkgbuild (>= 1.0.1), rmarkdown, rprojroot,\ntestthat (>= 3.0.0), webfakes, withr",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "SystemRequirements": "Subversion for install_svn, git for install_git",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-03-17 12:41:55 UTC; gaborcsardi",
+        "Author": "Gábor Csárdi [aut, cre],\n  Jim Hester [aut],\n  Hadley Wickham [aut],\n  Winston Chang [aut],\n  Martin Morgan [aut],\n  Dan Tenenbaum [aut],\n  Posit Software, PBC [cph, fnd],\n  Ascent Digital Services [cph]",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-03-17 13:20:02 UTC",
+        "Built": "R 4.3.1; ; 2024-03-17 16:04:14 UTC; unix"
+      }
+    },
     "reprex": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -4064,6 +4180,34 @@
         "Date/Publication": "2020-04-09 13:50:02 UTC",
         "Built": "R 4.3.0; aarch64-apple-darwin20; 2023-04-11 04:41:51 UTC; unix",
         "Archs": "reshape2.so.dSYM"
+      }
+    },
+    "rex": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Type": "Package",
+        "Package": "rex",
+        "Title": "Friendly Regular Expressions",
+        "Version": "1.2.1",
+        "Authors@R": "c(\n    person(\"Kevin\", \"Ushey\", , \"kevinushey@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Jim\", \"Hester\", , \"james.f.hester@gmail.com\", role = \"aut\"),\n    person(\"Robert\", \"Krzyzanowski\", , \"rkrzyzanowski@gmail.com\", role = \"aut\")\n  )",
+        "Description": "A friendly interface for the construction of regular\n    expressions.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/kevinushey/rex",
+        "BugReports": "https://github.com/kevinushey/rex/issues",
+        "Imports": "lazyeval",
+        "Suggests": "covr, dplyr, ggplot2, Hmisc, knitr, magrittr, rmarkdown,\nroxygen2, rvest, stringr, testthat",
+        "VignetteBuilder": "knitr",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.1.2",
+        "Collate": "'aaa.R' 'utils.R' 'escape.R' 'capture.R' 'character_class.R'\n'counts.R' 'lookarounds.R' 'match.R' 'or.R' 'rex-mode.R'\n'rex.R' 'shortcuts.R' 'wildcards.R' 'zzz.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-11-24 20:51:05 UTC; jhester",
+        "Author": "Kevin Ushey [aut, cre],\n  Jim Hester [aut],\n  Robert Krzyzanowski [aut]",
+        "Maintainer": "Kevin Ushey <kevinushey@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2021-11-26 16:11:02 UTC",
+        "Built": "R 4.3.0; ; 2023-04-11 04:35:29 UTC; unix"
       }
     },
     "rlang": {
@@ -5812,6 +5956,31 @@
         "Archs": "xml2.so.dSYM"
       }
     },
+    "xmlparsedata": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "xmlparsedata",
+        "Title": "Parse Data of 'R' Code as an 'XML' Tree",
+        "Version": "1.0.5",
+        "Author": "Gábor Csárdi",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Description": "Convert the output of 'utils::getParseData()' to an 'XML'\n    tree, that one can search via 'XPath', and easier to manipulate in\n    general.",
+        "License": "MIT + file LICENSE",
+        "LazyData": "true",
+        "URL": "https://github.com/r-lib/xmlparsedata#readme",
+        "BugReports": "https://github.com/r-lib/xmlparsedata/issues",
+        "RoxygenNote": "6.0.1",
+        "Suggests": "covr, testthat, xml2",
+        "Depends": "R (>= 3.0.0)",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-03-06 10:52:40 UTC; gaborcsardi",
+        "Repository": "CRAN",
+        "Date/Publication": "2021-03-06 11:10:02 UTC",
+        "Built": "R 4.3.0; ; 2023-04-05 22:49:13 UTC; unix"
+      }
+    },
     "xtable": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5890,6 +6059,9 @@
   "files": {
     ".gitattributes": {
       "checksum": "05bdb783ee6514c8c072e47680af8ff7"
+    },
+    ".Rprofile": {
+      "checksum": "e0f79d6d8103e181ea083f6efa4de73f"
     },
     ".vscode/settings.json": {
       "checksum": "b2a03828d816f7e2dc6a80a316a1c3c4"
@@ -13473,7 +13645,7 @@
       "checksum": "0511c031e60e88cb178db3bae490e0a6"
     },
     "helpers/global/server.R": {
-      "checksum": "0b0a821369ec2fcfccfa36bbf68c1606"
+      "checksum": "e7154e3885cf20fc4ec50bb925526660"
     },
     "helpers/global/ui.R": {
       "checksum": "fc9df03c2efc18fc20b17e147eef0937"
@@ -13512,7 +13684,7 @@
       "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"
     },
     "pages/home_page.R": {
-      "checksum": "96bcbc7cd50387b839770afbd388807f"
+      "checksum": "06c4c847c0193787957009bb19a0b0a3"
     },
     "pages/info_page.R": {
       "checksum": "bd322676be605281049a9f7a0b4db1d7"
@@ -13602,7 +13774,7 @@
       "checksum": "60c4501d420435b2e21b37217df50f56"
     },
     "www/common.css": {
-      "checksum": "6fba5d987feb1bb83a185f7048ec9b08"
+      "checksum": "dc9832854a5a2da7abb6b9def065ff17"
     },
     "www/home.css": {
       "checksum": "698359984778394035966e88d1178020"

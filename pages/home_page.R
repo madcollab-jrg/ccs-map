@@ -18,7 +18,7 @@ home_tab_body <- function() {
       conversations on environmental justice solutions.",
         class = "home-body text-lighter"
       ),
-      actionButton("examineData",
+      actionButton("examineDataBtn",
         HTML("<span>Examine Your Data</span>
         <i class='fas fa-arrow-right' style='margin-left: 5px;'></i>"),
         class = "button-filled"
