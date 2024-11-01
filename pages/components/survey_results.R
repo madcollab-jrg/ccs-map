@@ -755,8 +755,9 @@ resulting_graphics <- function(
         data_for_visualization <- data[, c(1, question_num + 1, 7:10, 6)]
       }
 
+      demographic_desc <- tolower(input$demographic)
+
       # print based on question type
-      # message(q_type)
       if (q_type == "matrix") {
         q_subtype <- question_subtype()
         # message(q_subtype)

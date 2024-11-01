@@ -13500,13 +13500,13 @@
       "checksum": "b220726f9f05bfd111b763918f1f59ba"
     },
     "pages/components/solving-data-box.R": {
-      "checksum": "33957fdf99ee5bb5c89e22f30612e320"
+      "checksum": "0e0e488151fe84e9b9f8827d0a04bd13"
     },
     "pages/components/survey_questions/allquestion_types_2.csv": {
       "checksum": "0ab35efc8e126b123651f36dfc93f951"
     },
     "pages/components/survey_results.R": {
-      "checksum": "191dc418088f4935fddc6280c2d15a04"
+      "checksum": "03e40975f3ae3d9464cfe697d713fab0"
     },
     "pages/components/table.R": {
       "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"

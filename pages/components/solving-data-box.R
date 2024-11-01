@@ -129,6 +129,8 @@ get_data_desc_rep_reaction <- function(
         # print(census_data)
         # print(demographic_desc)
 
+        demographic_desc <- tolower(input$demographic)
+
         data_loc <-
           paste(
             # "/Volumes/cbjackson2/ccs-knowledge/results_summary/",
