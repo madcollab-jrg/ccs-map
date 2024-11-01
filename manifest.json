@@ -707,36 +707,6 @@
         "Built": "R 4.3.0; ; 2023-06-10 01:41:45 UTC; unix"
       }
     },
-    "broom.helpers": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "description": {
-        "Package": "broom.helpers",
-        "Title": "Helpers for Model Coefficients Tibbles",
-        "Version": "1.14.0",
-        "Authors@R": "c(\n    person(\"Joseph\", \"Larmarange\", , \"joseph@larmarange.net\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0001-7097-700X\")),\n    person(\"Daniel D.\", \"Sjoberg\", , \"danield.sjoberg@gmail.com\", role = \"aut\",\n           comment = c(ORCID = \"0000-0003-0862-2018\"))\n  )",
-        "Description": "Provides suite of functions to work with regression model\n    'broom::tidy()' tibbles.  The suite includes functions to group\n    regression model terms by variable, insert reference and header rows\n    for categorical variables, add variable labels, and more.",
-        "License": "GPL (>= 3)",
-        "URL": "https://larmarange.github.io/broom.helpers/",
-        "BugReports": "https://github.com/larmarange/broom.helpers/issues",
-        "Depends": "R (>= 3.4)",
-        "Imports": "broom (>= 0.8), cli, dplyr, labelled, lifecycle, purrr, rlang\n(>= 1.0.1), stats, stringr, tibble, tidyr",
-        "Suggests": "betareg, biglm, biglmm, brms (>= 2.13.0), broom.mixed,\ncmprsk, covr, datasets, effects, emmeans, fixest (>= 0.10.0),\nforcats, gam, gee, geepack, ggplot2, ggeffects, ggstats (>=\n0.2.1), glmmTMB, glue, gt, gtsummary (>= 1.6.3), knitr, lavaan,\nlfe, lme4 (>= 1.1.28), logitr (>= 0.8.0), marginaleffects (>=\n0.10.0), margins, MASS, mgcv, mice, multgee, nnet, ordinal,\nparameters, parsnip, patchwork, plm, pscl, rmarkdown, rstanarm,\nscales, spelling, survey, survival, testthat, tidycmprsk, VGAM",
-        "VignetteBuilder": "knitr",
-        "RdMacros": "lifecycle",
-        "Encoding": "UTF-8",
-        "Language": "en-US",
-        "LazyData": "true",
-        "RoxygenNote": "7.2.3",
-        "NeedsCompilation": "no",
-        "Packaged": "2023-08-07 15:01:10 UTC; josep",
-        "Author": "Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>),\n  Daniel D. Sjoberg [aut] (<https://orcid.org/0000-0003-0862-2018>)",
-        "Maintainer": "Joseph Larmarange <joseph@larmarange.net>",
-        "Repository": "CRAN",
-        "Date/Publication": "2023-08-07 15:40:02 UTC",
-        "Built": "R 4.3.0; ; 2023-08-07 16:37:08 UTC; unix"
-      }
-    },
     "bs4Dash": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2263,39 +2233,6 @@
         "Built": "R 4.3.0; ; 2023-08-27 05:56:11 UTC; unix"
       }
     },
-    "gtsummary": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "description": {
-        "Package": "gtsummary",
-        "Title": "Presentation-Ready Data Summary and Analytic Result Tables",
-        "Version": "1.7.2",
-        "Authors@R": "\n    c(person(given = \"Daniel D.\",\n             family = \"Sjoberg\",\n             role = c(\"aut\", \"cre\"),\n             email = \"danield.sjoberg@gmail.com\",\n             comment = c(ORCID = \"0000-0003-0862-2018\")),\n      person(given = \"Joseph\",\n             family = \"Larmarange\",\n             role = \"aut\",\n             comment = c(ORCID = \"0000-0001-7097-700X\")),\n      person(given = \"Michael\",\n             family = \"Curry\",\n             role = \"aut\",\n             comment = c(ORCID = \"0000-0002-0261-4044\")),\n      person(given = \"Jessica\",\n             family = \"Lavery\",\n             role = \"aut\",\n             comment = c(ORCID = \"0000-0002-2746-5647\")),\n      person(given = \"Karissa\",\n             family = \"Whiting\",\n             role = \"aut\",\n             comment = c(ORCID = \"0000-0002-4683-1868\")),\n      person(given = \"Emily C.\",\n             family = \"Zabor\",\n             role = \"aut\",\n             comment = c(ORCID = \"0000-0002-1402-4498\")),\n      person(given = \"Xing\",\n             family = \"Bai\",\n             role = \"ctb\"),\n      person(given = \"Esther\",\n             family = \"Drill\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0002-3315-4538\")),\n      person(given = \"Jessica\",\n             family = \"Flynn\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0001-8310-6684\")),\n      person(given = \"Margie\",\n             family = \"Hannum\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0002-2953-0449\")),\n      person(given = \"Stephanie\",\n             family = \"Lobaugh\",\n             role = \"ctb\"),\n      person(given = \"Shannon\", \n             family = \"Pileggi\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0002-7732-4164\")),\n      person(given = \"Amy\",\n             family = \"Tin\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0002-8005-0694\")),\n      person(given = \"Gustavo\",\n             family = \"Zapata Wainberg\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0002-2524-3637\")))",
-        "Description": "Creates presentation-ready tables summarizing data\n    sets, regression models, and more. The code to create the tables is\n    concise and highly customizable. Data frames can be summarized with\n    any function, e.g. mean(), median(), even user-written functions.\n    Regression models are summarized and include the reference rows for\n    categorical variables. Common regression models, such as logistic\n    regression and Cox proportional hazards regression, are automatically\n    identified and the tables are pre-filled with appropriate column\n    headers.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://github.com/ddsjoberg/gtsummary,\nhttps://www.danieldsjoberg.com/gtsummary/",
-        "BugReports": "https://github.com/ddsjoberg/gtsummary/issues",
-        "Depends": "R (>= 3.4)",
-        "Imports": "broom (>= 1.0.1), broom.helpers (>= 1.13.0), cli (>= 3.1.1),\ndplyr (>= 1.1.1), forcats (>= 1.0.0), glue (>= 1.6.2), gt (>=\n0.9.0), knitr (>= 1.37), lifecycle (>= 1.0.1), purrr (>=\n1.0.1), rlang (>= 1.0.3), stringr (>= 1.4.0), tibble (>=\n3.2.1), tidyr (>= 1.1.4), vctrs (>= 0.5.2)",
-        "Suggests": "aod (>= 1.3.1), broom.mixed (>= 0.2.9), car (>= 3.0-11),\ncmprsk, covr, effectsize (>= 0.6.0), emmeans (>= 1.7.3),\nflextable (>= 0.8.1), geepack, ggstats (>= 0.2.1), Hmisc,\nhuxtable (>= 5.4.0), insight (>= 0.15.0), kableExtra (>=\n1.3.4), lme4, mgcv, mice (>= 3.10.0), nnet, officer, openxlsx,\nparameters (>= 0.20.2), parsnip (>= 0.1.7), rmarkdown, sandwich\n(>= 3.0.1), scales, smd (>= 0.6.6), spelling (>= 2.2), survey,\nsurvival (>= 3.2-11), testthat (>= 3.0.4), tidycmprsk (>=\n0.1.2), workflows (>= 0.2.4)",
-        "VignetteBuilder": "knitr",
-        "RdMacros": "lifecycle",
-        "Encoding": "UTF-8",
-        "Language": "en-US",
-        "LazyData": "true",
-        "RoxygenNote": "7.2.3",
-        "Config/testthat/edition": "3",
-        "Config/testthat/parallel": "true",
-        "Config/Needs/website": "lubridate",
-        "NeedsCompilation": "no",
-        "Packaged": "2023-07-15 20:32:45 UTC; sjobergd",
-        "Author": "Daniel D. Sjoberg [aut, cre] (<https://orcid.org/0000-0003-0862-2018>),\n  Joseph Larmarange [aut] (<https://orcid.org/0000-0001-7097-700X>),\n  Michael Curry [aut] (<https://orcid.org/0000-0002-0261-4044>),\n  Jessica Lavery [aut] (<https://orcid.org/0000-0002-2746-5647>),\n  Karissa Whiting [aut] (<https://orcid.org/0000-0002-4683-1868>),\n  Emily C. Zabor [aut] (<https://orcid.org/0000-0002-1402-4498>),\n  Xing Bai [ctb],\n  Esther Drill [ctb] (<https://orcid.org/0000-0002-3315-4538>),\n  Jessica Flynn [ctb] (<https://orcid.org/0000-0001-8310-6684>),\n  Margie Hannum [ctb] (<https://orcid.org/0000-0002-2953-0449>),\n  Stephanie Lobaugh [ctb],\n  Shannon Pileggi [ctb] (<https://orcid.org/0000-0002-7732-4164>),\n  Amy Tin [ctb] (<https://orcid.org/0000-0002-8005-0694>),\n  Gustavo Zapata Wainberg [ctb] (<https://orcid.org/0000-0002-2524-3637>)",
-        "Maintainer": "Daniel D. Sjoberg <danield.sjoberg@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2023-07-15 21:10:14 UTC",
-        "Built": "R 4.3.0; ; 2023-07-15 23:46:15 UTC; unix"
-      }
-    },
     "haven": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2865,38 +2802,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2023-08-29 22:20:02 UTC",
         "Built": "R 4.3.0; ; 2023-08-30 00:40:24 UTC; unix"
-      }
-    },
-    "labelled": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "description": {
-        "Package": "labelled",
-        "Type": "Package",
-        "Title": "Manipulating Labelled Data",
-        "Version": "2.12.0",
-        "Maintainer": "Joseph Larmarange <joseph@larmarange.net>",
-        "Authors@R": "c(\n  person(\"Joseph\", \"Larmarange\", email = \"joseph@larmarange.net\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-7097-700X\")),\n  person(\"Daniel\", \"Ludecke\", role = \"ctb\"),\n  person(\"Hadley\", \"Wickham\", role = \"ctb\"),\n  person(\"Michal\", \"Bojanowski\", role = \"ctb\"),\n  person(\"François\", \"Briatte\", role = \"ctb\")\n  )",
-        "Description": "Work with labelled data imported from 'SPSS'\n    or 'Stata' with 'haven' or 'foreign'. This package\n    provides useful functions to deal with \"haven_labelled\" and\n    \"haven_labelled_spss\" classes introduced by 'haven' package.",
-        "License": "GPL (>= 3)",
-        "Encoding": "UTF-8",
-        "Depends": "R (>= 3.0)",
-        "Imports": "haven (>= 2.4.1), dplyr (>= 1.0.0), lifecycle, rlang, vctrs,\nstringr, tidyr",
-        "Suggests": "testthat, knitr, rmarkdown, questionr, snakecase, utf8, covr,\nspelling",
-        "Enhances": "memisc",
-        "URL": "https://larmarange.github.io/labelled/",
-        "BugReports": "https://github.com/larmarange/labelled/issues",
-        "VignetteBuilder": "knitr",
-        "LazyData": "true",
-        "RoxygenNote": "7.2.3",
-        "RdMacros": "lifecycle",
-        "Language": "en-US",
-        "NeedsCompilation": "no",
-        "Packaged": "2023-06-21 13:32:27 UTC; josep",
-        "Author": "Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>),\n  Daniel Ludecke [ctb],\n  Hadley Wickham [ctb],\n  Michal Bojanowski [ctb],\n  François Briatte [ctb]",
-        "Repository": "CRAN",
-        "Date/Publication": "2023-06-21 14:20:02 UTC",
-        "Built": "R 4.3.0; ; 2023-06-21 15:04:36 UTC; unix"
       }
     },
     "later": {
@@ -5990,7 +5895,7 @@
       "checksum": "b2a03828d816f7e2dc6a80a316a1c3c4"
     },
     "app.R": {
-      "checksum": "6e93c4c51bd414fbd0e35bd3035e9c07"
+      "checksum": "421d6dce83c31460481445b43bfcabed"
     },
     "census_items/census_items.yaml": {
       "checksum": "7d244749fe1837691408125d7893432e"
@@ -6000,12 +5905,6 @@
     },
     "CONTRIBUTING.md": {
       "checksum": "c0ed7d01ae831f5d5ef45e178f18e38b"
-    },
-    "data_description_box.R": {
-      "checksum": "64ea6e89113b1a57fa34c3194c19bd77"
-    },
-    "data_util.R": {
-      "checksum": "485bc173639fe0eef3c01ed3a7a76a53"
     },
     "data/ccs-data-updated/air_map/air_map.csv": {
       "checksum": "9bc8f093e8754436282523b2f4e3c0b9"
@@ -13573,9 +13472,6 @@
     "data/results_summary/urban-heat-survey/urban-heat-survey-zipcode-95207.RData": {
       "checksum": "0511c031e60e88cb178db3bae490e0a6"
     },
-    "graphics_representative.R": {
-      "checksum": "a136387ee44be7fb73417b2c0e2eaa12"
-    },
     "helpers/global/server.R": {
       "checksum": "0b0a821369ec2fcfccfa36bbf68c1606"
     },
@@ -13591,8 +13487,29 @@
     "pages/avail_data.R": {
       "checksum": "7a664b1d7b901dfc0e9e5035addf6b3a"
     },
-    "pages/components/functions/table.R": {
-      "checksum": "c0a3b4bf3e594ea4917eb5e78d861d3e"
+    "pages/components/data_util.R": {
+      "checksum": "485bc173639fe0eef3c01ed3a7a76a53"
+    },
+    "pages/components/graphics_representative.R": {
+      "checksum": "5b3ec11297997191bb5d9e19974342aa"
+    },
+    "pages/components/reporting_tool.R": {
+      "checksum": "148a3d6af27f0425500db3bd5a60f55a"
+    },
+    "pages/components/selection_box.R": {
+      "checksum": "b68f94b89a8e8e451546bd28230699f2"
+    },
+    "pages/components/solving-data-box.R": {
+      "checksum": "3e0a72a26c643378e2b4d1cd5fa38568"
+    },
+    "pages/components/survey_questions/allquestion_types_2.csv": {
+      "checksum": "0ab35efc8e126b123651f36dfc93f951"
+    },
+    "pages/components/survey_results.R": {
+      "checksum": "191dc418088f4935fddc6280c2d15a04"
+    },
+    "pages/components/table.R": {
+      "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"
     },
     "pages/home_page.R": {
       "checksum": "96bcbc7cd50387b839770afbd388807f"
@@ -13601,22 +13518,13 @@
       "checksum": "bd322676be605281049a9f7a0b4db1d7"
     },
     "pages/reporting_tool.R": {
-      "checksum": "381c18ac10eec53687e16807b9573116"
+      "checksum": "b488f03acc1bee5a1a36db86e50ecff0"
     },
     "pages/strategies_page.R": {
       "checksum": "e229142c85e8e53b8b7b7ab99fc74fa6"
     },
     "README.md": {
       "checksum": "1efa4b3f840261b0d1fe0f8aced64300"
-    },
-    "reporting_tool.R": {
-      "checksum": "148a3d6af27f0425500db3bd5a60f55a"
-    },
-    "selection_box.R": {
-      "checksum": "b68f94b89a8e8e451546bd28230699f2"
-    },
-    "solving-data-box.R": {
-      "checksum": "3e0a72a26c643378e2b4d1cd5fa38568"
     },
     "survey_questions/air_quality_map.txt": {
       "checksum": "e5ea1f91dcaed531c353829a5892d96d"
@@ -13672,17 +13580,14 @@
     "survey_questions/urban_heat.txt": {
       "checksum": "40a75c594fd822e834276b5e8bd6d08d"
     },
-    "survey_results.R": {
-      "checksum": "191dc418088f4935fddc6280c2d15a04"
-    },
     "table.R": {
       "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"
     },
-    "translation_config.yaml": {
+    "translation/translation_config.yaml": {
       "checksum": "ffdf2c6eacc2febd1c5f258b252453b2"
     },
-    "translation.csv": {
-      "checksum": "077b757b8f594313b76691ad4cf85b8b"
+    "translation/translation.csv": {
+      "checksum": "07749df113711dccaba3d1d3878613f5"
     },
     "www/assets/about-bg.png": {
       "checksum": "d2c7aac89882d9cbe36dcffd7c059b5c"

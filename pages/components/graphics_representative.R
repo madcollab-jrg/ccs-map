@@ -59,7 +59,8 @@ get_representative_reactive <- function(input, output, file_loc = NA) {
       data_loc <-
         paste(
           # "/Volumes/cbjackson2/ccs-knowledge/results_representativeness/",
-          "./data/results_representativeness/",
+          # "./data/results_representativeness/",
+          "../../data/results_representativeness",
           file_loc(),
           sep = ""
         ) # change
