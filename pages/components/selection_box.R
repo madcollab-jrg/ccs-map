@@ -57,15 +57,29 @@ make_conditional_panel_survey <- function(survey, id, file_name = NA) {
   #   conditionalPanel that holds the questions for survey selected
   #   and contains a selectInput with inputId = id
   survey_conditional_panel <- conditionalPanel(
+    #   condition = paste0("input.survey == '", survey, "'"),
+    #   selectInput(
+    #     inputId = id,
+    #     label = div(
+    #       style = "font-size:0.85rem;",
+    #       "STEP 2: Select a question from the survey"
+    #     ),
+    #     choices = get_survey_questions(survey, file_name),
+    #     selectize = FALSE
+    #   )
+    # )
     condition = paste0("input.survey == '", survey, "'"),
-    selectInput(
+    selectizeInput(
       inputId = id,
       label = div(
         style = "font-size:0.85rem;",
         "STEP 2: Select a question from the survey"
       ),
       choices = get_survey_questions(survey, file_name),
-      selectize = FALSE
+      options = list(
+        placeholder = "Please select an option below",
+        onInitialize = I('function() { this.setValue(""); }')
+      )
     )
   )
 
@@ -81,14 +95,13 @@ make_conditional_panel_census <- function(census_item, id) {
     # HTML("<div class='label-desc'>
     #         Check the list of available demographic descriptors and groupings
     #         </div>"),
-    selectInput(
+    selectizeInput(
       inputId = id,
       label = div(
         style = "font-size:0.85rem;",
         "STEP 4: Choose which data you would like to examine"
       ),
-      choices = get_census_items(census_item),
-      selectize = FALSE
+      choices = get_census_items(census_item)
     )
   )
 }
