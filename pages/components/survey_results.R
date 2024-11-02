@@ -400,7 +400,7 @@ category_color <- list(
 multi_choice_questions <- function(
     example_multi, demographic_variable,
     filter_input, coloring, options) {
-  print(head(example_multi))
+  # print(head(example_multi))
   names(example_multi)[2] <- "response"
 
   example_multi <- example_multi %>%
@@ -441,7 +441,7 @@ multi_choice_questions <- function(
 
   # print(multi_summary)
 
-  print(demographic_variable)
+  # print(demographic_variable)
 
   # based on demographics determine the variables
   switch(demographic_variable,
@@ -517,7 +517,7 @@ multi_choice_questions <- function(
 
   print("---------")
 
-  print(multi_visualization)
+  # print(multi_visualization)
   print("---------")
 
   return(multi_visualization)
@@ -661,7 +661,7 @@ resulting_graphics <- function(
       # Unsure how rank type questions are suppose to be displayed
       question_num <- question() # column number of question
 
-      print(paste("question_num", question_num))
+      # print(paste("question_num", question_num))
 
       # column names of categories
       income_var <- "income_recode"

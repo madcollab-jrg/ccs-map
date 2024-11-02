@@ -131,11 +131,34 @@ get_data_desc_rep_reaction <- function(
 
         demographic_desc <- tolower(input$demographic)
 
+        print("'''''")
+
+        census_level <- census_input_to_data[[input$census_level]]
+        census_id <- censusInputId[input$census_level]
+
+        # print(census_id)
+        # print(input[[census_id]])
+
+        key <- input[[census_id]]
+
+        file <- paste(input_to_data_demo[[input$survey]], census_level,
+          census_level_input_to_data[["data"]][[census_level]][[key]],
+          sep = "-"
+        )
+        file_location <- paste(input_to_data_demo[[input$survey]],
+          "/", file, ".RData",
+          sep = ""
+        )
+
+        print(file_location)
+
+        print("'''''")
+
         data_loc <-
           paste(
             # "/Volumes/cbjackson2/ccs-knowledge/results_summary/",
             "./data/results_summary/",
-            file_loc(),
+            file_location,
             sep = ""
           )
         # print(data_loc)
@@ -144,7 +167,7 @@ get_data_desc_rep_reaction <- function(
           paste(
             # "/Volumes/cbjackson2/ccs-knowledge/results_representativeness/",
             "./data/results_representativeness/",
-            file_loc(),
+            file_location,
             sep = ""
           )
 
@@ -157,7 +180,7 @@ get_data_desc_rep_reaction <- function(
         tbl_data_filtered <- data.frame(Value = tbl_data_filtered) ### ADDITION
         gt_tbl <- gt(tbl_data_filtered, rownames_to_stub = TRUE)
 
-        print(tbl_data_filtered)
+        # print(tbl_data_filtered)
 
         loaded_data <- get_table(data_loc_rep)
         tbl_data_rep <- loaded_data[[1]]
@@ -170,7 +193,7 @@ get_data_desc_rep_reaction <- function(
         tbl_data_filtered$row_names <- rownames(tbl_data_filtered)
         tbl_data_filtered_rep$row_names <- rownames(tbl_data_filtered_rep)
 
-        print(tbl_data_filtered_rep)
+        # print(tbl_data_filtered_rep)
 
         # Merge two tables by row name
         merged_tbl_data <- merge(
@@ -202,7 +225,7 @@ get_data_desc_rep_reaction <- function(
 
         # print(str(merged_tbl_data))
 
-        print(merged_tbl_data)
+        # print(merged_tbl_data)
 
         # Extract only the columns needed for color calculation
         rep_data_numeric <- merged_tbl_data[, c(
@@ -288,8 +311,8 @@ get_data_desc_rep_reaction <- function(
       data_to_download <- tbl_data_reactive()
       if (!is.null(data_to_download)) {
         # Inspect the structure
-        print("Structure of data_to_download:")
-        print(str(data_to_download))
+        # print("Structure of data_to_download:")
+        # print(str(data_to_download))
 
         # Identify columns that are lists
         list_cols <- sapply(data_to_download, is.list)
@@ -304,8 +327,8 @@ get_data_desc_rep_reaction <- function(
         }
 
         # Re-inspect the structure after conversion
-        print("Structure after converting list columns:")
-        print(str(data_to_download))
+        # print("Structure after converting list columns:")
+        # print(str(data_to_download))
 
         # Write CSV file
         write.csv(data_to_download, file, row.names = FALSE)
