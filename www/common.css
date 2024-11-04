@@ -93,6 +93,13 @@
   letter-spacing: 0.03125rem;
 }
 
+.page-subheading {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 2rem;
+  letter-spacing: 0.03125rem;
+}
+
 .page-para {
   font-size: 1rem;
   font-weight: 400;
@@ -128,6 +135,10 @@
 
 .dark-mode .label-link {
   color: var(--bg-color);
+}
+
+.font-bolder {
+  font-weight: 600;
 }
 
 .callout {

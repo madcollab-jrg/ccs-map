@@ -10,7 +10,7 @@ ui <- dashboardPage(
     navbarMenu(
       id = "navmenu",
       navbarTab(tabName = "home_page", text = "Home"),
-      navbarTab(tabName = "avail_data", text = "Available Data"),
+      navbarTab(tabName = "avail_data", text = "Datasets"),
       navbarTab(tabName = "reporting_tool", text = "Reporting Tool"),
       navbarTab(tabName = "about", text = "About"),
       navbarTab(tabName = "info_page", text = "Info"),
@@ -24,7 +24,7 @@ ui <- dashboardPage(
     navbarMenu(
       id = "navmenu",
       navbarTab(tabName = "home_page", text = "Home"),
-      navbarTab(tabName = "avail_data", text = "Available Data"),
+      navbarTab(tabName = "avail_data", text = "Datasets"),
       navbarTab(tabName = "reporting_tool", text = "Reporting Tool"),
       navbarTab(tabName = "about", text = "About"),
       navbarTab(tabName = "info_page", text = "Info"),
