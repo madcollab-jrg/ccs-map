@@ -146,6 +146,121 @@ avail_data_tab_body <- function() {
         June – August 2023</p>
         <p class='page-para'><strong>Respondents</strong>: 243</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
+      "),  
+        ), # NEW ITEMS
+        accordionItem(
+          title =
+            h2("Environmental Justice", class = "page-subheading"),
+          status = "white",
+          collapsed = TRUE,
+          p(
+            "The survey focuses on understanding community perceptions and
+        experiences related to air quality in their neighborhood, including
+        specific problems, health impacts, pollution sources, and the effect
+        on vulnerable populations. It also seeks input on potential solutions,
+        such as the placement of air quality monitoring sensors, personal
+        efforts to improve air quality, and preferred methods of
+        communication for air quality alerts and participation in
+        decision-making processes.",
+            class = "page-para"
+          ),
+          HTML("
+        <p class='page-para'><strong>Date</strong>:
+        June – August 2023</p>
+        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Geography</strong>: Dane County</p>
+      "),
+        ),
+        accordionItem(
+          title =
+            h2("Environmental Justice", class = "page-subheading"),
+          status = "white",
+          collapsed = TRUE,
+          p(
+            "The survey focuses on understanding community perceptions and
+        experiences related to air quality in their neighborhood, including
+        specific problems, health impacts, pollution sources, and the effect
+        on vulnerable populations. It also seeks input on potential solutions,
+        such as the placement of air quality monitoring sensors, personal
+        efforts to improve air quality, and preferred methods of
+        communication for air quality alerts and participation in
+        decision-making processes.",
+            class = "page-para"
+          ),
+          HTML("
+        <p class='page-para'><strong>Date</strong>:
+        June – August 2023</p>
+        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Geography</strong>: Dane County</p>
+      "),
+        ),
+        accordionItem(
+          title =
+            h2("Environmental Justice", class = "page-subheading"),
+          status = "white",
+          collapsed = TRUE,
+          p(
+            "The survey focuses on understanding community perceptions and
+        experiences related to air quality in their neighborhood, including
+        specific problems, health impacts, pollution sources, and the effect
+        on vulnerable populations. It also seeks input on potential solutions,
+        such as the placement of air quality monitoring sensors, personal
+        efforts to improve air quality, and preferred methods of
+        communication for air quality alerts and participation in
+        decision-making processes.",
+            class = "page-para"
+          ),
+          HTML("
+        <p class='page-para'><strong>Date</strong>:
+        June – August 2023</p>
+        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Geography</strong>: Dane County</p>
+      "),
+        ),
+        accordionItem(
+          title =
+            h2("Environmental Justice", class = "page-subheading"),
+          status = "white",
+          collapsed = TRUE,
+          p(
+            "The survey focuses on understanding community perceptions and
+        experiences related to air quality in their neighborhood, including
+        specific problems, health impacts, pollution sources, and the effect
+        on vulnerable populations. It also seeks input on potential solutions,
+        such as the placement of air quality monitoring sensors, personal
+        efforts to improve air quality, and preferred methods of
+        communication for air quality alerts and participation in
+        decision-making processes.",
+            class = "page-para"
+          ),
+          HTML("
+        <p class='page-para'><strong>Date</strong>:
+        June – August 2023</p>
+        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Geography</strong>: Dane County</p>
+      "),
+        ),
+        accordionItem(
+          title =
+            h2("Environmental Justice", class = "page-subheading"),
+          status = "white",
+          collapsed = TRUE,
+          p(
+            "The survey focuses on understanding community perceptions and
+        experiences related to air quality in their neighborhood, including
+        specific problems, health impacts, pollution sources, and the effect
+        on vulnerable populations. It also seeks input on potential solutions,
+        such as the placement of air quality monitoring sensors, personal
+        efforts to improve air quality, and preferred methods of
+        communication for air quality alerts and participation in
+        decision-making processes.",
+            class = "page-para"
+          ),
+          HTML("
+        <p class='page-para'><strong>Date</strong>:
+        June – August 2023</p>
+        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
         )
       ),
