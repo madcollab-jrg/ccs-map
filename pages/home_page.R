@@ -19,11 +19,11 @@ home_tab_body <- function() {
         class = "home-body text-lighter"
       ),
       actionButton("examineDataBtn",
-        HTML("<span>Examine Your Data</span>
+        HTML("<span>Community Data Report</span>
         <i class='fas fa-arrow-right' style='margin-left: 5px;'></i>"),
         class = "button-filled"
       ),
-      actionButton("availDataBtn", "Available Datasets",
+      actionButton("availDataBtn", "Available Data",
         class = "button-outlined"
       ),
     ),
