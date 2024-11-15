@@ -6064,7 +6064,7 @@
       "checksum": "e0f79d6d8103e181ea083f6efa4de73f"
     },
     ".vscode/settings.json": {
-      "checksum": "b2a03828d816f7e2dc6a80a316a1c3c4"
+      "checksum": "e95ac40ff4ae7781c0526ab2bcd2f9c0"
     },
     "app.R": {
       "checksum": "421d6dce83c31460481445b43bfcabed"
@@ -13645,7 +13645,7 @@
       "checksum": "0511c031e60e88cb178db3bae490e0a6"
     },
     "helpers/global/server.R": {
-      "checksum": "e7154e3885cf20fc4ec50bb925526660"
+      "checksum": "6cb55deb1b5b4b4b7b0a95876598ea96"
     },
     "helpers/global/ui.R": {
       "checksum": "e92c43f1476517af8ecb0e4cd86ac132"
@@ -13672,7 +13672,7 @@
       "checksum": "b220726f9f05bfd111b763918f1f59ba"
     },
     "pages/components/solving-data-box.R": {
-      "checksum": "af2c9514e7fab17f0f60df69a42fc037"
+      "checksum": "ed919d01b17e18e5c8e5b7b7d101ee58"
     },
     "pages/components/survey_questions/allquestion_types_2.csv": {
       "checksum": "0ab35efc8e126b123651f36dfc93f951"
