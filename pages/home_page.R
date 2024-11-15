@@ -11,7 +11,7 @@ home_tab_body <- function() {
     class = "home-row",
     column(
       6,
-      h4("Community Climate Solutions (CCS)", class = "home-tagline"),
+      #h4("Community Climate Solutions (CCS)", class = "home-tagline"),
       h1("Welcome to Knowledge Map", class = "home-title"),
       p("Discover and explore community responses to environmental surveys,
       empowering local environmental policymaking and fostering meaningful
