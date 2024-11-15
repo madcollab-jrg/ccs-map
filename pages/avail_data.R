@@ -9,7 +9,7 @@ avail_data_tab_body <- function() {
     style = "margin-top: 24px;",
     column(
       12,
-      h1("Data curated for the Knowledge Map", class = "page-title"),
+      h1("Available Data", class = "page-title"),
       hr(style = "border-top: 1px solid #A8AAAD;"),
     ),
     column(
