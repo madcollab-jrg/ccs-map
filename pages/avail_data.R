@@ -9,7 +9,7 @@ avail_data_tab_body <- function() {
     style = "margin-top: 24px;",
     column(
       12,
-      h1("Available Data", class = "page-title"),
+      h1("Datasets", class = "page-title"),
       hr(style = "border-top: 1px solid #A8AAAD;"),
     ),
     column(
@@ -34,11 +34,15 @@ avail_data_tab_body <- function() {
         Air Quality, exploring pollution concerns and health impacts, and Urban Heat, addressing 
         challenges related to extreme heat and local mitigation strategies.",class = "page-para"),
 
-      h2("About the CCS Knowledge Map Surveys", class = "page-subtitle"),
-      p("In Summer 2023, the Wisconsin Community Climate Solutions site was launched to gather 
-        feedback from 400 residents on key environmental challenges. The surveys explored 
-        conerns around urban heat, tree canopies, air quality, and environmental justice.",class = "page-para"),
-
+      h2("Community Climate Solutions", class = "page-subtitle"),
+      p("In Summer 2023, we launched Wisconsin Community Climate Solutions (",
+        a("https://ccs.mysocialpinpoint.com/", 
+            href = "https://ccs.mysocialpinpoint.com/", 
+            target = "_blank", 
+            rel = "noopener noreferrer"),") 
+      to gather feedback from 400 residents on key environmental challenges. 
+      The surveys explored concerns around urban heat, tree canopies, air quality, 
+      and environmental justice.",class = "page-para"),
 
       p("Select a survey on the right to view its description.",class = "page-para"),
     ),
@@ -61,8 +65,8 @@ avail_data_tab_body <- function() {
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        October 2022 – November 2022</p>
+        <p class='page-para'><strong>Date</strong>:Summer 2023</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
         <p class='page-para'><strong>Respondents</strong>: 243</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
@@ -82,8 +86,8 @@ avail_data_tab_body <- function() {
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
+        <p class='page-para'><strong>Date</strong>:Summer 2023</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
         <p class='page-para'><strong>Respondents</strong>: 243</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
@@ -103,8 +107,8 @@ avail_data_tab_body <- function() {
           ),
           br(),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
+        <p class='page-para'><strong>Date</strong>:Summer 2023</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
         <p class='page-para'><strong>Respondents</strong>: 243</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
@@ -126,8 +130,8 @@ avail_data_tab_body <- function() {
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
+        <p class='page-para'><strong>Date</strong>:Summer 2023</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
         <p class='page-para'><strong>Respondents</strong>: 243</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
@@ -142,8 +146,8 @@ avail_data_tab_body <- function() {
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
+        <p class='page-para'><strong>Date</strong>:Summer 2023</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
         <p class='page-para'><strong>Respondents</strong>: 243</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),  

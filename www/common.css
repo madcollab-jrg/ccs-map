@@ -7,6 +7,8 @@
   --breakpoint-lg: 1200px;
 }
 
+
+
 .dark-mode .button-filled,
 .button-filled {
   border-radius: 2.5rem;
@@ -193,4 +195,24 @@
   .button-common {
     font-size: 0.75rem;
   }
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--primary-hover-color);
+  text-decoration: underline;
+}
+
+.label-link {
+  text-decoration: underline; /* Ensures hyperlinks appear underlined */
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+.dark-mode .label-link {
+  color: var(--bg-color);
 }
