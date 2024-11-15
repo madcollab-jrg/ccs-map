@@ -14,20 +14,33 @@ avail_data_tab_body <- function() {
     ),
     column(
       5,
+      p("Data from community engagements focused on environmental topics such as air quality,
+       urban heat, tree canopies, and environmental justice are available. This data includes 
+       close-ended survey questions, open-ended responses, and geographically 
+       pinned inputs, providing us with insights into community priorities, challenges, 
+       and environmental awareness.",class = "page-para"),
+
+      h2("In-Person Deliberation (October 2022)", class = "page-subtitle"),
+      p("In October 2022, 80 community members participated in discussions on topics related to 
+        environmental and community well-being. The surveys focused on various topics including, 
+        assessing the community's awareness of tree benefits and green spaces, attitudes toward 
+        carbon emissions and removal technologies, energy-saving practices and their impact 
+        on daily life, and examining how extreme heat affects health.",class = "page-para"),
+
+      h2("Follow-up In-Person Meetings (March 2023)", class = "page-subtitle"),
+      p("In March 2023, 40 community members attended follow-up meetings to provide feedback 
+        on key environmental issues. These discussions focused on Tree Knowledge, emphasizing 
+        the community’s views on the role of trees in cooling and environmental health, 
+        Air Quality, exploring pollution concerns and health impacts, and Urban Heat, addressing 
+        challenges related to extreme heat and local mitigation strategies.",class = "page-para"),
+
       h2("About the CCS Knowledge Map Surveys", class = "page-subtitle"),
-      p("We have collected three types of data from our engagement.
-      The first type is close-ended survey questions that use multiple
-      choice format or ask participants to rank the options. To analyze
-      this first type of data, we adopted the method of frequency analysis.
-      The second type is open-ended survey questions or written notes from our
-      participants to answer pre-filled Q&A sheets. To analyze this text data,
-      we used various computational tools from NLP as well as human validation
-      to uncover the themes and sentiments from communities. The third type of
-      data is a geo-pinned annotated dataset. To analyze this data, we simply
-      represent the responses on a map of the geography.", class = "page-para"),
-      p("Select a survey on the right to view the description and questions.",
-        class = "page-para"
-      ),
+      p("In Summer 2023, the Wisconsin Community Climate Solutions site was launched to gather 
+        feedback from 400 residents on key environmental challenges. The surveys explored 
+        conerns around urban heat, tree canopies, air quality, and environmental justice.",class = "page-para"),
+
+
+      p("Select a survey on the right to view its description.",class = "page-para"),
     ),
     column(
       7,
@@ -40,12 +53,11 @@ avail_data_tab_body <- function() {
           status = "white",
           collapsed = FALSE,
           p(
-            "This survey contains on how community
-            members are impacted by extreme heat, their behaviors during
-            hot weather, and personal steps taken to mitigate heat. It also
-            explores the community’s interest in participating in local efforts
-            to address urban heat and the role of local government in mitigating
-            its effects.",
+            "This survey contains on how community members are impacted by 
+            extreme heat, their behaviors during hot weather, and personal 
+            steps taken to mitigate heat. It also explores the community’s 
+            interest in participating in local efforts to address urban 
+            heat and the role of local government in mitigating its effects.",
             class = "page-para"
           ),
           HTML("
@@ -61,14 +73,12 @@ avail_data_tab_body <- function() {
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey focuses on understanding community perceptions and
-        experiences related to air quality in their neighborhood, including
-        specific problems, health impacts, pollution sources, and the effect
-        on vulnerable populations. It also seeks input on potential solutions,
-        such as the placement of air quality monitoring sensors, personal
-        efforts to improve air quality, and preferred methods of
-        communication for air quality alerts and participation in
-        decision-making processes.",
+            "This survey contains insights on community experiences with air pollution, 
+            its health impacts, and perceptions of changes in air quality over time. 
+            It also explores awareness of pollutants, concerns for vulnerable populations, 
+            and suggestions for improving air quality monitoring. 
+            Lastly, it invites input on potential community involvement in decision-making 
+            regarding air quality management.",
             class = "page-para"
           ),
           HTML("
@@ -84,14 +94,11 @@ avail_data_tab_body <- function() {
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey is designed to gauge community opinions on various
-        aspects of trees within their neighborhood, including their benefits,
-        agreement with certain statements, and observations of tree-related
-        damage to infrastructure. It also explores individual preferences
-        and values concerning trees, such as desired types of trees to be
-        planted, areas in need of more trees, tree-related goals, factors
-        affecting personal tree planting decisions, and willingness to
-        participate in their city’s tree planting efforts.",
+            "The survey explores changes in tree populations and their health over the 
+            past decade, as well as community perceptions of the benefits trees provide. 
+            It assesses how trees impact quality of life and seeks suggestions for 
+            areas in need of more tree coverage, along with interest in participating 
+            in tree-planting initiatives.",
             class = "page-para"
           ),
           br(),
@@ -131,14 +138,7 @@ avail_data_tab_body <- function() {
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey focuses on understanding community perceptions and
-        experiences related to air quality in their neighborhood, including
-        specific problems, health impacts, pollution sources, and the effect
-        on vulnerable populations. It also seeks input on potential solutions,
-        such as the placement of air quality monitoring sensors, personal
-        efforts to improve air quality, and preferred methods of
-        communication for air quality alerts and participation in
-        decision-making processes.",
+            "This survey contains insights around big ideas in addressing climate change in communities.",
             class = "page-para"
           ),
           HTML("
@@ -150,116 +150,116 @@ avail_data_tab_body <- function() {
         ), # NEW ITEMS
         accordionItem(
           title =
-            h2("Environmental Justice", class = "page-subheading"),
+            h2("Tree Knowledge", class = "page-subheading"),
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey focuses on understanding community perceptions and
-        experiences related to air quality in their neighborhood, including
-        specific problems, health impacts, pollution sources, and the effect
-        on vulnerable populations. It also seeks input on potential solutions,
-        such as the placement of air quality monitoring sensors, personal
-        efforts to improve air quality, and preferred methods of
-        communication for air quality alerts and participation in
-        decision-making processes.",
+            "This survey contains insights around community awareness of the benefits trees provide, 
+            such as carbon capture and flood reduction. It explores how trees impact health and 
+            quality of life and gathers opinions on the importance of green spaces in the community.",
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
-        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Date</strong>: October 2022</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
+        <p class='page-para'><strong>Respondents</strong>: 92</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
         ),
         accordionItem(
           title =
-            h2("Environmental Justice", class = "page-subheading"),
+            h2("Carbon Concerns", class = "page-subheading"),
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey focuses on understanding community perceptions and
-        experiences related to air quality in their neighborhood, including
-        specific problems, health impacts, pollution sources, and the effect
-        on vulnerable populations. It also seeks input on potential solutions,
-        such as the placement of air quality monitoring sensors, personal
-        efforts to improve air quality, and preferred methods of
-        communication for air quality alerts and participation in
-        decision-making processes.",
+            "This survey focuses on community awareness of climate pollutants, carbon removal 
+            technologies, and personal actions to combat climate change. It also assesses 
+            opinions on who should be responsible for ensuring the development and equitable 
+            deployment of climate change technologies.",
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
-        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Date</strong>: October 2022</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
+        <p class='page-para'><strong>Respondents</strong>: 92</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
         ),
         accordionItem(
           title =
-            h2("Environmental Justice", class = "page-subheading"),
+            h2("Energy Concerns", class = "page-subheading"),
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey focuses on understanding community perceptions and
-        experiences related to air quality in their neighborhood, including
-        specific problems, health impacts, pollution sources, and the effect
-        on vulnerable populations. It also seeks input on potential solutions,
-        such as the placement of air quality monitoring sensors, personal
-        efforts to improve air quality, and preferred methods of
-        communication for air quality alerts and participation in
-        decision-making processes.",
+            "The Energy Concerns Survey examines the importance of energy-saving practices 
+            at home and their impact on quality of life. It also assesses community 
+            awareness of energy-saving strategies and extreme heat impacts.",
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
-        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Date</strong>: October 2022</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
+        <p class='page-para'><strong>Respondents</strong>: 92</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
         ),
         accordionItem(
           title =
-            h2("Environmental Justice", class = "page-subheading"),
+            h2("Environmental Issues", class = "page-subheading"),
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey focuses on understanding community perceptions and
-        experiences related to air quality in their neighborhood, including
-        specific problems, health impacts, pollution sources, and the effect
-        on vulnerable populations. It also seeks input on potential solutions,
-        such as the placement of air quality monitoring sensors, personal
-        efforts to improve air quality, and preferred methods of
-        communication for air quality alerts and participation in
-        decision-making processes.",
+            "This survey gathers insights into the most urgent environmental issues facing the 
+            community and assesses how informed individuals feel about climate change and 
+            environmental justice. It evaluates the extent to which people believe they can 
+            influence environmental policy in their community.",
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
-        <p class='page-para'><strong>Respondents</strong>: 243</p>
+        <p class='page-para'><strong>Date</strong>: October 2022</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
+        <p class='page-para'><strong>Respondents</strong>: 92</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
         ),
         accordionItem(
           title =
-            h2("Environmental Justice", class = "page-subheading"),
+            h2("Health Impacts", class = "page-subheading"),
           status = "white",
           collapsed = TRUE,
           p(
-            "The survey focuses on understanding community perceptions and
-        experiences related to air quality in their neighborhood, including
-        specific problems, health impacts, pollution sources, and the effect
-        on vulnerable populations. It also seeks input on potential solutions,
-        such as the placement of air quality monitoring sensors, personal
-        efforts to improve air quality, and preferred methods of
-        communication for air quality alerts and participation in
-        decision-making processes.",
+            "The Health Impacts Survey focuses on community perceptions of extreme heat and its 
+            impact on daily life and health. It also assesses awareness of energy-saving practices, 
+            local resources such as cooling centers, and the long-term risks of extreme heat. 
+            The survey gathers insights into community knowledge of solutions like insulation, 
+            electrification, and the dangers posed by extreme heat.",
             class = "page-para"
           ),
           HTML("
-        <p class='page-para'><strong>Date</strong>:
-        June – August 2023</p>
-        <p class='page-para'><strong>Respondents</strong>: 243</p>
+         <p class='page-para'><strong>Date</strong>: October 2022</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
+        <p class='page-para'><strong>Respondents</strong>: 92</p>
+        <p class='page-para'><strong>Geography</strong>: Dane County</p>
+      "),
+        ),
+        accordionItem(
+          title =
+            h2("General Survey", class = "page-subheading"),
+          status = "white",
+          collapsed = TRUE,
+          p(
+            "Aims understand the community's perception of the most urgent environmental issues, 
+            their impact on daily life, and the actions people are willing to take to address these 
+            challenges. It explores awareness of climate change, personal goals for environmental 
+            improvement, and the willingness to adopt new technologies for mitigating climate change. 
+            The survey also assesses community views on who is responsible for deploying these 
+            technologies equitably.",
+            class = "page-para"
+          ),
+          HTML("
+         <p class='page-para'><strong>Date</strong>: October 2022</p>
+        <p class='page-para'><strong>Method</strong>: In-Person</p>
+        <p class='page-para'><strong>Respondents</strong>: 92</p>
         <p class='page-para'><strong>Geography</strong>: Dane County</p>
       "),
         )
