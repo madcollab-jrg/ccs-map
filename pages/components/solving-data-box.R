@@ -94,7 +94,7 @@ get_pal <- function(min_val, max_val) {
   return(Vectorize(pal))
 }
 
-get_representativeness_text_with_color <- function(x, min_val, max_val) {
+get_representativeness_text <- function(x, min_val, max_val) {
   # Apply color logic
   # Initialize the result list
   result <- list()
@@ -104,28 +104,17 @@ get_representativeness_text_with_color <- function(x, min_val, max_val) {
     result$color <- "white"
   } else if (x < -1) {
     result$text <- "Very Underrepresented"
-    # result$color <- get_pal(min_val, max_val)(x)
-    result$color <- "#FFACAC"
   } else if (x < -0.25) {
     result$text <- "Underrepresented"
-    # result$color <- get_pal(min_val, max_val)(x)
-    result$color <- "#FFD4AD"
   } else if (x <= 0.25) {
     result$text <- "Equally Represented"
-    # result$color <- get_pal(min_val, max_val)(x)
-    result$color <- "#FFFCAE"
   } else if (x <= 1) {
     result$text <- "Overrepresented"
-    # result$color <- get_pal(min_val, max_val)(x)
-    result$color <- "#DAFEAE"
   } else if(x > 1){
     result$text <- "Very Overrepresented"
-    # result$color <- get_pal(min_val, max_val)(x)
-    result$color <- "#DAFEAE"
   }
   else {
     result$text <- "NA"
-    result$color <- "white"
   }
   
   # Return as a list with 'text' and 'color' components
@@ -296,26 +285,33 @@ get_data_desc_rep_reaction <- function(
 
         # Apply the function to get both text and color
         representativeness_results <- lapply(merged_tbl_data$Representativeness, 
-          function(x) get_representativeness_text_with_color(x, min(rep_data_numeric, na.rm = TRUE), max(rep_data_numeric, na.rm = TRUE)))
-
-        print(str(representativeness_results))
+          function(x) get_representativeness_text(x, min(rep_data_numeric, na.rm = TRUE), max(rep_data_numeric, na.rm = TRUE)))
 
         # Extract the text and color into separate columns
         merged_tbl_data$Representativeness_text <- sapply(representativeness_results, function(x) x$text)
-        merged_tbl_data$Representativeness_color <- sapply(representativeness_results, function(x) x$color)
 
         # Update the table to use the text column
         merged_tbl_data$Representativeness <- merged_tbl_data$Representativeness_text
         merged_tbl_data$Representativeness_text <- NULL  # Remove the temporary column  
-        # merged_tbl_data$Representativeness_color <- NULL
 
-
+        # Define the levels
+        representativeness_levels <- c(
+          "Very Underrepresented",
+          "Underrepresented",
+          "Equally Represented",
+          "Overrepresented",
+          "Very Overrepresented",
+          "NA"
+        )
+        # Convert to Factor for coloring
+        merged_tbl_data$Representativeness <- factor(
+          merged_tbl_data$Representativeness,
+          levels = representativeness_levels
+        )
         # Create gt table from the merged data
         gt_tbl <- gt(merged_tbl_data, rownames_to_stub = FALSE)
 
         print(merged_tbl_data)
-
-        
 
         # # Formatting decimals
         # gt_tbl <- gt_tbl %>%
@@ -340,10 +336,16 @@ get_data_desc_rep_reaction <- function(
           gt_tbl %>%
            data_color(
             method = "factor",
-            colors = merged_tbl_data$Representativeness_color,
-            columns = c(
-              "Representativeness"
-            )
+              palette = c(
+                "#FFFCAE",  # Equally Represented
+                "#FFFFFF",   # NA
+                "#DAFEAE",  # Overrepresented
+                "#FFD4AD",  # Underrepresented
+                "#B4FFAE",  # Very Overrepresented
+                "#FFACAC"  # Very Underrepresented
+              ),
+            domain = representativeness_levels,
+            columns = vars(Representativeness)
           )%>%
           tab_style(
             style = cell_text(
@@ -361,13 +363,8 @@ get_data_desc_rep_reaction <- function(
           ) %>%
           tab_options(data_row.padding = px(10), footnotes.font.size = pct(65))
 
-        merged_tbl_data$Representativeness_color <- NULL
         # Store the merged table data in the reactive variable
         tbl_data_reactive(merged_tbl_data)
-
-        # Now, remove the 'Representativeness_color' column using `select()` in `gt_tbl`
-        gt_tbl <- gt_tbl %>%
-          cols_hide(columns = c(Representativeness_color))
         output$new_table <- render_gt(gt_tbl)
       }
     }
@@ -396,11 +393,6 @@ get_data_desc_rep_reaction <- function(
               unlist
             )
         }
-
-        # Re-inspect the structure after conversion
-        # print("Structure after converting list columns:")
-        # print(str(data_to_download))
-
         # Write CSV file
         write.csv(data_to_download, file, row.names = FALSE)
       } else {

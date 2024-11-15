@@ -13657,7 +13657,7 @@
       "checksum": "eaa1da405a6524e602d613cbaa7c891f"
     },
     "pages/avail_data.R": {
-      "checksum": "58767d090d8dac061e10a4627b70585e"
+      "checksum": "02b78b0d8a0df34978d9c6c71679095b"
     },
     "pages/components/data_util.R": {
       "checksum": "485bc173639fe0eef3c01ed3a7a76a53"
@@ -13672,7 +13672,7 @@
       "checksum": "f70c6cceb8699f953d7b35333c1a634d"
     },
     "pages/components/solving-data-box.R": {
-      "checksum": "ed919d01b17e18e5c8e5b7b7d101ee58"
+      "checksum": "7e6c13646f226bb759fe600c7b3d281a"
     },
     "pages/components/survey_questions/allquestion_types_2.csv": {
       "checksum": "0ab35efc8e126b123651f36dfc93f951"
@@ -13684,7 +13684,7 @@
       "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"
     },
     "pages/home_page.R": {
-      "checksum": "06c4c847c0193787957009bb19a0b0a3"
+      "checksum": "4ec9b890a3e6018169131adcf529881f"
     },
     "pages/info_page.R": {
       "checksum": "bd322676be605281049a9f7a0b4db1d7"
@@ -13774,7 +13774,7 @@
       "checksum": "60c4501d420435b2e21b37217df50f56"
     },
     "www/common.css": {
-      "checksum": "6c6b1bb5018c9af5ec16ac8e3d5d1c09"
+      "checksum": "e0a12c864cb54878ebdc3e19e4262a3d"
     },
     "www/home.css": {
       "checksum": "698359984778394035966e88d1178020"
