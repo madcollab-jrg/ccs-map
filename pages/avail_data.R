@@ -35,8 +35,8 @@ avail_data_tab_body <- function() {
         challenges related to extreme heat and local mitigation strategies.",class = "page-para"),
 
       h2("Community Climate Solutions", class = "page-subtitle"),
-      p("In Summer 2023, we launched Wisconsin Community Climate Solutions (",
-        a("https://ccs.mysocialpinpoint.com/", 
+      p("In Summer 2023, we launched Wisconsin (",
+        a("Community Climate Solutions", 
             href = "https://ccs.mysocialpinpoint.com/", 
             target = "_blank", 
             rel = "noopener noreferrer"),") 
