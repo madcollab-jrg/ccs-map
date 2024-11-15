@@ -119,6 +119,28 @@ server <- function(input, output, session) {
   })
 
 
+  restricted_surveys <- c("Carbon Concerns", "Energy Concerns",
+    "General Survey", "Health Impacts")
+
+
+  observeEvent(input$survey, {
+    # If "Carbon Concerns" is selected, update the 'census_level' choices
+    if (input$survey %in% restricted_surveys) {
+      updateSelectizeInput(session, "census_level", 
+        choices = c("Zipcode"),  # Only show "Zipcode" for Carbon Concerns
+        selected = "Zipcode"  # Set "Zipcode" as the selected option
+      )
+    } else {
+      # Otherwise, show the full list of geography options
+      updateSelectizeInput(session, "census_level", 
+        choices = c("Census Tract", "Census State", "Census County", 
+                    "Zipcode", "State Lower", "State Upper", "Congress"),
+        selected = ""  # Reset the selection
+      )
+    }
+  })
+
+
   # get question column number + question type for survey results
   question_number <- eventReactive(
     list(input$run_report),
