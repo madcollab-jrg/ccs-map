@@ -37,7 +37,8 @@ surveys <- c(
   "Environmental Justice Survey",
   "Tree Canopy Survey", "Urban Heat Survey",
   "Urban Heat Map", "Air Quality Map", "Tree Canopy Map",
-  "Environmental Justice Story", "Environmental Justice Report",
+  # "Environmental Justice Story", 
+  # "Environmental Justice Report",
   "Tree Knowledge", "Carbon Concerns", "Energy Concerns",
   "General Survey", "Health Impacts"
 )

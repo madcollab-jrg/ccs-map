@@ -44,6 +44,22 @@ survey_results_ui <- function(demog, surveyQues) {
   return(ui)
 }
 
+
+  # Function to generate an error message plot
+error_plot <- function(message = "No plots") {
+  plot_ly(
+    type = "scatter",
+    mode = "text",
+    text = message,
+    textfont = list(size = 20),
+    hoverinfo = "none"
+  ) %>%
+    layout(
+      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE)
+    )
+  }
+
 # Text Questions
 # Matrix Questions
 # Multi-Choice Questions
@@ -739,10 +755,16 @@ resulting_graphics <- function(
       } else if (input$survey == "Tree Knowledge") {
         data_for_visualization <- data[, c(1, question_num + 1, 7:10, 6)]
         # data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
-      } else if (input$survey == "Energy Concerns") {
-        data_for_visualization <- data[, c(1, question_num + 1, 5:8, 4)]
+      } 
+      else if (input$survey == "Environmental Justice Story") {
+        data_for_visualization <- data[, c(1, question_num + 1, 25:28, 24)]
         # data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
-      } else if (input$survey == "General Survey") {
+      } 
+      # else if (input$survey == "Energy Concerns") {
+      #   data_for_visualization <- data[, c(1, question_num + 1, 5:8, 4)]
+      #   # data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
+      # } 
+      else if (input$survey == "General Survey") {
         data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
       } else if (input$survey == "Health Impacts") {
         data_for_visualization <- data[, c(1, question_num + 1, 10:13, 9)]
@@ -762,124 +784,107 @@ resulting_graphics <- function(
         q_subtype <- question_subtype()
         # message(q_subtype)
         message(demographic_desc)
-        if (demographic_desc == "income") {
-          output$survey_results <- renderPlotly(matrix_questions(
-            data_for_visualization,
-            income_var, q_subtype
-          ))
-        } else if (demographic_desc == "education") {
-          output$survey_results <- renderPlotly(matrix_questions(
-            data_for_visualization,
-            edu_var, q_subtype
-          ))
-        } else if (demographic_desc == "age") {
-          output$survey_results <- renderPlotly(matrix_questions(
-            data_for_visualization,
-            age_var, q_subtype
-          ))
-        } else if (demographic_desc == "gender") {
-          output$survey_results <- renderPlotly(matrix_questions(
-            data_for_visualization,
-            gender_var, q_subtype
-          ))
-        } else if (demographic_desc == "race") {
-          output$survey_results <- renderPlotly(matrix_questions(
-            data_for_visualization,
-            race_var, q_subtype
-          ))
-        }
+        tryCatch({
+          plot <- switch(demographic_desc,
+            "income" = matrix_questions(data_for_visualization, income_var, q_subtype),
+            "education" = matrix_questions(data_for_visualization, edu_var, q_subtype),
+            "age" = matrix_questions(data_for_visualization, age_var, q_subtype),
+            "gender" = matrix_questions(data_for_visualization, gender_var, q_subtype),
+            "race" = matrix_questions(data_for_visualization, race_var, q_subtype)
+          )
+          output$survey_results <- renderPlotly(plot)
+        }, error = function(e) {
+          output$survey_results <- renderPlotly(error_plot("No plots"))
+        })
       } else if (q_type == "open-ended") {
-        if (demographic_desc == "income") {
-          output$survey_results <- renderPlotly(perform_topic_modeling(
-            data_for_visualization,
-            income_var
-          ))
-        } else if (demographic_desc == "education") {
-          output$survey_results <- renderPlotly(perform_topic_modeling(
-            data_for_visualization,
-            edu_var
-          ))
-        } else if (demographic_desc == "age") {
-          output$survey_results <- renderPlotly(perform_topic_modeling(
-            data_for_visualization,
-            age_var
-          ))
-        } else if (demographic_desc == "gender") {
-          output$survey_results <- renderPlotly(perform_topic_modeling(
-            data_for_visualization,
-            gender_var
-          ))
-          # output$survey_results <- renderPlotly(perform_topic_modeling(
-          #   data_for_visualization,
-          #   gender_var
-          # ))
-        } else if (demographic_desc == "race") {
-          # output$survey_results <- renderPlotly(text_questions(
-          #   data_for_visualization,
-          #   race_var
-          # ))
-          output$survey_results <- renderPlotly(perform_topic_modeling(
-            data_for_visualization,
-            race_var
-          ))
-        }
+        tryCatch({
+          plot <- switch(demographic_desc,
+            "income" = perform_topic_modeling(data_for_visualization, income_var),
+            "education" = perform_topic_modeling(data_for_visualization, edu_var),
+            "age" = perform_topic_modeling(data_for_visualization, age_var),
+            "gender" = perform_topic_modeling(data_for_visualization, gender_var),
+            "race" = perform_topic_modeling(data_for_visualization, race_var)
+          )
+          output$survey_results <- renderPlotly(plot)
+        }, error = function(e) {
+          output$survey_results <- renderPlotly(error_plot("No plots"))
+        })
       } else if (q_type == "multi-choice") {
-        if (demographic_desc == "income") {
-          output$survey_results <- renderPlotly(multi_choice_questions(
-            data_for_visualization,
-            income_var, NA, income_color_mapping, income_options
-          ))
-        } else if (demographic_desc == "education") {
-          output$survey_results <- renderPlotly(multi_choice_questions(
-            data_for_visualization,
-            edu_var, NA, edu_color_mapping, edu_options
-          ))
-        } else if (demographic_desc == "age") {
-          output$survey_results <- renderPlotly(multi_choice_questions(
-            data_for_visualization,
-            age_var, NA, age_color_mapping, age_options
-          ))
-        } else if (demographic_desc == "gender") {
-          output$survey_results <- renderPlotly(multi_choice_questions(
-            data_for_visualization,
-            gender_var, NA, gender_color_mapping, gender_options
-          ))
-        } else if (demographic_desc == "race") {
-          output$survey_results <- renderPlotly(multi_choice_questions(
-            data_for_visualization,
-            race_var, NA, race_color_mapping, race_options
-          ))
-        }
+           tryCatch({
+          plot <- switch(demographic_desc,
+            "income" = multi_choice_questions(
+              data_for_visualization, income_var, NA, income_color_mapping, income_options
+            ),
+            "education" = multi_choice_questions(
+              data_for_visualization, edu_var, NA, edu_color_mapping, edu_options
+            ),
+            "age" = multi_choice_questions(
+              data_for_visualization, age_var, NA, age_color_mapping, age_options
+            ),
+            "gender" = multi_choice_questions(
+              data_for_visualization, gender_var, NA, gender_color_mapping, gender_options
+            ),
+            "race" = multi_choice_questions(
+              data_for_visualization, race_var, NA, race_color_mapping, race_options
+            )
+          )
+          output$survey_results <- renderPlotly(plot)
+        }, error = function(e) {
+          output$survey_results <- renderPlotly(error_plot("No plots"))
+        })
       } else if (q_type == "select box") {
-        if (demographic_desc == "income") {
-          output$survey_results <- renderPlotly(select_box_questions(
-            data_for_visualization,
-            income_var, NA, income_color_mapping, income_options
-          ))
-        } else if (demographic_desc == "education") {
-          output$survey_results <- renderPlotly(select_box_questions(
-            data_for_visualization,
-            edu_var, NA, edu_color_mapping, edu_options
-          ))
-        } else if (demographic_desc == "age") {
-          output$survey_results <- renderPlotly(select_box_questions(
-            data_for_visualization,
-            age_var, NA, age_color_mapping, age_options
-          ))
-        } else if (demographic_desc == "gender") {
-          output$survey_results <- renderPlotly(select_box_questions(
-            data_for_visualization,
-            gender_var, NA, gender_color_mapping, gender_options
-          ))
-        } else if (demographic_desc == "race") {
-          output$survey_results <- renderPlotly(select_box_questions(
-            data_for_visualization,
-            race_var, NA, race_color_mapping, race_options
-          ))
-        }
+        # if (demographic_desc == "income") {
+        #   output$survey_results <- renderPlotly(select_box_questions(
+        #     data_for_visualization,
+        #     income_var, NA, income_color_mapping, income_options
+        #   ))
+        # } else if (demographic_desc == "education") {
+        #   output$survey_results <- renderPlotly(select_box_questions(
+        #     data_for_visualization,
+        #     edu_var, NA, edu_color_mapping, edu_options
+        #   ))
+        # } else if (demographic_desc == "age") {
+        #   output$survey_results <- renderPlotly(select_box_questions(
+        #     data_for_visualization,
+        #     age_var, NA, age_color_mapping, age_options
+        #   ))
+        # } else if (demographic_desc == "gender") {
+        #   output$survey_results <- renderPlotly(select_box_questions(
+        #     data_for_visualization,
+        #     gender_var, NA, gender_color_mapping, gender_options
+        #   ))
+        # } else if (demographic_desc == "race") {
+        #   output$survey_results <- renderPlotly(select_box_questions(
+        #     data_for_visualization,
+        #     race_var, NA, race_color_mapping, race_options
+        #   ))
+        # }
+        tryCatch({
+          plot <- switch(demographic_desc,
+            "income" = select_box_questions(
+              data_for_visualization, income_var, NA, income_color_mapping, income_options
+            ),
+            "education" = select_box_questions(
+              data_for_visualization, edu_var, NA, edu_color_mapping, edu_options
+            ),
+            "age" = select_box_questions(
+              data_for_visualization, age_var, NA, age_color_mapping, age_options
+            ),
+            "gender" = select_box_questions(
+              data_for_visualization, gender_var, NA, gender_color_mapping, gender_options
+            ),
+            "race" = select_box_questions(
+              data_for_visualization, race_var, NA, race_color_mapping, race_options
+            )
+          )
+          output$survey_results <- renderPlotly(plot)
+        }, error = function(e) {
+          output$survey_results <- renderPlotly(error_plot("No plots"))
+        })
       }
     } else {
       message("no plots")
+      output$survey_results <- renderPlotly(error_plot("No plots"))
     }
   })
 }

@@ -190,11 +190,11 @@ survey_box_ui <- function(surveys) {
       "ej_story_qs",
       "environmental_justice_story"
     ),
-    make_conditional_panel_survey(
-      "Environmental Justice Report",
-      "ej_report_qs",
-      "environmental_justice_report"
-    ),
+    # make_conditional_panel_survey(
+    #   "Environmental Justice Report",
+    #   "ej_report_qs",
+    #   "environmental_justice_report"
+    # ),
     # make_conditional_panel_survey(
     #   "Tree Knowledge",
     #   "trees_greenery_survey_qs",
