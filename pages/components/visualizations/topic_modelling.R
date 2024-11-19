@@ -34,7 +34,8 @@ custom_dict <- c(
   "vehicl" = "vehicle", "mani" = "many", "pollution-rel" = "pollution-related",
   "negat" = "negate", "contribut" = "contribute", "resid" = "reside",
   "issu" = "issue", "emiss" = "emission", "climat" = "climate",
-  "chang" = "change", "recycl" = "recycle"
+  "chang" = "change", "recycl" = "recycle", "littl" = "little",
+  "popul" = "popular"
 )
 
 # Function to replace words using the custom dictionary

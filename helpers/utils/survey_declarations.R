@@ -22,7 +22,7 @@ has_results <- c(
   "Air Quality Survey" = TRUE,
   "Environmental Justice Survey" = TRUE, "Tree Canopy Survey" = TRUE,
   "Urban Heat Survey" = TRUE,
-  "Air Quality Map" = TRUE, "Tree Canopy Map" = TRUE, "Urban Heat Map" = FALSE,
+  "Air Quality Map" = TRUE, "Tree Canopy Map" = TRUE, "Urban Heat Map" = TRUE,
   "Carbon Survey" = TRUE,
   "Carbon Concerns" = TRUE,
   "Tree Knowledge" = TRUE,

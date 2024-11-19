@@ -202,11 +202,7 @@ server <- function(input, output, session) {
     demographic_desc = demographic_data()
   )
 
-  # Representation
-  # get_representative_reactive(input, output, file_to_get)
-
   # results graphics
-
   # print(is_survey)
 
   resulting_graphics(

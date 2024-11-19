@@ -85,6 +85,11 @@ resulting_graphics <- function(
       q_type <- "open-ended"
     }
 
+    # Temporary exception to handle "Urban Heat Map" survey where q_type is NA
+    if (is.na(q_type) && input$survey == "Urban Heat Map") {
+      q_type <- "open-ended"
+    }
+
     if (q_type != "matrix") {
       toggle_loader(TRUE)
     }
@@ -205,6 +210,8 @@ resulting_graphics <- function(
         data_for_visualization <- data[, c(1, question_num + 1, 25:28, 24)]
       } else if (input$survey == "General Survey") {
         data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
+      } else if (input$survey == "Urban Heat Map") {
+        data_for_visualization <- data[, c(1, question_num + 3, 20, 46:61)]
       } else if (input$survey == "Health Impacts") {
         data_for_visualization <- data[, c(1, question_num + 1, 10:13, 9)]
       } else if (input$survey == "Energy Concerns") {
