@@ -196,7 +196,7 @@ resulting_graphics <- function(
       } else if (input$survey == "Environmental Justice Survey") {
         data_for_visualization <- data[, c(2, question_num + 3, 28:58, 27, 24)]
       } else if (input$survey == "General Survey") {
-        data_for_visualization <- data[, c(1, question_num + 1, 25:28, 24)]
+        data_for_visualization <- data[, c(1, question_num + 1, 24:29)]
       } else if (input$survey == "Carbon Concerns") {
         data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
       } else if (input$survey == "Tree Knowledge") {

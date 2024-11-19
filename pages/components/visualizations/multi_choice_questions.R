@@ -2,8 +2,8 @@
 multi_choice_questions <- function(
     example_multi, demographic_variable,
     filter_input, coloring, options) {
-  # print(head(example_multi))
   names(example_multi)[2] <- "response"
+  print(head(example_multi))
 
   example_multi <- example_multi %>%
     separate_rows(response, sep = "; ")

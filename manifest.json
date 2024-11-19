@@ -13509,7 +13509,7 @@
       "checksum": "4ac590838d367d7bc6bbd1c238529b21"
     },
     "pages/components/survey_results.R": {
-      "checksum": "a5bec0f3027df1cbc4eb5e0489efb81a"
+      "checksum": "3bbfc429a116685ea3d2e97281b67a82"
     },
     "pages/components/table.R": {
       "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"
@@ -13524,13 +13524,13 @@
       "checksum": "572acd1cb24086ecb7693d7a665b87a5"
     },
     "pages/components/visualizations/multi_choice_questions.R": {
-      "checksum": "69379c5e639750ca3c0c12b0edab61d3"
+      "checksum": "976b93d8d2c36908d3e6fe211def258d"
     },
     "pages/components/visualizations/select_box_questions.R": {
       "checksum": "2eae1220574cc9c2eed8d994d0219612"
     },
     "pages/components/visualizations/topic_modelling.R": {
-      "checksum": "914eac4529928f73ace98d263c55f959"
+      "checksum": "89045fb08806e622e8406944dfccbbe5"
     },
     "pages/home_page.R": {
       "checksum": "4ec9b890a3e6018169131adcf529881f"
