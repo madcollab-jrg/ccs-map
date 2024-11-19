@@ -119,23 +119,27 @@ server <- function(input, output, session) {
   })
 
 
-  restricted_surveys <- c("Carbon Concerns", "Energy Concerns",
-    "General Survey", "Health Impacts")
+  restricted_surveys <- c(
+    "Carbon Concerns", "Energy Concerns",
+    "General Survey", "Health Impacts"
+  )
 
 
   observeEvent(input$survey, {
     # If "Carbon Concerns" is selected, update the 'census_level' choices
     if (input$survey %in% restricted_surveys) {
-      updateSelectizeInput(session, "census_level", 
-        choices = c("Zipcode"),  # Only show "Zipcode" for Carbon Concerns
-        selected = "Zipcode"  # Set "Zipcode" as the selected option
+      updateSelectizeInput(session, "census_level",
+        choices = c("Zipcode"), # Only show "Zipcode" for Carbon Concerns
+        selected = "Zipcode" # Set "Zipcode" as the selected option
       )
     } else {
       # Otherwise, show the full list of geography options
-      updateSelectizeInput(session, "census_level", 
-        choices = c("Census Tract", "Census State", "Census County", 
-                    "Zipcode", "State Lower", "State Upper", "Congress"),
-        selected = ""  # Reset the selection
+      updateSelectizeInput(session, "census_level",
+        choices = c(
+          "Census Tract", "Census State", "Census County",
+          "Zipcode", "State Lower", "State Upper", "Congress"
+        ),
+        selected = "" # Reset the selection
       )
     }
   })
@@ -160,7 +164,7 @@ server <- function(input, output, session) {
       req(input$survey)
       req(input$demographic)
       q_num <- question_number()
-      print(q_num)
+      # print(q_num)
       get_question_type(input$survey, q_num)
     }
   )
@@ -212,7 +216,6 @@ server <- function(input, output, session) {
 
   # observeEvent(input$lang, {
   #   i18n$set_translation_language(input$lang)
-  #   # Re-render UI components to reflect language change
   # })
 
   # all button and action link interaction on UI

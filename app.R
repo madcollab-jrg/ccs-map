@@ -8,6 +8,15 @@ library(yaml)
 library(shinyjs)
 library(shiny.i18n)
 
+# lintr::use_lintr(type = "tidyverse")
+
+# in a project:
+# lintr::lint_dir()
+
+# Initialize the translator
+i18n <- Translator$new(translation_json_path = "./translation/translation.json")
+i18n$set_translation_language("en")
+
 source("pages/components/selection_box.R")
 source("pages/components/graphics_representative.R")
 source("pages/components/solving-data-box.R")

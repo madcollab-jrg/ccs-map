@@ -1,0 +1,19 @@
+{
+  "languages": ["en", "es"],
+  "translation": [
+    { "en": "Home", "es": "Inicio" },
+    { "en": "Available Data", "es": "Datos Disponibles" },
+    {
+      "en": "Reporting Tool",
+      "es": "Herramienta de Informes"
+    },
+    {
+      "en": "About",
+      "es": "Acerca de"
+    },
+    {
+      "en": "Info",
+      "es": "Informaciòn"
+    }
+  ]
+}

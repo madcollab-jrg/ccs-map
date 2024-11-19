@@ -1,4 +1,5 @@
 ui <- dashboardPage(
+  # usei18n(i18n),
   header = dashboardHeader(
     title = tags$a(href = "/", tags$img(
       src = "assets/logo.png", alt = "Logo", height = "50px",

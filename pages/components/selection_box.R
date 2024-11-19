@@ -57,17 +57,6 @@ make_conditional_panel_survey <- function(survey, id, file_name = NA) {
   #   conditionalPanel that holds the questions for survey selected
   #   and contains a selectInput with inputId = id
   survey_conditional_panel <- conditionalPanel(
-    #   condition = paste0("input.survey == '", survey, "'"),
-    #   selectInput(
-    #     inputId = id,
-    #     label = div(
-    #       style = "font-size:0.85rem;",
-    #       "STEP 2: Select a question from the survey"
-    #     ),
-    #     choices = get_survey_questions(survey, file_name),
-    #     selectize = FALSE
-    #   )
-    # )
     condition = paste0("input.survey == '", survey, "'"),
     selectizeInput(
       inputId = id,
@@ -89,12 +78,6 @@ make_conditional_panel_survey <- function(survey, id, file_name = NA) {
 make_conditional_panel_census <- function(census_item, id) {
   census_conditional_panel <- conditionalPanel(
     condition = paste("input.census_level ==", census_item),
-    # p("STEP 4: Choose which data you would like to examine",
-    #   class = "label"
-    # ),
-    # HTML("<div class='label-desc'>
-    #         Check the list of available demographic descriptors and groupings
-    #         </div>"),
     selectizeInput(
       inputId = id,
       label = div(
@@ -183,7 +166,7 @@ survey_box_ui <- function(surveys) {
     ),
     make_conditional_panel_survey(
       "Tree Canopy Map", "tree_canopy_map_qs",
-      "tree_canopy"
+      "tree_map"
     ),
     make_conditional_panel_survey(
       "Environmental Justice Story",

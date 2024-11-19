@@ -55,10 +55,6 @@ input_to_data_demo <- c(
   "Energy Concerns" = "energy-concerns",
   "General Survey" = "general-survey",
   "Health Impacts" = "health-impacts",
-  # "Carbon Survey" = "carbon_survey",
-  # "Energy Survey" = "energy_survey",
-  # "General Survey" = "general_survey",
-  # "Heat Health Survey" = "heat_health_survey",
   "Trees Greenery Survey" = "trees_greenery_survey"
 )
 census_input_to_data <- c(
@@ -90,7 +86,8 @@ input_to_data_survey_desc <- c(
   "Tree Knowledge" = "tree_knowledge",
   "Tree Map" = "tree_map",
   "Tree Survey" = "tree_survey",
-  "Tree Canopy Survey" = "tree_survey"
+  "Tree Canopy Survey" = "tree_survey",
+  "Tree Canopy Map" = "tree_map"
 )
 
 question_type_map <- c()
