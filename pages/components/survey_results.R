@@ -222,11 +222,31 @@ resulting_graphics <- function(
         tryCatch(
           {
             plot <- switch(demographic_desc,
-              "income" = perform_topic_modeling(data_for_visualization, income_var),
-              "education" = perform_topic_modeling(data_for_visualization, edu_var),
-              "age" = perform_topic_modeling(data_for_visualization, age_var),
-              "gender" = perform_topic_modeling(data_for_visualization, gender_var),
-              "race" = perform_topic_modeling(data_for_visualization, race_var)
+              "income" = perform_topic_modeling(
+                data_for_visualization,
+                income_var,
+                input$survey
+              ),
+              "education" = perform_topic_modeling(
+                data_for_visualization,
+                edu_var,
+                input$survey
+              ),
+              "age" = perform_topic_modeling(
+                data_for_visualization,
+                age_var,
+                input$survey
+              ),
+              "gender" = perform_topic_modeling(
+                data_for_visualization,
+                gender_var,
+                input$survey
+              ),
+              "race" = perform_topic_modeling(
+                data_for_visualization,
+                race_var,
+                input$survey
+              )
             )
             output$survey_results <- renderPlotly(plot)
           },

@@ -1,3 +1,14 @@
+# Load necessary libraries
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(stringr)
+library(stm)
+library(textstem)
+library(wordcloud) # For word cloud visualization (optional)
+library(RColorBrewer) # For color palettes
+
+# Define custom dictionary for word replacement
 custom_dict <- c(
   "qualiti" = "quality", "problem" = "problem",
   "caus" = "cause", "neighborhood" = "neighborhood",
@@ -21,9 +32,11 @@ custom_dict <- c(
   "increas" = "increase", "encourag" = "encourage", "busi" = "busy",
   "consumpt" = "consumption", "abil" = "ability", "alreadi" = "already",
   "vehicl" = "vehicle", "mani" = "many", "pollution-rel" = "pollution-related",
-  "negat" = "negate", "contribut" = "contribute", "resid" = "reside"
+  "negat" = "negate", "contribut" = "contribute", "resid" = "reside",
+  "issu" = "issue", "emiss" = "emission"
 )
 
+# Function to replace words using the custom dictionary
 replace_word_lemma <- function(word) {
   if (word %in% names(custom_dict)) {
     return(custom_dict[[word]])
@@ -32,39 +45,23 @@ replace_word_lemma <- function(word) {
   }
 }
 
+# Enhanced Topic Modeling Function
 perform_topic_modeling <- function(
     survey_data, demographic_variable,
-    num_topics = 4) {
-  # Import stoplist
-  malletwords <-
-    scan("./data/report_data/mallet.txt",
-      character(),
-      quote = ""
-    )
+    survey, num_topics = 2) {
+  # Import stoplist (optional, based on your needs)
+  # malletwords <- scan("./data/report_data/mallet.txt", character(), quote = "")
 
-  # Extract example question and demographic data
+  # Clean and preprocess responses
   example_open <- survey_data
   names(example_open)[2] <- "response"
 
-  # example_open$response_cleaned <- tolower(gsub(
-  #   "[[:punct:]]", " ",
-  #   example_open$response
-  # ))
-  # example_open$response_cleaned <- removeWords(
-  #   example_open$response_cleaned,
-  #   c(stopwords("english"), malletwords)
-  # )
-  # example_open$response_cleaned <-
-  #   lemmatize_words(example_open$response_cleaned)
-
+  # Text Cleaning Steps
   example_open$response_cleaned <- tolower(example_open$response)
   example_open$response_cleaned <-
     gsub("[[:punct:]0-9]", " ", example_open$response_cleaned)
   example_open$response_cleaned <-
-    removeWords(example_open$response_cleaned, c(
-      stopwords("english")
-      # malletwords
-    ))
+    removeWords(example_open$response_cleaned, stopwords("english"))
   example_open$response_cleaned <-
     stripWhitespace(example_open$response_cleaned)
   example_open$response_cleaned <-
@@ -74,9 +71,9 @@ perform_topic_modeling <- function(
 
   survey_data <- example_open
 
-  # Preprocess the text data
+  # Preprocess the text data for STM
   processed_texts <- textProcessor(
-    documents = survey_data$response,
+    documents = survey_data$response_cleaned,
     metadata = survey_data
   )
   out <- prepDocuments(
@@ -88,45 +85,27 @@ perform_topic_modeling <- function(
   meta <- out$meta
 
   # Fit the STM model
-  num_topics <- 2 # Choose an appropriate number of topics
   topic_model <- stm(
     documents = docs, vocab = vocab,
     K = num_topics, data = meta, max.em.its = 150, init.type = "Spectral"
   )
 
-  print("***********")
-  top_words <- labelTopics(topic_model)
-  print(top_words)
+  # Extract top words for each topic
+  top_words <- labelTopics(topic_model, n = 10)
   topic_words <- top_words$prob
 
+  # Convert top words to human-readable format
   human_readable_topics <- apply(topic_words, 1, function(topic) {
     words <- unlist(strsplit(topic, ", "))
-    readable_words <- sapply(words, function(word) {
-      # Replace with custom dictionary if needed
-      replace_word_lemma(word)
-    })
+    readable_words <- sapply(words, replace_word_lemma)
     paste(readable_words, collapse = ", ")
   })
 
+  # Display human-readable topics
   for (i in 1:num_topics) {
     topic <- paste("Topic", i, "-", human_readable_topics[i])
     print(topic)
   }
-
-  topics1 <- topic_words[1, ]
-  topics2 <- topic_words[2, ]
-
-  # topics1 <- paste(topics1, collapse = ", ")
-  # topics2 <- paste(topics2, collapse = ", ")
-
-  # topics1 <- paste("Topic 1 - ", topics1)
-  # topics2 <- paste("Topic 2 - ", topics2)
-
-  # print(topics1)
-  # print(topics2)
-
-  print("***********")
-
 
   # Get document-topic matrix
   doc_topic_matrix <- topic_model$theta
@@ -135,70 +114,53 @@ perform_topic_modeling <- function(
   doc_topic_df <- as.data.frame(doc_topic_matrix)
   doc_topic_df$Document <- rownames(doc_topic_df)
 
-  # Melt the data frame for plotting
-  doc_topic_melted <- reshape2::melt(doc_topic_df, id.vars = "Document")
-
-  # print(doc_topic_melted)
-
-  # Get top words associated with each topic
-  # top_words <- terms(topic_model, 10)
-
-  # print(top_words)
-  print("---------------------------------------------")
-  # print(doc_topic_matrix)
-
-  column_sum1 <- sum(doc_topic_matrix[, 1])
-  print(paste("column_sum1", column_sum1))
-
-  column_sum2 <- sum(doc_topic_matrix[, 2])
-  print(paste("column_sum2", column_sum2))
-
+  # Summarize topic proportions
   topic_sums <- colSums(doc_topic_matrix)
   topic_descriptions <- paste0(
     "Topic ", 1:num_topics, " - ",
     human_readable_topics
   )
 
-  trace1 <- list(
+  # Apply text wrapping to topic descriptions
+  topic_wrapped <- str_wrap(topic_descriptions, width = 40)
+
+  # Create a data frame for plotting
+  plot_data <- data.frame(
+    Topic = topic_wrapped,
+    Proportion = topic_sums / sum(topic_sums)
+  )
+
+  # Define a visually appealing color palette
+  palette <- brewer.pal(n = max(4, num_topics), name = "Pastel2")
+
+  # Create the Plotly bar chart
+  p <- plot_ly(
+    data = plot_data,
+    x = ~Proportion,
+    y = ~Topic,
     type = "bar",
-    # x = c(column_sum1 / 400, column_sum2 / 400),
-    # y = c(topics1, topics2),
-    x = topic_sums / 400,
-    y = topic_descriptions,
-    marker = list(
-      line = list(
-        color = "rgb(8,48,107)",
-        width = 1.5
+    orientation = "h",
+    marker = list(color = palette),
+    text = ~ paste(Topic),
+    hoverinfo = "text",
+    textposition = "auto"
+  ) %>%
+    layout(
+      title = "Responses",
+      xaxis = list(
+        title = "Proportion of Topics",
+        range = c(0, max(plot_data$Proportion) * 1.1),
+        titlefont = list(size = 14, family = "Inter"),
+        tickfont = list(size = 12, family = "Inter")
       ),
-      color = "rgb(158,202,225)"
-    ),
-    opacity = 0.6,
-    orientation = "h"
-  )
-  data <- list(trace1)
-  layout <- list(
-    title = "Topic Modelling",
-    xaxis = list(domain = c(0.15, 1)),
-    margin = list(
-      b = 80,
-      l = 120,
-      r = 10,
-      t = 140
-    ),
-    barmode = "stack",
-    plot_bgcolor = "rgb(255, 255, 255)",
-    paper_bgcolor = "rgb(255, 255, 255)"
-  )
-  p <- plot_ly()
-  p <- add_trace(p,
-    type = trace1$type, x = trace1$x,
-    y = trace1$y, marker = trace1$marker,
-    opacity = trace1$opacity, orientation = trace1$orientation
-  )
-  p <- layout(p,
-    title = layout$title,
-    xaxis = layout$xaxis, margin = layout$margin,
-    barmode = layout$barmode, plot_bgcolor = layout$plot_bgcolor,
-    paper_bgcolor = layout$paper_bgcolor
-  )
+      yaxis = list(title = "", showticklabels = FALSE),
+      margin = list(l = 200, r = 50, t = 100, b = 50),
+      plot_bgcolor = "rgb(255, 255, 255)",
+      paper_bgcolor = "rgb(255, 255, 255)",
+      font = list(family = "Inter, sans-serif", size = 12, fontweight = 600),
+      showlegend = FALSE
+    )
+
+  # Return the Plotly object
+  return(p)
 }
