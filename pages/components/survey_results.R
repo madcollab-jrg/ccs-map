@@ -7,6 +7,12 @@ survey_results_ui <- function(demog, surveyQues) {
       demog, "</h1>",
       "<p class='text-lighter font-sm'>", surveyQues, "</p></div>"
     )),
+    # div(id = "plot-loading-container", class = "plot-loader hidden"),
+    HTML(paste(
+      "<div class='plot-loader hidden' id='plot-loading-container'>
+        <div class='loader'></div>
+      </div>"
+    )),
     plotlyOutput("survey_results"), # for plotly
     width = 12,
     collapsible = FALSE,
@@ -40,8 +46,20 @@ resulting_graphics <- function(
     input, output, survey_data, is_survey,
     question = NA, question_type = NA, question_subtype = NA,
     demographic_desc = NA) {
+  # Function to toggle loader
+  toggle_loader <- function(show = TRUE) {
+    if (show) {
+      shinyjs::removeClass("plot-loading-container", "hidden")
+      shinyjs::addClass("survey_results", "hidden")
+    } else {
+      shinyjs::addClass("plot-loading-container", "hidden")
+      shinyjs::removeClass("survey_results", "hidden")
+    }
+  }
+
   # Populate the survey results boxes with the required graphics
   reaction <- observeEvent(input$run_report, {
+    disable("run_report")
     req(input$survey)
     req(input$census_level)
     req(input$demographic)
@@ -58,6 +76,34 @@ resulting_graphics <- function(
     if (is.na(q_type) && input$survey == "Tree Knowledge") {
       q_type <- "multi-choice"
     }
+    # Temporary exception to handle "Carbon Concerns" survey where q_type is NA
+    if (is.na(q_type) && input$survey == "Carbon Concerns") {
+      q_type <- "multi-choice"
+    }
+    # Temporary exception to handle "Air Quality Map" survey where q_type is NA
+    if (is.na(q_type) && input$survey == "Air Quality Map") {
+      q_type <- "open-ended"
+    }
+
+    if (q_type != "matrix") {
+      toggle_loader(TRUE)
+    }
+
+    # # Normalize survey name
+    # normalized_survey <- str_trim(str_to_title(input$survey))
+
+    # # Define a mapping of survey names to q_type
+    # survey_qtype_mapping <- c(
+    #   "Tree Canopy Map" = "open-ended",
+    #   "Tree Knowledge" = "multi-choice",
+    #   "Carbon Concerns" = "multi-choice",
+    #   "Air Quality Map" = "open-ended"
+    # )
+
+    # Set q_type based on the mapping if q_type is NA
+    # if (is.na(q_type) && normalized_survey %in% names(survey_qtype_mapping)) {
+    #   q_type <- survey_qtype_mapping[normalized_survey]
+    # }
 
     # Debugging prints
     print(paste("Selected Survey:", input$survey))
@@ -144,6 +190,9 @@ resulting_graphics <- function(
         data_for_visualization <- data[, c(2, question_num + 3, 48:56, 25, 22)]
       } else if (input$survey == "Air Quality Survey") {
         data_for_visualization <- data[, c(2, question_num + 3, 47:55, 24, 21)]
+      } else if (input$survey == "Air Quality Map") {
+        data_for_visualization <-
+          data[, c(2, 4, question_num + 3, 47:55, 24, 21)]
       } else if (input$survey == "Environmental Justice Survey") {
         data_for_visualization <- data[, c(2, question_num + 3, 28:58, 27, 24)]
       } else if (input$survey == "General Survey") {
@@ -152,20 +201,12 @@ resulting_graphics <- function(
         data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
       } else if (input$survey == "Tree Knowledge") {
         data_for_visualization <- data[, c(1, question_num + 1, 7:10, 6)]
-        # data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
       } else if (input$survey == "Environmental Justice Story") {
         data_for_visualization <- data[, c(1, question_num + 1, 25:28, 24)]
-        # data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
-      }
-      # else if (input$survey == "Energy Concerns") {
-      #   data_for_visualization <- data[, c(1, question_num + 1, 5:8, 4)]
-      #   # data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
-      # }
-      else if (input$survey == "General Survey") {
+      } else if (input$survey == "General Survey") {
         data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
       } else if (input$survey == "Health Impacts") {
         data_for_visualization <- data[, c(1, question_num + 1, 10:13, 9)]
-        # data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
       } else if (input$survey == "Energy Concerns") {
         data_for_visualization <- data[, c(1, question_num + 1, 5:8, 4)]
       } else if (input$survey == "Heat Health Survey") {
@@ -212,9 +253,11 @@ resulting_graphics <- function(
                 race_var, q_subtype
               )
             )
+            enable("run_report")
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
+            enable("run_report")
             output$survey_results <-
               renderPlotly(error_plot("No plots available"))
           }
@@ -249,9 +292,13 @@ resulting_graphics <- function(
                 input$survey
               )
             )
+            enable("run_report")
+            toggle_loader(FALSE)
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
+            enable("run_report")
+            toggle_loader(FALSE)
             output$survey_results <-
               renderPlotly(error_plot("No plots available"))
           }
@@ -281,9 +328,13 @@ resulting_graphics <- function(
                 race_color_mapping, race_options
               )
             )
+            enable("run_report")
+            toggle_loader(FALSE)
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
+            enable("run_report")
+            toggle_loader(FALSE)
             output$survey_results <-
               renderPlotly(error_plot("No plots available"))
           }
@@ -313,15 +364,21 @@ resulting_graphics <- function(
                 race_color_mapping, race_options
               )
             )
+            enable("run_report")
+            toggle_loader(FALSE)
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
+            enable("run_report")
+            toggle_loader(FALSE)
             output$survey_results <-
               renderPlotly(error_plot("No plots available"))
           }
         )
       }
     } else {
+      enable("run_report")
+      toggle_loader(FALSE)
       message("no plots")
       output$survey_results <- renderPlotly(error_plot("No plots available"))
     }

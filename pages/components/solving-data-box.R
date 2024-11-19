@@ -98,7 +98,7 @@ get_representativeness_text <- function(x, min_val, max_val) {
   # Apply color logic
   # Initialize the result list
   result <- list()
-  
+
   if (is.na(x)) {
     result$text <- "NA"
     result$color <- "white"
@@ -110,13 +110,12 @@ get_representativeness_text <- function(x, min_val, max_val) {
     result$text <- "Equally Represented"
   } else if (x <= 1) {
     result$text <- "Overrepresented"
-  } else if(x > 1){
+  } else if (x > 1) {
     result$text <- "Very Overrepresented"
-  }
-  else {
+  } else {
     result$text <- "NA"
   }
-  
+
   # Return as a list with 'text' and 'color' components
   return(result)
 }
@@ -284,15 +283,17 @@ get_data_desc_rep_reaction <- function(
         # frame with `NA` or `""` names.
 
         # Apply the function to get both text and color
-        representativeness_results <- lapply(merged_tbl_data$Representativeness, 
-          function(x) get_representativeness_text(x, min(rep_data_numeric, na.rm = TRUE), max(rep_data_numeric, na.rm = TRUE)))
+        representativeness_results <- lapply(
+          merged_tbl_data$Representativeness,
+          function(x) get_representativeness_text(x, min(rep_data_numeric, na.rm = TRUE), max(rep_data_numeric, na.rm = TRUE))
+        )
 
         # Extract the text and color into separate columns
         merged_tbl_data$Representativeness_text <- sapply(representativeness_results, function(x) x$text)
 
         # Update the table to use the text column
         merged_tbl_data$Representativeness <- merged_tbl_data$Representativeness_text
-        merged_tbl_data$Representativeness_text <- NULL  # Remove the temporary column  
+        merged_tbl_data$Representativeness_text <- NULL # Remove the temporary column
 
         # Define the levels
         representativeness_levels <- c(
@@ -334,19 +335,19 @@ get_data_desc_rep_reaction <- function(
 
         gt_tbl <-
           gt_tbl %>%
-           data_color(
+          data_color(
             method = "factor",
-              palette = c(
-                "#FFFCAE",  # Equally Represented
-                "#FFFFFF",   # NA
-                "#DAFEAE",  # Overrepresented
-                "#FFD4AD",  # Underrepresented
-                "#B4FFAE",  # Very Overrepresented
-                "#FFACAC"  # Very Underrepresented
-              ),
+            palette = c(
+              "#FFFCAE", # Equally Represented
+              "#FFFFFF", # NA
+              "#DAFEAE", # Overrepresented
+              "#FFD4AD", # Underrepresented
+              "#B4FFAE", # Very Overrepresented
+              "#FFACAC" # Very Underrepresented
+            ),
             domain = representativeness_levels,
-            columns = vars(Representativeness)
-          )%>%
+            columns = c(Representativeness)
+          ) %>%
           tab_style(
             style = cell_text(
               size = pct(80), color = "#1A1A1A",

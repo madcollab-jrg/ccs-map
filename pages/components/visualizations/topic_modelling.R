@@ -50,7 +50,11 @@ perform_topic_modeling <- function(
     survey_data, demographic_variable,
     survey, num_topics = 2) {
   # Import stoplist (optional, based on your needs)
-  # malletwords <- scan("./data/report_data/mallet.txt", character(), quote = "")
+  # malletwords <-
+  # scan("./data/report_data/mallet.txt", character(), quote = "")
+
+
+  print(head(survey_data))
 
   # Clean and preprocess responses
   example_open <- survey_data
