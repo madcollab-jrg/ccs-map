@@ -145,6 +145,27 @@ server <- function(input, output, session) {
     }
   })
 
+  observeEvent(input$survey, {
+    # If "restricted" is selected, update the 'demographic' choices
+    if (input$survey %in% restricted_surveys) {
+      updateSelectizeInput(session, "demographic",
+        choices = c(
+          "Gender", "Income",
+          "Education", "Race"
+        ), # Only show "Zipcode" for Carbon Concerns
+        selected = "Gender" # Set "Zipcode" as the selected option
+      )
+    } else {
+      # Otherwise, show the full list of demographic options
+      updateSelectizeInput(session, "demographic",
+        choices = c(
+          "Age", "Gender", "Income", "Education", "Race"
+        ),
+        selected = "" # Reset the selection
+      )
+    }
+  })
+
 
   # get question column number + question type for survey results
   question_number <- eventReactive(

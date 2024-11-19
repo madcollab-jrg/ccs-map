@@ -190,20 +190,20 @@ resulting_graphics <- function(
       data_for_visualization <- NA
       print(input$survey)
       if (input$survey == "Urban Heat Survey") {
-        data_for_visualization <- data[, c(2, question_num + 3, 45:53, 22, 19)]
+        data_for_visualization <- data[, c(2, question_num + 3, 45:61, 22, 19)]
       } else if (input$survey == "Tree Canopy Survey") {
-        data_for_visualization <- data[, c(2, question_num + 3, 48:56, 25, 22)]
+        data_for_visualization <- data[, c(2, question_num + 3, 48:64, 25, 22)]
       } else if (input$survey == "Air Quality Survey") {
-        data_for_visualization <- data[, c(2, question_num + 3, 47:55, 24, 21)]
+        data_for_visualization <- data[, c(2, question_num + 3, 47:63, 24, 21)]
       } else if (input$survey == "Air Quality Map") {
         data_for_visualization <-
           data[, c(2, 4, question_num + 3, 47:55, 24, 21)]
       } else if (input$survey == "Environmental Justice Survey") {
-        data_for_visualization <- data[, c(2, question_num + 3, 28:58, 27, 24)]
+        data_for_visualization <- data[, c(2, question_num + 3, 28:66, 27, 24)]
       } else if (input$survey == "General Survey") {
         data_for_visualization <- data[, c(1, question_num + 1, 24:29)]
       } else if (input$survey == "Carbon Concerns") {
-        data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
+        data_for_visualization <- data[, c(1, question_num + 1, 5:9)]
       } else if (input$survey == "Tree Knowledge") {
         data_for_visualization <- data[, c(1, question_num + 1, 7:10, 6)]
       } else if (input$survey == "Environmental Justice Story") {
