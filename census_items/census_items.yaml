@@ -39,7 +39,8 @@ tract:
   - Census Tract 1004, Jefferson County, Wisconsin
 
 zipcode:
-  - 34787
+  # - 34787
+  - 53704 # not in order
   - 53070
   - 53527
   - 53529
@@ -55,7 +56,6 @@ zipcode:
   - 53597
   - 53598
   - 53703
-  - 53704
   - 53705
   - 53706
   - 53711

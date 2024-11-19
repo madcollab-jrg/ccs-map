@@ -121,7 +121,8 @@ server <- function(input, output, session) {
 
   restricted_surveys <- c(
     "Carbon Concerns", "Energy Concerns",
-    "General Survey", "Health Impacts"
+    "General Survey", "Health Impacts",
+    "Tree Knowledge"
   )
 
 

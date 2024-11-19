@@ -17,28 +17,14 @@ survey_results_ui <- function(demog, surveyQues) {
   return(ui)
 }
 
-
-# Function to generate an error message plot
-error_plot <- function(message = "No plots") {
-  plot_ly(
-    type = "scatter",
-    mode = "text",
-    text = message,
-    textfont = list(size = 20),
-    hoverinfo = "none"
-  ) %>%
-    layout(
-      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE)
-    )
-}
-
 make_color_mapping <- function(column, options) {
   col_pal <- brewer.pal(length(options), "PuOr")
   color_mapping <- tibble(!!column := options, col = col_pal)
   return(color_mapping)
 }
 
+# Error Plot Graph
+source("pages/components/visualizations/error_plot.R")
 # Text Questions
 source("pages/components/visualizations/topic_modelling.R")
 # Matrix Questions
@@ -68,6 +54,10 @@ resulting_graphics <- function(
     if (is.na(q_type) && input$survey == "Tree Canopy Map") {
       q_type <- "open-ended"
     }
+    # Temporary exception to handle "Tree Knowledge" survey where q_type is NA
+    if (is.na(q_type) && input$survey == "Tree Knowledge") {
+      q_type <- "multi-choice"
+    }
 
     # Debugging prints
     print(paste("Selected Survey:", input$survey))
@@ -86,8 +76,6 @@ resulting_graphics <- function(
     if (q_type != "Ranking" & survey_flag) {
       # Unsure how rank type questions are suppose to be displayed
       question_num <- question() # column number of question
-
-      # print(paste("question_num", question_num))
 
       # column names of categories
       income_var <- "income_recode"
@@ -207,15 +195,28 @@ resulting_graphics <- function(
                 data_for_visualization,
                 income_var, q_subtype
               ),
-              "education" = matrix_questions(data_for_visualization, edu_var, q_subtype),
-              "age" = matrix_questions(data_for_visualization, age_var, q_subtype),
-              "gender" = matrix_questions(data_for_visualization, gender_var, q_subtype),
-              "race" = matrix_questions(data_for_visualization, race_var, q_subtype)
+              "education" = matrix_questions(
+                data_for_visualization,
+                edu_var, q_subtype
+              ),
+              "age" = matrix_questions(
+                data_for_visualization,
+                age_var, q_subtype
+              ),
+              "gender" = matrix_questions(
+                data_for_visualization,
+                gender_var, q_subtype
+              ),
+              "race" = matrix_questions(
+                data_for_visualization,
+                race_var, q_subtype
+              )
             )
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
-            output$survey_results <- renderPlotly(error_plot("No plots"))
+            output$survey_results <-
+              renderPlotly(error_plot("No plots available"))
           }
         )
       } else if (q_type == "open-ended") {
@@ -251,7 +252,8 @@ resulting_graphics <- function(
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
-            output$survey_results <- renderPlotly(error_plot("No plots"))
+            output$survey_results <-
+              renderPlotly(error_plot("No plots available"))
           }
         )
       } else if (q_type == "multi-choice") {
@@ -282,7 +284,8 @@ resulting_graphics <- function(
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
-            output$survey_results <- renderPlotly(error_plot("No plots"))
+            output$survey_results <-
+              renderPlotly(error_plot("No plots available"))
           }
         )
       } else if (q_type == "select box") {
@@ -313,13 +316,14 @@ resulting_graphics <- function(
             output$survey_results <- renderPlotly(plot)
           },
           error = function(e) {
-            output$survey_results <- renderPlotly(error_plot("No plots"))
+            output$survey_results <-
+              renderPlotly(error_plot("No plots available"))
           }
         )
       }
     } else {
       message("no plots")
-      output$survey_results <- renderPlotly(error_plot("No plots"))
+      output$survey_results <- renderPlotly(error_plot("No plots available"))
     }
   })
 }

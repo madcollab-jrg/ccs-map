@@ -5901,10 +5901,10 @@
       "checksum": "8417e625ac53ee5f21e41acf58e642f8"
     },
     "census_items/census_items.yaml": {
-      "checksum": "7d244749fe1837691408125d7893432e"
+      "checksum": "8da6792cc739769e02be9f8db8f6e3aa"
     },
     "census_items/census_level_to_results.yaml": {
-      "checksum": "3eda39f5f64a2732bb53c9954f0ab2c5"
+      "checksum": "204168926f67817948f97f65fa66e396"
     },
     "CONTRIBUTING.md": {
       "checksum": "c0ed7d01ae831f5d5ef45e178f18e38b"
@@ -13476,7 +13476,7 @@
       "checksum": "0511c031e60e88cb178db3bae490e0a6"
     },
     "helpers/global/server.R": {
-      "checksum": "57a6ba6fa5e1b428e2b8d49ab3d59527"
+      "checksum": "4fc782b527b00c53494034c03f9f05fd"
     },
     "helpers/global/ui.R": {
       "checksum": "75495026effc3c00a5ba6d4f9813bb7f"
@@ -13506,13 +13506,16 @@
       "checksum": "7e6c13646f226bb759fe600c7b3d281a"
     },
     "pages/components/survey_questions/allquestion_types_2.csv": {
-      "checksum": "5fe3921df9e50e1958bd5a25377e3b5e"
+      "checksum": "23e9c426a9ee1231c86c773317960f24"
     },
     "pages/components/survey_results.R": {
-      "checksum": "bc3ef9c74890b11913468a4341fded7d"
+      "checksum": "df4ad7829da1097d3f1406c6cf77134f"
     },
     "pages/components/table.R": {
       "checksum": "3cdf38bdfb6c2fe3dca3a0a653b1471e"
+    },
+    "pages/components/visualizations/error_plot.R": {
+      "checksum": "f24b0336c6b8d1c8e6bc13e52bc5b424"
     },
     "pages/components/visualizations/imports.R": {
       "checksum": "318149355c65cbce8cf25f62ed125f75"
@@ -13551,7 +13554,7 @@
       "checksum": "97a7723c40720452c868e09370a4431e"
     },
     "survey_questions/allquestion_types_2.csv": {
-      "checksum": "9fd4dffe3aec702f77b050d65e7bd23a"
+      "checksum": "3dd3f240c02f729a0ff672ebb97c86f1"
     },
     "survey_questions/allquestion_types.csv": {
       "checksum": "45451edec69c7fbd0a4a11291e8050ad"
