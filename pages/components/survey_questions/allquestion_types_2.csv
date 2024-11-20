@@ -71,8 +71,8 @@ General Survey,Who do you think should be responsible for ensuring that new tech
 General Survey,What are your concerns of deploying new technologies such as the carbon dioxide removal storage in your neighborhood?,Open-ended,,0,18
 General Survey,Climate change affects my health.,Multi-Choice,,0,19
 General Survey,"In the future, what is the most convenient way for you to share your opinions about environmental issues and other social issues?",Multi-Choice,,0,20
-General Survey,Do you agree or disagree with the statement that climate change is happening?,Multi-Choice,,0,21
-General Survey,Do you agree or disagree with the statement that climate change is caused by human activities?,Multi-Choice,,0,22
+General Survey,Do you agree or disagree with the statement that climate change is happening?,Combined,,0,21
+General Survey,Do you agree or disagree with the statement that climate change is caused by human activities?,Combined,,0,22
 Health Impacts,How important is extreme heat to your everyday life ,Multi-Choice,,0,1
 Health Impacts,Do you agree/disagree that extreme heat has impacted your life?,Multi-Choice,,0,2
 Health Impacts,Insulation and weatherization are ways to reduce energy consumption at my home.,Multi-Choice,,0,3

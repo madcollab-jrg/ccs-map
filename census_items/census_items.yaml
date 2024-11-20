@@ -67,7 +67,7 @@ zipcode:
   - 53718
   - 53719
   - 53726
-  - 95207
+  # - 95207
 
 state_upper:
   - State Senate District 1 (2018), Wisconsin

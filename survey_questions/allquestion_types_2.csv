@@ -71,8 +71,8 @@ General Survey,Who do you think should be responsible for ensuring that new tech
 General Survey,What are your concerns of deploying new technologies such as the carbon dioxide removal storage in your neighborhood?,Open-ended,,0,18
 General Survey,Climate change affects my health.,Multi-Choice,,0,19
 General Survey,"In the future, what is the most convenient way for you to share your opinions about environmental issues and other social issues?",Multi-Choice,,0,20
-General Survey,Do you agree or disagree with the statement that climate change is happening?,Multi-Choice,,0,21
-General Survey,Do you agree or disagree with the statement that climate change is caused by human activities?,Multi-Choice,,0,22
+General Survey,Do you agree or disagree with the statement that climate change is happening?,Combined,,0,21
+General Survey,Do you agree or disagree with the statement that climate change is caused by human activities?,Combined,,0,22
 Health Impacts,How important is extreme heat to your everyday life ,Multi-Choice,,0,1
 Health Impacts,Do you agree/disagree that extreme heat has impacted your life?,Multi-Choice,,0,2
 Health Impacts,Insulation and weatherization are ways to reduce energy consumption at my home.,Multi-Choice,,0,3
@@ -80,7 +80,7 @@ Health Impacts,Electrification is one way to reduce carbon emissions at my home.
 Health Impacts,I can go to a cooling center during extreme heat weather to stay cool.,Multi-Choice,,0,5
 Health Impacts,"In Dane County, days over 100F will double in the next 30 years.",Multi-Choice,,0,6
 Health Impacts,Extreme heat is dangerous to my health.,Multi-Choice,,0,7
-Air Map,What are the best locations to measure air quality in our neighborhoods?,Open-ended,,1,1
+Air Quality Map,What are the best locations to measure air quality in our neighborhoods?,Open-ended,,1,1
 Environmental Justice Story,Tell us about your experiences with climate change!,Open-ended,,1,1
 Environmental Justice Report,Respond to one of the prompts on the right...Add your big idea.,Open-ended,,1,1
 Urban Heat Map,What are areas of extreme heat in your community?,Open-ended,,1,1

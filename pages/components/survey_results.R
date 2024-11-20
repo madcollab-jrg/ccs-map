@@ -7,7 +7,6 @@ survey_results_ui <- function(demog, surveyQues) {
       demog, "</h1>",
       "<p class='text-lighter font-sm'>", surveyQues, "</p></div>"
     )),
-    # div(id = "plot-loading-container", class = "plot-loader hidden"),
     HTML(paste(
       "<div class='plot-loader hidden' id='plot-loading-container'>
         <div class='loader'></div>
@@ -39,6 +38,8 @@ source("pages/components/visualizations/matrix.R")
 source("pages/components/visualizations/multi_choice_questions.R")
 # Select Box Questions
 source("pages/components/visualizations/select_box_questions.R")
+# Combined Multi Choice Questions
+source("pages/components/visualizations/combined.R")
 
 data_for_visualization <- NA
 
@@ -89,6 +90,15 @@ resulting_graphics <- function(
     if (is.na(q_type) && input$survey == "Urban Heat Map") {
       q_type <- "open-ended"
     }
+
+    if (question() == 16 && input$survey == "General Survey") {
+      q_type <- "combined"
+    }
+
+    if (question() == 17 && input$survey == "General Survey") {
+      q_type <- "combined"
+    }
+
 
     if (q_type != "matrix") {
       toggle_loader(TRUE)
@@ -206,20 +216,12 @@ resulting_graphics <- function(
         data_for_visualization <- data[, c(1, question_num + 1, 5:9)]
       } else if (input$survey == "Tree Knowledge") {
         data_for_visualization <- data[, c(1, question_num + 1, 7:10, 6)]
-      } else if (input$survey == "Environmental Justice Story") {
-        data_for_visualization <- data[, c(1, question_num + 1, 25:28, 24)]
-      } else if (input$survey == "General Survey") {
-        data_for_visualization <- data[, c(1, question_num + 1, 2:5, 5)]
       } else if (input$survey == "Urban Heat Map") {
         data_for_visualization <- data[, c(1, question_num + 3, 20, 46:61)]
       } else if (input$survey == "Health Impacts") {
         data_for_visualization <- data[, c(1, question_num + 1, 10:13, 9)]
       } else if (input$survey == "Energy Concerns") {
         data_for_visualization <- data[, c(1, question_num + 1, 5:8, 4)]
-      } else if (input$survey == "Heat Health Survey") {
-        data_for_visualization <- data[, c(1, question_num + 1, 10:13, 9)]
-      } else if (input$survey == "Trees Greenery Survey") {
-        data_for_visualization <- data[, c(1, question_num + 1, 7:10, 6)]
       } else if (input$survey == "Tree Canopy Map") {
         data_for_visualization <- data[, c(2, question_num + 3, 45:56, 20:27)]
       } else {
@@ -382,7 +384,44 @@ resulting_graphics <- function(
               renderPlotly(error_plot("No plots available"))
           }
         )
+      } else if (q_type == "combined") {
+        print("you are in combined")
+        # tryCatch(
+        #   {
+        plot <- switch(demographic_desc,
+          "income" = combined_multi_choice_questions(
+            data_for_visualization, income_var, NA,
+            income_color_mapping, income_options
+          ),
+          "education" = combined_multi_choice_questions(
+            data_for_visualization, edu_var, NA,
+            edu_color_mapping, edu_options
+          ),
+          "age" = combined_multi_choice_questions(
+            data_for_visualization, age_var, NA,
+            age_color_mapping, age_options
+          ),
+          "gender" = combined_multi_choice_questions(
+            data_for_visualization, gender_var, NA,
+            gender_color_mapping, gender_options
+          ),
+          "race" = combined_multi_choice_questions(
+            data_for_visualization, race_var, NA,
+            race_color_mapping, race_options
+          )
+        )
+        enable("run_report")
+        toggle_loader(FALSE)
+        output$survey_results <- renderPlotly(plot)
       }
+      #   error = function(e) {
+      #     enable("run_report")
+      #     toggle_loader(FALSE)
+      #     output$survey_results <-
+      #       renderPlotly(error_plot("No plots available"))
+      #   }
+      # )
+      # }
     } else {
       enable("run_report")
       toggle_loader(FALSE)

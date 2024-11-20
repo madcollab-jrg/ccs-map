@@ -15,7 +15,7 @@ get_question_type <- function(survey, number) {
     Survey == survey_name &
       Number == number
   )
-  print(q[1, "Type"])
+  # print(q[1, "Type"])
   return(tolower(as.character(q[1, "Type"])))
 }
 
