@@ -4,34 +4,34 @@ multi_choice_questions <- function(
     filter_input, coloring, options) {
   names(example_multi)[2] <- "response"
   print(head(example_multi))
-
+  
   example_multi <- example_multi %>%
     separate_rows(response, sep = "; ")
-
+  
   if (!is.na(filter_input)) {
     example_multi <- example_multi %>%
       filter(!!sym(demographic_variable) == !!filter_input)
   }
-
+  
   # Also extract other and run topic modeling?
   multi_summary <- example_multi %>%
     group_by(!!sym(demographic_variable), response) %>%
     summarise(count = n()) %>%
     mutate(freq = round(count / sum(count), digits = 2))
-
+  
   # Remove other responses
   multi_summary <- multi_summary %>%
     filter(!grepl("^Other \\(please specify\\)", response)) %>%
     filter(!is.na(!!sym(demographic_variable)))
-
+  
   if (demographic_variable == "Gender") {
     multi_summary <- multi_summary %>% filter(!Gender == "Non-binary")
   }
-
+  
   multi_summary <- merge(multi_summary, coloring, by = demographic_variable)
-
+  
   multi_summary <- multi_summary[, -ncol(multi_summary)]
-
+  
   # Manually wrap labels
   wrap_labels <- function(labels, max_length = 20, ellipsis_length = 2) {
     ifelse(nchar(labels) > max_length, paste0(substr(
@@ -40,42 +40,42 @@ multi_choice_questions <- function(
     ), ".."), labels)
   }
   multi_summary$wrapped_labels <- wrap_labels(multi_summary$response)
-
+  
   print(multi_summary)
-
+  
   # print(demographic_variable)
-
+  
   # based on demographics determine the variables
   switch(demographic_variable,
-    "Gender" = {
-      color_var <- ~Gender
-      legendgroup <- ~Gender
-      legendtext <- "Gender"
-    },
-    "income_recode" = {
-      color_var <- ~income_recode
-      legendgroup <- ~income_recode
-      legendtext <- "Income Groups"
-    },
-    "edu_recode" = {
-      color_var <- ~edu_recode
-      legendgroup <- ~edu_recode
-      legendtext <- "Education Levels"
-    },
-    "Year.of.Birth" = {
-      color_var <- ~Year.of.Birth
-      legendgroup <- ~Year.of.Birth
-      legendtext <- "Age Group"
-    },
-    "race_recode" = {
-      color_var <- ~race_recode
-      legendgroup <- ~race_recode
-      legendtext <- "Race"
-    }
+         "Gender" = {
+           color_var <- ~Gender
+           legendgroup <- ~Gender
+           legendtext <- "Gender"
+         },
+         "income_recode" = {
+           color_var <- ~income_recode
+           legendgroup <- ~income_recode
+           legendtext <- "Income Groups"
+         },
+         "edu_recode" = {
+           color_var <- ~edu_recode
+           legendgroup <- ~edu_recode
+           legendtext <- "Education Levels"
+         },
+         "Year.of.Birth" = {
+           color_var <- ~Year.of.Birth
+           legendgroup <- ~Year.of.Birth
+           legendtext <- "Age Group"
+         },
+         "race_recode" = {
+           color_var <- ~race_recode
+           legendgroup <- ~race_recode
+           legendtext <- "Race"
+         }
   )
-
+  
   multi_visualization <- NA
-
+  
   # Visualization (HORIZONTAL BAR CHART) using Plotly
   multi_visualization <- plot_ly(
     data = multi_summary,
@@ -116,11 +116,11 @@ multi_choice_questions <- function(
         showlegend = FALSE
       )
     )
-
+  
   print("---------")
-
+  
   # print(multi_visualization)
   print("---------")
-
+  
   return(multi_visualization)
 }

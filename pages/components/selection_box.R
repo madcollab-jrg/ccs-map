@@ -21,7 +21,7 @@ get_survey_questions <- function(survey, fileName) {
 get_census_items <- function(census_item) {
   # "'Census State'", "'Census County'", "'Census Block'"
   survey_questions <- c() # place holder
-
+  
   # TODO: probably save this locally or within app files
   file_loc <- paste(getwd(), "/census_items/census_items.yaml", sep = "")
   possible_values <- read_yaml(file_loc)
@@ -71,7 +71,7 @@ make_conditional_panel_survey <- function(survey, id, file_name = NA) {
       )
     )
   )
-
+  
   return(survey_conditional_panel)
 }
 
@@ -97,19 +97,19 @@ survey_box_ui <- function(surveys) {
   #
   # Returns:
   #   box with the required selectInput and conditionalPanels
-
+  
   surveyui <- box(
     class = "survey-box",
     collapsible = FALSE,
     actionButton("helpBtn",
-      "Help",
-      class = "button-common",
-      style = "margin-bottom: 0.5rem;"
+                 "Help",
+                 class = "button-common",
+                 style = "margin-bottom: 0.5rem;"
     ),
     actionButton("definitionsBtn",
-      "Definitions",
-      class = "button-common",
-      style = "margin-bottom: 0.5rem;"
+                 "Definitions",
+                 class = "button-common",
+                 style = "margin-bottom: 0.5rem;"
     ),
     p("STEP 1: Select a survey",
       class = "label",
@@ -216,13 +216,13 @@ survey_box_ui <- function(surveys) {
     ),
     p(""),
     p(""),
-
+    
     # use to compute representation
     p("STEP 3: Choose a geography to examine the data", class = "label"),
     span("Check the list of geographies here: ", class = "label-desc"),
     actionLink("howWeAnalEle",
-      "How we aggregate the data based on geography unit",
-      class = "label-link font-sm"
+               "How we aggregate the data based on geography unit",
+               class = "label-link font-sm"
     ),
     selectizeInput(
       inputId = "census_level",
