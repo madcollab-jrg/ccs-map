@@ -13,6 +13,7 @@ survey_results_ui <- function(demog, surveyQues) {
       </div>"
     )),
     plotlyOutput("survey_results"), # for plotly
+    DT::dataTableOutput("demographic_table"), # for demographic table
     width = 12,
     collapsible = FALSE,
     maximizable = TRUE,
@@ -30,8 +31,8 @@ make_color_mapping <- function(column, options) {
 
 # Error Plot Graph
 source("pages/components/visualizations/error_plot.R")
-# Text Questions
-source("pages/components/visualizations/topic_modelling.R")
+# Text Questions - Enhanced Topic Modeling with Heatmaps
+source("pages/components/visualizations/enhanced_topic_modeling.R")
 # Matrix Questions
 source("pages/components/visualizations/matrix.R")
 # Multi-Choice Questions
@@ -165,8 +166,8 @@ resulting_graphics <- function(
       edu_color_mapping <- make_color_mapping(edu_var, edu_options)
       
       age_options <- c(
-        NA, "18_to_24", "25_to_34", "35_to_44", "45_to_54",
-        "55_to_64", "65_over"
+        NA, "18 to 24", "25 to 34", "35 to 44", "45 to 54",
+        "55 to 64", "65 over"
       )
       age_color_mapping <- make_color_mapping(age_var, age_options)
       
@@ -188,16 +189,16 @@ resulting_graphics <- function(
         data <- data %>%
           mutate(Year.of.Birth = 2024 - Year.of.Birth) %>%
           mutate(Year.of.Birth = dplyr::case_when(
-            Year.of.Birth >= 18 & Year.of.Birth <= 24 ~ "18_to_24",
-            Year.of.Birth >= 25 & Year.of.Birth <= 34 ~ "25_to_34",
-            Year.of.Birth >= 35 & Year.of.Birth <= 44 ~ "35_to_44",
-            Year.of.Birth >= 45 & Year.of.Birth <= 54 ~ "45_to_54",
-            Year.of.Birth >= 55 & Year.of.Birth <= 64 ~ "55_to_64",
-            Year.of.Birth >= 65 ~ "65_over",
+            Year.of.Birth >= 18 & Year.of.Birth <= 24 ~ "18 to 24",
+            Year.of.Birth >= 25 & Year.of.Birth <= 34 ~ "25 to 34",
+            Year.of.Birth >= 35 & Year.of.Birth <= 44 ~ "35 to 44",
+            Year.of.Birth >= 45 & Year.of.Birth <= 54 ~ "45 to 54",
+            Year.of.Birth >= 55 & Year.of.Birth <= 64 ~ "55 to 64",
+            Year.of.Birth >= 65 ~ "65 over",
             TRUE ~ NA_character_
           ))
       } else {
-        data <- data %>% mutate(Year.of.Birth = "18_to_24")
+        data <- data %>% mutate(Year.of.Birth = "18 to 24")
       }
       
       # --- NEW: apply the SAME geography selection as the table (Step 3)
@@ -248,27 +249,79 @@ resulting_graphics <- function(
                          "race"     = matrix_questions(data_for_visualization, race_var, q_subtype)
           )
           output$survey_results <- renderPlotly(plot)
+          # Hide table for non-open-ended questions
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Table not available for this question type"))
+          })
           enable("run_report")
         }, error = function(e) {
           output$survey_results <- renderPlotly(error_plot("No plots available"))
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Error loading data"))
+          })
           enable("run_report")
         })
         
       } else if (q_type == "open-ended") {
         tryCatch({
-          plot <- switch(demographic_desc,
-                         "income"   = perform_topic_modeling(data_for_visualization, income_var, input$survey),
-                         "education"= perform_topic_modeling(data_for_visualization, edu_var,   input$survey),
-                         "age"      = perform_topic_modeling(data_for_visualization, age_var,   input$survey),
-                         "gender"   = perform_topic_modeling(data_for_visualization, gender_var,input$survey),
-                         "race"     = perform_topic_modeling(data_for_visualization, race_var,  input$survey)
+          # Map demographic description to actual variable name
+          demographic_var <- switch(demographic_desc,
+                                   "income"   = income_var,
+                                   "education"= edu_var,
+                                   "age"      = age_var,
+                                   "gender"   = gender_var,
+                                   "race"     = race_var
           )
+          
+          # Use enhanced topic modeling with demographic heatmap
+          visualization_results <- enhanced_topic_modeling_visualization(
+            data_for_visualization, demographic_var, filter_input = NA, num_topics = 4
+          )
+          
+          if (!is.null(visualization_results)) {
+            # Use demographic heatmap as the main visualization
+            plot <- visualization_results$demographic_heatmap
+            
+            # Render demographic table for open-ended questions
+            if (!is.null(visualization_results$demographic_table)) {
+              output$demographic_table <- DT::renderDataTable({
+                DT::datatable(
+                  visualization_results$demographic_table,
+                  options = list(
+                    pageLength = 10,
+                    scrollX = TRUE,
+                    dom = 'Bfrtip',
+                    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+                  ),
+                  extensions = 'Buttons',
+                  caption = paste("Demographic breakdown for", demographic_var)
+                )
+              })
+            } else {
+              output$demographic_table <- DT::renderDataTable({
+                DT::datatable(data.frame(Message = "No demographic data available"))
+              })
+            }
+            
+            # Store additional results for potential future use
+            # visualization_results$topic_results
+            # visualization_results$demographic_summaries
+          } else {
+            plot <- NULL
+            output$demographic_table <- DT::renderDataTable({
+              DT::datatable(data.frame(Message = "No data available"))
+            })
+          }
+          
           toggle_loader(FALSE)
           output$survey_results <- renderPlotly(plot)
           enable("run_report")
         }, error = function(e) {
           toggle_loader(FALSE)
           output$survey_results <- renderPlotly(error_plot("No plots available"))
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Error loading data"))
+          })
           enable("run_report")
         })
         
@@ -283,10 +336,17 @@ resulting_graphics <- function(
           )
           toggle_loader(FALSE)
           output$survey_results <- renderPlotly(plot)
+          # Hide table for non-open-ended questions
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Table not available for this question type"))
+          })
           enable("run_report")
         }, error = function(e) {
           toggle_loader(FALSE)
           output$survey_results <- renderPlotly(error_plot("No plots available"))
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Error loading data"))
+          })
           enable("run_report")
         })
         
@@ -301,10 +361,17 @@ resulting_graphics <- function(
           )
           toggle_loader(FALSE)
           output$survey_results <- renderPlotly(plot)
+          # Hide table for non-open-ended questions
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Table not available for this question type"))
+          })
           enable("run_report")
         }, error = function(e) {
           toggle_loader(FALSE)
           output$survey_results <- renderPlotly(error_plot("No plots available"))
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Error loading data"))
+          })
           enable("run_report")
         })
         
@@ -319,6 +386,10 @@ resulting_graphics <- function(
         )
         toggle_loader(FALSE)
         output$survey_results <- renderPlotly(plot)
+        # Hide table for non-open-ended questions
+        output$demographic_table <- DT::renderDataTable({
+          DT::datatable(data.frame(Message = "Table not available for this question type"))
+        })
         enable("run_report")
       }
     } else {
@@ -326,6 +397,9 @@ resulting_graphics <- function(
       toggle_loader(FALSE)
       message("no plots")
       output$survey_results <- renderPlotly(error_plot("No plots available"))
+      output$demographic_table <- DT::renderDataTable({
+        DT::datatable(data.frame(Message = "No data available"))
+      })
     }
   })
 }

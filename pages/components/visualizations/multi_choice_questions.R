@@ -21,7 +21,7 @@ multi_choice_questions <- function(
   
   # Remove other responses
   multi_summary <- multi_summary %>%
-    filter(!grepl("^Other \\(please specify\\)", response)) %>%
+    filter(!grepl("^Other", response)) %>%
     filter(!is.na(!!sym(demographic_variable)))
   
   if (demographic_variable == "Gender") {
@@ -82,9 +82,11 @@ multi_choice_questions <- function(
     x = ~freq,
     y = ~wrapped_labels,
     text = ~ paste(
-      "<b>Response</b>: ", response
+      "<b>Response</b>: ", response,
+      "<br><b>Count</b>: ", count
     ),
     hoverinfo = "text",
+    textposition = "none",
     type = "bar",
     orientation = "h",
     color = color_var,
@@ -99,21 +101,21 @@ multi_choice_questions <- function(
   ) %>%
     layout(
       yaxis = list(
-        tickangle = -45, title = "Responses", family = "'Inter'",
+        title = "Responses", family = "'Inter'",
         ticktext = ~wrapped_labels
       ),
       xaxis = list(title = "Percent of Respondents", family = "'Inter'"),
       legend = list(
-        x = 0,
-        y = -0.2,
-        orientation = "h",
+        x = 1,
+        y = 1,
+        orientation = "v",
         font = list(size = 12, family = "'Inter'"),
         title = list(
           text = legendtext,
           font = list(size = 16, family = "'Inter'")
         ),
         itemsizing = "constant", # Ensures legend items have constant size
-        showlegend = FALSE
+        showlegend = TRUE
       )
     )
   
