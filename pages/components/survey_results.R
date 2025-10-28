@@ -48,57 +48,62 @@ data_for_visualization <- NA
 
 .geo_input_id_for_level <- function(level) {
   switch(level,
-         "Census Tract"  = "census_tract_items",
-         "Census State"  = "census_state_items",
-         "Census County" = "census_county_items",
-         "Zipcode"       = "census_zipcode_items",
-         "State Lower"   = "census_state_lower_items",
-         "State Upper"   = "census_state_upper_items",
-         "Congress"      = "census_congress_items",
-         NULL
+    "Census Tract"  = "census_tract_items",
+    "Census State"  = "census_state_items",
+    "Census County" = "census_county_items",
+    "Zipcode"       = "census_zipcode_items",
+    "State Lower"   = "census_state_lower_items",
+    "State Upper"   = "census_state_upper_items",
+    "Congress"      = "census_congress_items",
+    NULL
   )
 }
 
 .find_first_col <- function(df, patterns) {
-  cand <- names(df)[Reduce(`|`, lapply(patterns, function(p)
-    grepl(p, names(df), ignore.case = TRUE)))]
+  cand <- names(df)[Reduce(`|`, lapply(patterns, function(p) {
+    grepl(p, names(df), ignore.case = TRUE)
+  }))]
   if (length(cand)) cand[1] else NULL
 }
 
 apply_geo_filter <- function(df, input) {
   lvl <- input$census_level
-  id  <- .geo_input_id_for_level(lvl)
-  if (is.null(id)) return(df)
+  id <- .geo_input_id_for_level(lvl)
+  if (is.null(id)) {
+    return(df)
+  }
   val <- input[[id]]
-  if (is.null(val) || is.na(val) || identical(val, "")) return(df)
-  
+  if (is.null(val) || is.na(val) || identical(val, "")) {
+    return(df)
+  }
+
   # Heuristics for common column names in raw survey rows
   patterns <- switch(lvl,
-                     "Census State"  = c("^state$", "state_name"),
-                     "Census County" = c("^county$", "county_name"),
-                     "Zipcode"       = c("^zip", "zipcode", "postal"),
-                     "Census Tract"  = c("tract"),
-                     "State Lower"   = c("assembly", "state_lower", "lower"),
-                     "State Upper"   = c("senate", "state_upper", "upper"),
-                     "Congress"      = c("congress"),
-                     character()
+    "Census State"  = c("^state$", "state_name"),
+    "Census County" = c("^county$", "county_name"),
+    "Zipcode"       = c("^zip", "zipcode", "postal"),
+    "Census Tract"  = c("tract"),
+    "State Lower"   = c("assembly", "state_lower", "lower"),
+    "State Upper"   = c("senate", "state_upper", "upper"),
+    "Congress"      = c("congress"),
+    character()
   )
-  
+
   col <- .find_first_col(df, patterns)
   if (is.null(col)) {
     message(sprintf("[geo-filter] No matching column for '%s' in data; leaving unfiltered.", lvl))
     return(df)
   }
-  
+
   # Compare as strings to be robust against numeric/character mismatches
   df %>% dplyr::filter(as.character(.data[[col]]) == as.character(val))
 }
 # -------------------------------------------------------------------------------
 
 resulting_graphics <- function(
-    input, output, survey_data, is_survey,
-    question = NA, question_type = NA, question_subtype = NA,
-    demographic_desc = NA
+  input, output, survey_data, is_survey,
+  question = NA, question_type = NA, question_subtype = NA,
+  demographic_desc = NA
 ) {
   # Function to toggle loader
   toggle_loader <- function(show = TRUE) {
@@ -110,46 +115,46 @@ resulting_graphics <- function(
       shinyjs::removeClass("survey_results", "hidden")
     }
   }
-  
+
   # Populate the survey results boxes with the required graphics
   reaction <- observeEvent(input$run_report, {
     disable("run_report")
     req(input$survey)
     req(input$census_level)
     req(input$demographic)
-    
+
     # Retrieve values
     q_type <- question_type()
     survey_flag <- is_survey()
-    
+
     # Temporary exceptions to set q_type when source metadata is NA
     if (is.na(q_type) && input$survey == "Tree Canopy Map") q_type <- "open-ended"
-    if (is.na(q_type) && input$survey == "Tree Knowledge")  q_type <- "multi-choice"
+    if (is.na(q_type) && input$survey == "Tree Knowledge") q_type <- "multi-choice"
     if (is.na(q_type) && input$survey == "Carbon Concerns") q_type <- "multi-choice"
     if (is.na(q_type) && input$survey == "Air Quality Map") q_type <- "open-ended"
-    if (is.na(q_type) && input$survey == "Urban Heat Map")  q_type <- "open-ended"
-    
+    if (is.na(q_type) && input$survey == "Urban Heat Map") q_type <- "open-ended"
+
     if (question() == 16 && input$survey == "General Survey") q_type <- "combined"
     if (question() == 17 && input$survey == "General Survey") q_type <- "combined"
-    
+
     if (q_type != "matrix") {
       toggle_loader(TRUE)
     }
-    
+
     print(paste("Selected Survey:", input$survey))
     print(paste("Question Type:", q_type))
     print(paste("Survey Flag:", survey_flag))
-    
+
     if (q_type != "Ranking" & survey_flag) {
       question_num <- question() # column number of question
-      
+
       # column names of categories
       income_var <- "income_recode"
-      edu_var    <- "edu_recode"
-      age_var    <- "Year.of.Birth"
+      edu_var <- "edu_recode"
+      age_var <- "Year.of.Birth"
       gender_var <- "Gender"
-      race_var   <- "race_recode"
-      
+      race_var <- "race_recode"
+
       # subcategories options + color mapping
       income_options <- c(
         NA, "Less than $25,000", "$35,000 to $49,999",
@@ -157,33 +162,33 @@ resulting_graphics <- function(
         "$100,000 to $149,999", "$150,000 to $199,999", "$200,000 or more"
       )
       income_color_mapping <- make_color_mapping(income_var, income_options)
-      
+
       edu_options <- c(
         NA, "Less than High School Diploma",
         "High School Graduate (Includes Equivalency)",
         "Some College or Associates Degree", "Bachelors Degree or Higher"
       )
       edu_color_mapping <- make_color_mapping(edu_var, edu_options)
-      
+
       age_options <- c(
         NA, "18 to 24", "25 to 34", "35 to 44", "45 to 54",
         "55 to 64", "65 over"
       )
       age_color_mapping <- make_color_mapping(age_var, age_options)
-      
+
       gender_options <- c(NA, "Non-binary", "Male", "Female")
       gender_color_mapping <- make_color_mapping(gender_var, gender_options)
-      
+
       race_options <- c(
         NA, "Black or African American", "Hispanic", "White",
         "Asian", "Native Hawaiian Pacific Islander",
         "American Indian Alaskan Native", "Two or More Races"
       )
       race_color_mapping <- make_color_mapping(race_var, race_options)
-      
+
       # --- raw survey rows
       data <- survey_data()
-      
+
       # Normalize year-of-birth -> age buckets
       if ("Year.of.Birth" %in% names(data)) {
         data <- data %>%
@@ -200,10 +205,10 @@ resulting_graphics <- function(
       } else {
         data <- data %>% mutate(Year.of.Birth = "18 to 24")
       }
-      
+
       # --- NEW: apply the SAME geography selection as the table (Step 3)
       data <- apply_geo_filter(data, input)
-      
+
       # data needed to make graphics by survey
       data_for_visualization <- NA
       print(input$survey)
@@ -233,156 +238,180 @@ resulting_graphics <- function(
         data_for_visualization <- data[, c(2, question_num + 3, 45:56, 20:27)]
       } else {
         output$survey_results <- renderPlotly(error_plot("Selected survey is not recognized."))
-        enable("run_report"); toggle_loader(FALSE); return(NULL)
+        enable("run_report")
+        toggle_loader(FALSE)
+        return(NULL)
       }
-      
+
       demographic_desc <- tolower(input$demographic)
-      
+
       if (q_type == "matrix") {
         q_subtype <- question_subtype()
-        tryCatch({
-          plot <- switch(demographic_desc,
-                         "income"   = matrix_questions(data_for_visualization, income_var, q_subtype),
-                         "education"= matrix_questions(data_for_visualization, edu_var, q_subtype),
-                         "age"      = matrix_questions(data_for_visualization, age_var, q_subtype),
-                         "gender"   = matrix_questions(data_for_visualization, gender_var, q_subtype),
-                         "race"     = matrix_questions(data_for_visualization, race_var, q_subtype)
-          )
-          output$survey_results <- renderPlotly(plot)
-          # Hide table for non-open-ended questions
-          output$demographic_table <- DT::renderDataTable({
-            DT::datatable(data.frame(Message = "Table not available for this question type"))
-          })
-          enable("run_report")
-        }, error = function(e) {
-          output$survey_results <- renderPlotly(error_plot("No plots available"))
-          output$demographic_table <- DT::renderDataTable({
-            DT::datatable(data.frame(Message = "Error loading data"))
-          })
-          enable("run_report")
-        })
-        
+        tryCatch(
+          {
+            plot <- switch(demographic_desc,
+              "income" = matrix_questions(data_for_visualization, income_var, q_subtype),
+              "education" = matrix_questions(data_for_visualization, edu_var, q_subtype),
+              "age" = matrix_questions(data_for_visualization, age_var, q_subtype),
+              "gender" = matrix_questions(data_for_visualization, gender_var, q_subtype),
+              "race" = matrix_questions(data_for_visualization, race_var, q_subtype)
+            )
+            output$survey_results <- renderPlotly(plot)
+            # Hide table for non-open-ended questions
+            output$demographic_table <- DT::renderDataTable({
+              DT::datatable(data.frame(Message = "Table not available for this question type"))
+            })
+            enable("run_report")
+          },
+          error = function(e) {
+            output$survey_results <- renderPlotly(error_plot("No plots available"))
+            output$demographic_table <- DT::renderDataTable({
+              DT::datatable(data.frame(Message = "Error loading data"))
+            })
+            enable("run_report")
+          }
+        )
       } else if (q_type == "open-ended") {
-        tryCatch({
-          # Map demographic description to actual variable name
-          demographic_var <- switch(demographic_desc,
-                                   "income"   = income_var,
-                                   "education"= edu_var,
-                                   "age"      = age_var,
-                                   "gender"   = gender_var,
-                                   "race"     = race_var
-          )
-          
-          # Use enhanced topic modeling with demographic heatmap
-          visualization_results <- enhanced_topic_modeling_visualization(
-            data_for_visualization, demographic_var, filter_input = NA, num_topics = 4
-          )
-          
-          if (!is.null(visualization_results)) {
-            # Use demographic heatmap as the main visualization
-            plot <- visualization_results$demographic_heatmap
-            
-            # Render demographic table for open-ended questions
-            if (!is.null(visualization_results$demographic_table)) {
-              output$demographic_table <- DT::renderDataTable({
-                DT::datatable(
-                  visualization_results$demographic_table,
-                  options = list(
-                    pageLength = 10,
-                    scrollX = TRUE,
-                    dom = 'Bfrtip',
-                    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-                  ),
-                  extensions = 'Buttons',
-                  caption = paste("Demographic breakdown for", demographic_var)
+        tryCatch(
+          {
+            # Map demographic description to actual variable name
+            demographic_var <- switch(demographic_desc,
+              "income" = income_var,
+              "education" = edu_var,
+              "age" = age_var,
+              "gender" = gender_var,
+              "race" = race_var
+            )
+
+            # Use enhanced topic modeling with demographic heatmap
+            visualization_results <- enhanced_topic_modeling_visualization(
+              data_for_visualization, demographic_var,
+              filter_input = NA, num_topics = 4
+            )
+
+            if (!is.null(visualization_results)) {
+              # Use demographic heatmap as the main visualization
+              plot <- visualization_results$demographic_heatmap
+
+              # Render demographic table for open-ended questions
+              if (!is.null(visualization_results$demographic_table)) {
+                # Get better display name for demographic variable
+                demo_display_name <- switch(demographic_var,
+                  "Year.of.Birth" = "Age Range",
+                  "income_recode" = "Income Bracket",
+                  "edu_recode" = "Education Level",
+                  "race_recode" = "Race",
+                  demographic_var
                 )
-              })
+
+                # Rename the demographic column in the table
+                table_data <- visualization_results$demographic_table
+                names(table_data)[names(table_data) == demographic_var] <- demo_display_name
+
+                output$demographic_table <- DT::renderDataTable({
+                  DT::datatable(
+                    table_data,
+                    options = list(
+                      pageLength = 10,
+                      scrollX = TRUE,
+                      dom = "Bfrtip",
+                      buttons = c("copy", "csv", "excel", "pdf", "print")
+                    ),
+                    extensions = "Buttons",
+                    caption = paste("Demographic breakdown for", demo_display_name)
+                  )
+                })
+              } else {
+                output$demographic_table <- DT::renderDataTable({
+                  DT::datatable(data.frame(Message = "No demographic data available"))
+                })
+              }
+
+              # Store additional results for potential future use
+              # visualization_results$topic_results
+              # visualization_results$demographic_summaries
             } else {
+              plot <- NULL
               output$demographic_table <- DT::renderDataTable({
-                DT::datatable(data.frame(Message = "No demographic data available"))
+                DT::datatable(data.frame(Message = "No data available"))
               })
             }
-            
-            # Store additional results for potential future use
-            # visualization_results$topic_results
-            # visualization_results$demographic_summaries
-          } else {
-            plot <- NULL
+
+            toggle_loader(FALSE)
+            output$survey_results <- renderPlotly(plot)
+            enable("run_report")
+          },
+          error = function(e) {
+            toggle_loader(FALSE)
+            output$survey_results <- renderPlotly(error_plot("No plots available"))
             output$demographic_table <- DT::renderDataTable({
-              DT::datatable(data.frame(Message = "No data available"))
+              DT::datatable(data.frame(Message = "Error loading data"))
             })
+            enable("run_report")
           }
-          
-          toggle_loader(FALSE)
-          output$survey_results <- renderPlotly(plot)
-          enable("run_report")
-        }, error = function(e) {
-          toggle_loader(FALSE)
-          output$survey_results <- renderPlotly(error_plot("No plots available"))
-          output$demographic_table <- DT::renderDataTable({
-            DT::datatable(data.frame(Message = "Error loading data"))
-          })
-          enable("run_report")
-        })
-        
+        )
       } else if (q_type == "multi-choice") {
-        tryCatch({
-          plot <- switch(demographic_desc,
-                         "income"   = multi_choice_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
-                         "education"= multi_choice_questions(data_for_visualization, edu_var,    NA, edu_color_mapping,    edu_options),
-                         "age"      = multi_choice_questions(data_for_visualization, age_var,    NA, age_color_mapping,    age_options),
-                         "gender"   = multi_choice_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
-                         "race"     = multi_choice_questions(data_for_visualization, race_var,    NA, race_color_mapping,   race_options)
-          )
-          toggle_loader(FALSE)
-          output$survey_results <- renderPlotly(plot)
-          # Hide table for non-open-ended questions
-          output$demographic_table <- DT::renderDataTable({
-            DT::datatable(data.frame(Message = "Table not available for this question type"))
-          })
-          enable("run_report")
-        }, error = function(e) {
-          toggle_loader(FALSE)
-          output$survey_results <- renderPlotly(error_plot("No plots available"))
-          output$demographic_table <- DT::renderDataTable({
-            DT::datatable(data.frame(Message = "Error loading data"))
-          })
-          enable("run_report")
-        })
-        
+        tryCatch(
+          {
+            plot <- switch(demographic_desc,
+              "income" = multi_choice_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
+              "education" = multi_choice_questions(data_for_visualization, edu_var, NA, edu_color_mapping, edu_options),
+              "age" = multi_choice_questions(data_for_visualization, age_var, NA, age_color_mapping, age_options),
+              "gender" = multi_choice_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
+              "race" = multi_choice_questions(data_for_visualization, race_var, NA, race_color_mapping, race_options)
+            )
+            toggle_loader(FALSE)
+            output$survey_results <- renderPlotly(plot)
+            # Hide table for non-open-ended questions
+            output$demographic_table <- DT::renderDataTable({
+              DT::datatable(data.frame(Message = "Table not available for this question type"))
+            })
+            enable("run_report")
+          },
+          error = function(e) {
+            toggle_loader(FALSE)
+            output$survey_results <- renderPlotly(error_plot("No plots available"))
+            output$demographic_table <- DT::renderDataTable({
+              DT::datatable(data.frame(Message = "Error loading data"))
+            })
+            enable("run_report")
+          }
+        )
       } else if (q_type == "select box") {
-        tryCatch({
-          plot <- switch(demographic_desc,
-                         "income"   = select_box_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
-                         "education"= select_box_questions(data_for_visualization, edu_var,    NA, edu_color_mapping,    edu_options),
-                         "age"      = select_box_questions(data_for_visualization, age_var,    NA, age_color_mapping,    age_options),
-                         "gender"   = select_box_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
-                         "race"     = select_box_questions(data_for_visualization, race_var,    NA, race_color_mapping,   race_options)
-          )
-          toggle_loader(FALSE)
-          output$survey_results <- renderPlotly(plot)
-          # Hide table for non-open-ended questions
-          output$demographic_table <- DT::renderDataTable({
-            DT::datatable(data.frame(Message = "Table not available for this question type"))
-          })
-          enable("run_report")
-        }, error = function(e) {
-          toggle_loader(FALSE)
-          output$survey_results <- renderPlotly(error_plot("No plots available"))
-          output$demographic_table <- DT::renderDataTable({
-            DT::datatable(data.frame(Message = "Error loading data"))
-          })
-          enable("run_report")
-        })
-        
+        tryCatch(
+          {
+            plot <- switch(demographic_desc,
+              "income" = select_box_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
+              "education" = select_box_questions(data_for_visualization, edu_var, NA, edu_color_mapping, edu_options),
+              "age" = select_box_questions(data_for_visualization, age_var, NA, age_color_mapping, age_options),
+              "gender" = select_box_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
+              "race" = select_box_questions(data_for_visualization, race_var, NA, race_color_mapping, race_options)
+            )
+            toggle_loader(FALSE)
+            output$survey_results <- renderPlotly(plot)
+            # Hide table for non-open-ended questions
+            output$demographic_table <- DT::renderDataTable({
+              DT::datatable(data.frame(Message = "Table not available for this question type"))
+            })
+            enable("run_report")
+          },
+          error = function(e) {
+            toggle_loader(FALSE)
+            output$survey_results <- renderPlotly(error_plot("No plots available"))
+            output$demographic_table <- DT::renderDataTable({
+              DT::datatable(data.frame(Message = "Error loading data"))
+            })
+            enable("run_report")
+          }
+        )
       } else if (q_type == "combined") {
         print("you are in combined")
         plot <- switch(demographic_desc,
-                       "income"   = combined_multi_choice_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
-                       "education"= combined_multi_choice_questions(data_for_visualization, edu_var,    NA, edu_color_mapping,    edu_options),
-                       "age"      = combined_multi_choice_questions(data_for_visualization, age_var,    NA, age_color_mapping,    age_options),
-                       "gender"   = combined_multi_choice_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
-                       "race"     = combined_multi_choice_questions(data_for_visualization, race_var,    NA, race_color_mapping,   race_options)
+          "income" = combined_multi_choice_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
+          "education" = combined_multi_choice_questions(data_for_visualization, edu_var, NA, edu_color_mapping, edu_options),
+          "age" = combined_multi_choice_questions(data_for_visualization, age_var, NA, age_color_mapping, age_options),
+          "gender" = combined_multi_choice_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
+          "race" = combined_multi_choice_questions(data_for_visualization, race_var, NA, race_color_mapping, race_options)
         )
         toggle_loader(FALSE)
         output$survey_results <- renderPlotly(plot)
