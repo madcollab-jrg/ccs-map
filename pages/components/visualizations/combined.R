@@ -4,7 +4,7 @@ library(tidyr)
 library(plotly)
 library(stringr)
 
-# Define response mappings for the single question
+# (Optional) defaults you can keep or remove — the function now uses the args you pass in
 options <- c(
   "1" = "Government",
   "2" = "Private Sector",
@@ -13,80 +13,68 @@ options <- c(
   "5" = "Community Groups"
 )
 
-# Define colorings for the responses
 colorings_list <- data.frame(
-  Response_Label = c(
-    "Government", "Private Sector",
-    "Non-Profit Organizations", "Individuals", "Community Groups"
-  ),
-  color = c(
-    "#1f77b4", "#ff7f0e", "#2ca02c",
-    "#d62728", "#8c564b"
-  ),
+  Response_Label = c("Government","Private Sector","Non-Profit Organizations","Individuals","Community Groups"),
+  color = c("#1f77b4","#ff7f0e","#2ca02c","#d62728","#8c564b"),
   stringsAsFactors = FALSE
 )
 
 # Combined Multi-Choice Questions Visualization Function (Single Question)
 combined_multi_choice_questions <- function(
-    survey_data, # Data frame containing responses for one question
-    demographic_variable, # Demographic variable for filtering/grouping (e.g., "Gender")
-    filter_input = NA, # Specific demographic value to filter (optional, default is NA)
-    colorings, # Data frame with response labels and colors
-    options_list # Named vector mapping response codes to descriptive labels
-    ) {
+    survey_data,            # Data frame containing responses for one question
+    demographic_variable,   # Demographic variable for grouping (e.g., "Gender")
+    filter_input = NA,      # Specific demographic value to filter (optional)
+    colorings,              # Data frame with Response_Label and color
+    options_list            # Named vector mapping response codes -> labels
+) {
   # Ensure the data frame has at least two columns: Demographic and Response
   if (ncol(survey_data) < 2) {
     stop("The data frame must contain at least two columns: Demographic and Response.")
   }
-
+  
   # Rename the second column to 'response' for consistency
   names(survey_data)[2] <- "response"
-
+  
   # Select only the demographic_variable and 'response' columns
   survey_data <- survey_data %>%
-    select(!!sym(demographic_variable), response)
-
-  # Convert response to character and handle NA values
+    dplyr::select(!!rlang::sym(demographic_variable), response)
+  
+  # Convert response to character and handle NA values, split multi-selects
   survey_data <- survey_data %>%
     mutate(response = as.character(response)) %>%
     mutate(response = ifelse(is.na(response), "NA", response)) %>%
-    separate_rows(response, sep = "") %>%
+    tidyr::separate_rows(response, sep = "") %>%   # if responses are stored like "135"
     filter(response != "")
-
-  # Map numeric responses to labels
+  
+  # Map numeric responses to labels using provided options_list (fallback to hard-coded)
+  lab_map <- if (!missing(options_list) && length(options_list)) options_list else options
   survey_data <- survey_data %>%
-    mutate(Response_Label = case_when(
-      response == "1" ~ "Government",
-      response == "2" ~ "Private Sector",
-      response == "3" ~ "Non-Profit Organizations",
-      response == "4" ~ "Individuals",
-      response == "5" ~ "Community Groups",
+    mutate(Response_Label = dplyr::case_when(
+      response %in% names(lab_map) ~ unname(lab_map[response]),
       TRUE ~ "Other"
     ))
-
-  # Filter based on demographic_variable and filter_input if provided
+  
+  # Optional: filter by a specific demographic value, if given
   if (!is.na(filter_input)) {
     survey_data <- survey_data %>%
-      filter(!!sym(demographic_variable) == filter_input)
+      dplyr::filter(!!rlang::sym(demographic_variable) == filter_input)
   }
-
+  
   # Calculate response frequencies by demographic group
   summary_data <- survey_data %>%
-    group_by(!!sym(demographic_variable), Response_Label) %>%
-    summarise(Count = n(), .groups = "drop") %>%
-    group_by(!!sym(demographic_variable)) %>%
+    group_by(!!rlang::sym(demographic_variable), Response_Label) %>%
+    summarise(Count = dplyr::n(), .groups = "drop") %>%
+    group_by(!!rlang::sym(demographic_variable)) %>%
     mutate(Percentage = (Count / sum(Count)) * 100) %>%
     ungroup()
-
-  # Merge with colorings to assign colors to each response category
+  
+  # Join colors (use the colorings argument; fallback to local colorings_list)
+  color_df <- if (!missing(colorings) && nrow(colorings) > 0) colorings else colorings_list
   summary_data <- summary_data %>%
-    left_join(colorings_list, by = "Response_Label")
-
-  # Check for missing colors and assign a default color if needed
-  summary_data <- summary_data %>%
+    left_join(color_df, by = "Response_Label") %>%
     mutate(color = ifelse(is.na(color), "#cccccc", color))
-
-  # Create the Plotly bar chart
+  
+  # Build plot
   plot <- plot_ly(
     data = summary_data,
     x = ~Percentage,
@@ -95,10 +83,10 @@ combined_multi_choice_questions <- function(
     colors = setNames(summary_data$color, summary_data$Response_Label),
     type = "bar",
     orientation = "h",
-    text = ~ paste(
-      "Response:", Response_Label,
-      "<br>Count:", Count,
-      "<br>Percentage:", round(Percentage, 1), "%"
+    text = ~ paste0(
+      "Response: ", Response_Label,
+      "<br>Count: ", Count,
+      "<br>Percentage: ", round(Percentage, 1), "%"
     ),
     hoverinfo = "text"
   ) %>%
@@ -109,6 +97,6 @@ combined_multi_choice_questions <- function(
       yaxis = list(title = ""),
       showlegend = FALSE
     )
-
+  
   return(plot)
 }

@@ -54,14 +54,14 @@ perform_topic_modeling <- function(
   # Import stoplist (optional, based on your needs)
   # malletwords <-
   # scan("./data/report_data/mallet.txt", character(), quote = "")
-
-
+  
+  
   print(head(survey_data))
-
+  
   # Clean and preprocess responses
   example_open <- survey_data
   names(example_open)[2] <- "response"
-
+  
   # Text Cleaning Steps
   example_open$response_cleaned <- tolower(example_open$response)
   example_open$response_cleaned <-
@@ -74,9 +74,9 @@ perform_topic_modeling <- function(
     wordStem(example_open$response_cleaned, language = "english")
   example_open$response_cleaned <-
     lemmatize_words(example_open$response_cleaned)
-
+  
   survey_data <- example_open
-
+  
   # Preprocess the text data for STM
   processed_texts <- textProcessor(
     documents = survey_data$response_cleaned,
@@ -89,56 +89,56 @@ perform_topic_modeling <- function(
   docs <- out$documents
   vocab <- out$vocab
   meta <- out$meta
-
+  
   # Fit the STM model
   topic_model <- stm(
     documents = docs, vocab = vocab,
     K = num_topics, data = meta, max.em.its = 150, init.type = "Spectral"
   )
-
+  
   # Extract top words for each topic
   top_words <- labelTopics(topic_model, n = 10)
   topic_words <- top_words$prob
-
+  
   # Convert top words to human-readable format
   human_readable_topics <- apply(topic_words, 1, function(topic) {
     words <- unlist(strsplit(topic, ", "))
     readable_words <- sapply(words, replace_word_lemma)
     paste(readable_words, collapse = ", ")
   })
-
+  
   # Display human-readable topics
   for (i in 1:num_topics) {
     topic <- paste("Topic", i, "-", human_readable_topics[i])
     print(topic)
   }
-
+  
   # Get document-topic matrix
   doc_topic_matrix <- topic_model$theta
-
+  
   # Convert matrix to data frame
   doc_topic_df <- as.data.frame(doc_topic_matrix)
   doc_topic_df$Document <- rownames(doc_topic_df)
-
+  
   # Summarize topic proportions
   topic_sums <- colSums(doc_topic_matrix)
   topic_descriptions <- paste0(
     "Topic ", 1:num_topics, " - ",
     human_readable_topics
   )
-
+  
   # Apply text wrapping to topic descriptions
   topic_wrapped <- str_wrap(topic_descriptions, width = 40)
-
+  
   # Create a data frame for plotting
   plot_data <- data.frame(
     Topic = topic_wrapped,
     Proportion = topic_sums / sum(topic_sums)
   )
-
+  
   # Define a visually appealing color palette
   palette <- brewer.pal(n = max(4, num_topics), name = "Pastel2")
-
+  
   # Create the Plotly bar chart
   p <- plot_ly(
     data = plot_data,
@@ -166,7 +166,7 @@ perform_topic_modeling <- function(
       font = list(family = "Inter, sans-serif", size = 12, fontweight = 600),
       showlegend = FALSE
     )
-
+  
   # Return the Plotly object
   return(p)
 }

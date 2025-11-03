@@ -1,265 +1,203 @@
 server <- function(input, output, session) {
-  # Function to update the selected survey, demo, level
-  output$survey <- renderText({
-    paste(input$survey)
-  })
-
-  output$surveyQues <- renderText({
-    paste(input$survey)
-  })
-
-  output$demographic <- renderText({
-    paste(input$demographic)
-  })
-
-  output$demo <- renderText({
-    paste(input$demographic)
-  })
-
-  output$demog <- renderText({
-    paste(input$demographic)
-  })
-
-  output$census_level <- renderText({
-    paste(input$census_level)
-  })
-
-  # demographic_data_loc <-
-  #   "/Volumes/cbjackson2/ccs-knowledge/ccs-data-demographic_unprocessed/"
-  # survey_data_loc <- "/Volumes/cbjackson2/ccs-knowledge/ccs-data/"
-
-  # survey_data_loc <- "/Volumes/cbjackson2/ccs-knowledge/ccs-data-updated/"
-
+  
+  output$survey <- renderText({ input$survey })
+  output$surveyQues <- renderText({ input$survey })
+  output$demographic <- renderText({ input$demographic })
+  output$demo <- renderText({ input$demographic })
+  output$demog <- renderText({ input$demographic })
+  output$census_level <- renderText({ input$census_level })
+  
   survey_data_loc <- "./data/ccs-data-updated/"
-
-
-  # import survey data
-
-  survey_data <- eventReactive(
-    list(input$run_report),
-    {
-      req(input$survey)
-      req(input$demographic)
-      # import data here - reactive to input$survey
-      name <- input$survey
-      # survey_data <-
-      #   read.csv(paste(survey_data_loc,
-      # input_to_data_survey[[name]], sep = ""))
-      survey_data <-
-        read.csv(paste(survey_data_loc, input_to_data_survey_desc[[name]], "/",
-          input_to_data_survey_desc[[name]], ".csv",
-          sep = ""
-        ))
-      # print(paste(survey_data_loc, input_to_data_survey_desc[[name]], "/",
-      #   input_to_data_survey_desc[[name]], ".csv",
-      #   sep = ""
-      # ))
-      survey_data[, -1]
-    }
-  )
-
-  # import census data
+  
+  survey_data <- eventReactive(input$run_report, {
+    req(input$survey, input$demographic)
+    name <- input$survey
+    read.csv(paste0(survey_data_loc, input_to_data_survey_desc[[name]], "/", input_to_data_survey_desc[[name]], ".csv"))[, -1]
+  })
+  
   census_data <- reactive({
     census_level <- census_input_to_data[[input$census_level]]
     census_id <- censusInputId[input$census_level]
   })
-
-  # import demographic data
+  
   demographic_data <- reactive({
-    demographic_id <- demographic_desc_to_data[[input$demographic]]
-    return(demographic_id)
+    demographic_desc_to_data[[input$demographic]]
   })
-
-  # file for representativeness scores
+  
   file_to_get <- reactive({
     input$run_report
-    if (input$survey != "" & input$census_level != "" &
-      input$demographic != "") {
+    if (!is.null(input$survey) && input$survey != "" &&
+        !is.null(input$census_level) && input$census_level != "" &&
+        !is.null(input$demographic) && input$demographic != "") {
+      
       census_level <- census_input_to_data[[input$census_level]]
-      census_id <- censusInputId[input$census_level]
-
-      # print(census_id)
-      # print(input[[census_id]])
-
+      census_id <- censusInputId[[input$census_level]]
+      
+      if (is.null(census_id) || is.null(input[[census_id]]) || input[[census_id]] == "") {
+        return(NULL)
+      }
+      
       key <- input[[census_id]]
-
-      file <- paste(input_to_data_demo[[input$survey]], census_level,
-        census_level_input_to_data[["data"]][[census_level]][[key]],
-        sep = "-"
-      )
-      file_loc <- paste(input_to_data_demo[[input$survey]],
-        "/", file, ".RData",
-        sep = ""
-      )
+      file <- paste(input_to_data_demo[[input$survey]], census_level, census_level_input_to_data[["data"]][[census_level]][[key]], sep = "-")
+      paste0(input_to_data_demo[[input$survey]], "/", file, ".RData")
     } else {
-      file <- ""
+      NULL
     }
   })
-
+  
   file_to_get_sum <- reactive({
     req(input$run_report)
-    if (input$survey != "" & input$census_level != "" &
-      input$demographic != "") {
+    if (!is.null(input$survey) && input$survey != "" &&
+        !is.null(input$census_level) && input$census_level != "" &&
+        !is.null(input$demographic) && input$demographic != "") {
+      
       census_level <- census_input_to_data[[input$census_level]]
-      census_id <- censusInputId[input$census_level]
-
+      census_id <- censusInputId[[input$census_level]]
+      
+      if (is.null(census_id) || is.null(input[[census_id]]) || input[[census_id]] == "") {
+        return(NULL)
+      }
+      
       key <- input[[census_id]]
-
-      file <- paste(input_to_data_survey_desc[[input$survey]], census_level,
-        census_level_input_to_data[["data"]][[census_level]][[key]],
-        sep = "-"
-      )
-      file_sum <- paste(input_to_data_survey_desc[[input$survey]],
-        "/", file, ".RData",
-        sep = ""
-      )
+      file <- paste(input_to_data_survey_desc[[input$survey]], census_level, census_level_input_to_data[["data"]][[census_level]][[key]], sep = "-")
+      paste0(input_to_data_survey_desc[[input$survey]], "/", file, ".RData")
     } else {
-      file <- ""
+      NULL
     }
   })
-
-
-  restricted_surveys <- c(
-    "Carbon Concerns", "Energy Concerns",
-    "General Survey", "Health Impacts",
-    "Tree Knowledge"
-  )
-
-
+  
+  restricted_surveys <- c("Carbon Concerns", "Energy Concerns", "General Survey", "Health Impacts", "Tree Knowledge")
+  
   observeEvent(input$survey, {
-    # If "Carbon Concerns" is selected, update the 'census_level' choices
-    if (input$survey %in% restricted_surveys) {
-      updateSelectizeInput(session, "census_level",
-        choices = c("Zipcode"), # Only show "Zipcode" for Carbon Concerns
-        selected = "Zipcode" # Set "Zipcode" as the selected option
-      )
-    } else {
-      # Otherwise, show the full list of geography options
-      updateSelectizeInput(session, "census_level",
-        choices = c(
-          "Census Tract", "Census State", "Census County",
-          "Zipcode", "State Lower", "State Upper", "Congress"
-        ),
-        selected = "" # Reset the selection
-      )
-    }
+    updateSelectizeInput(session, "census_level",
+                         choices = if (input$survey %in% restricted_surveys) c("Zipcode") else c("Census Tract", "Census State", "Census County", "Zipcode", "State Lower", "State Upper", "Congress"),
+                         selected = if (input$survey %in% restricted_surveys) "Zipcode" else ""
+    )
   })
-
+  
   observeEvent(input$survey, {
-    # If "restricted" is selected, update the 'demographic' choices
-    if (input$survey %in% restricted_surveys) {
-      updateSelectizeInput(session, "demographic",
-        choices = c(
-          "Gender", "Income",
-          "Education", "Race"
-        ), # Only show "Zipcode" for Carbon Concerns
-        selected = "Gender" # Set "Zipcode" as the selected option
-      )
-    } else {
-      # Otherwise, show the full list of demographic options
-      updateSelectizeInput(session, "demographic",
-        choices = c(
-          "Age", "Gender", "Income", "Education", "Race"
-        ),
-        selected = "" # Reset the selection
-      )
-    }
+    updateSelectizeInput(session, "demographic",
+                         choices = if (input$survey %in% restricted_surveys) c("Gender", "Income", "Education", "Race") else c("Age", "Gender", "Income", "Education", "Race"),
+                         selected = if (input$survey %in% restricted_surveys) "Gender" else ""
+    )
   })
-
-
-  # get question column number + question type for survey results
-  question_number <- eventReactive(
-    list(input$run_report),
-    {
-      req(input$survey)
-      req(input$demographic)
-      surveyQid <- surveyInputId[[input$survey]]
-      question <- input[[surveyQid]]
-      as.integer(str_extract(question, regex("[0-9]+"))) #+3
-    }
-  )
-
-  # get question type for graphics display
-  question_type <- eventReactive(
-    list(input$run_report),
-    {
-      req(input$survey)
-      req(input$demographic)
-      q_num <- question_number()
-      # print(q_num)
-      get_question_type(input$survey, q_num)
-    }
-  )
-
-  # question subtype - needed for matrix type questions
-  question_subtype <- eventReactive(
-    list(input$run_report),
-    {
-      req(input$survey)
-      req(input$demographic)
-      q_num <- question_number()
-      get_question_subtype(input$survey, q_num)
-    }
-  )
-
-  # is something a survey - For non-survey they haven't
-  #  decided on graphical displays
-  is_survey <- eventReactive(list(input$run_report), {
-    req(input$survey)
-    req(input$demographic)
+  
+  question_number <- eventReactive(input$run_report, {
+    req(input$survey, input$demographic)
+    question <- input[[surveyInputId[[input$survey]]]]
+    as.integer(str_extract(question, "[0-9]+"))
+  })
+  
+  question_type <- eventReactive(input$run_report, {
+    req(input$survey, input$demographic)
+    get_question_type(input$survey, question_number())
+  })
+  
+  question_subtype <- eventReactive(input$run_report, {
+    req(input$survey, input$demographic)
+    get_question_subtype(input$survey, question_number())
+  })
+  
+  is_survey <- eventReactive(input$run_report, {
+    req(input$survey, input$demographic)
     has_results[[input$survey]]
   })
-
-  # # middle panel data description
-  # get_data_description_reaction(input, output, surveyInputId,
-  #   survey_data, census_data,
-  #   file_loc = file_to_get
-  # )
-
+  
   get_data_desc_rep_reaction(input, output, surveyInputId,
-    survey_data, census_data,
-    file_loc = file_to_get,
-    file_sum = file_to_get_sum,
-    demographic_desc = demographic_data()
+                             survey_data, census_data,
+                             file_loc = file_to_get,
+                             file_sum = file_to_get_sum,
+                             demographic_desc = demographic_data()
   )
-
-  # results graphics
-  # print(is_survey)
-
+  
   resulting_graphics(
-    input, output, survey_data, is_survey,
+    input, output,
+    survey_data = reactive({
+      df <- survey_data()
+      if (is.null(df) || nrow(df) == 0) {
+        h4("No data available for the selected filters")
+        return(NULL)
+      }
+      df
+    }),
+    is_survey,
     question_number, question_type, question_subtype,
     demographic_desc = demographic_data()
   )
-
-  # observeEvent(input$lang, {
-  #   i18n$set_translation_language(input$lang)
-  # })
-
-  # all button and action link interaction on UI
-  observeEvent(input$examineDataBtn, {
-    updateTabItems(session, "navmenu", "reporting_tool")
+  
+  observeEvent(input$examineDataBtn, { updateTabItems(session, "navmenu", "reporting_tool") })
+  observeEvent(input$availDataBtn,   { updateTabItems(session, "navmenu", "avail_data") })
+  observeEvent(input$helpBtn,        { updateTabItems(session, "navmenu", "about") })
+  observeEvent(input$definitionsBtn, { updateTabItems(session, "navmenu", "avail_data") })
+  observeEvent(input$datasetEle,     { updateTabItems(session, "navmenu", "avail_data") })
+  observeEvent(input$howWeAnalEle,   { updateTabItems(session, "navmenu", "info_page") })
+  observeEvent(input$curatedData,    { updateTabItems(session, "navmenu", "avail_data") })
+  observeEvent(input$strategies,     { updateTabItems(session, "navmenu", "strategies_page") })
+  
+  observe({
+    cat("survey:", input$survey, "| demo:", input$demographic, "| level:", input$census_level, "\n")
   })
-  observeEvent(input$availDataBtn, {
-    updateTabItems(session, "navmenu", "avail_data")
+  
+  input_ready <- reactive({
+    survey_val <- input$survey
+    demo_val <- input$demographic
+    level_val <- input$census_level
+    
+    # Safe default
+    ques_val <- NULL
+    
+    if (!is.null(survey_val) && survey_val %in% names(surveyInputId)) {
+      survey_id <- surveyInputId[[survey_val]]
+      ques_val <- input[[survey_id]]
+    }
+    
+    all(
+      !is.null(survey_val), survey_val != "", !is.na(survey_val),
+      !is.null(demo_val), demo_val != "", !is.na(demo_val),
+      !is.null(level_val), level_val != "", !is.na(level_val),
+      !is.null(ques_val), ques_val != "", !is.na(ques_val)
+    )
   })
-  observeEvent(input$helpBtn, {
-    updateTabItems(session, "navmenu", "about")
+  
+  
+  observe({
+    req(input$survey, input$demographic, input$census_level)
+    
+    survey_val <- input$survey
+    demo_val <- input$demographic
+    level_val <- input$census_level
+    
+    req_id <- if (survey_val %in% names(surveyInputId)) surveyInputId[[survey_val]] else NULL
+    ques_val <- if (!is.null(req_id)) input[[req_id]] else NA
+    
+    cat("Checking inputs:",
+        "\nsurvey:", survey_val,
+        "\ndemographic:", demo_val,
+        "\ncensus_level:", level_val,
+        "\nquestion:", req_id, "=", ques_val, "\n")
   })
-  observeEvent(input$definitionsBtn, {
-    updateTabItems(session, "navmenu", "avail_data")
+  
+  
+  
+  
+  observe({
+    if (input_ready()) {
+      shinyjs::enable("run_report")
+    } else {
+      shinyjs::disable("run_report")
+    }
   })
-  observeEvent(input$datasetEle, {
-    updateTabItems(session, "navmenu", "avail_data")
+  
+  
+  
+  
+  
+  
+  observe({
+    cat("\n[DEBUG] level:", input$census_level,
+        "| state_id:", input$census_state_items,
+        "| county_id:", input$census_county_items,
+        "| tract_id:", input$census_tract_items, "\n")
   })
-  observeEvent(input$howWeAnalEle, {
-    updateTabItems(session, "navmenu", "info_page")
-  })
-  observeEvent(input$curatedData, {
-    updateTabItems(session, "navmenu", "avail_data")
-  })
-  observeEvent(input$strategies, {
-    updateTabItems(session, "navmenu", "strategies_page")
-  })
-  shinyjs::enable("run_report")
+  
 }
