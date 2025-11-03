@@ -113,6 +113,7 @@ We would like to thank the following individuals and organizations for their con
   - Christian Varner, PhD student in Statistics
   - Niharika Chunduru, Master’s student in Statistics & Data Science
   - Shelcia David, Master’s student in Informations
+  - Tanisq Jawahar, Bachelor's student in Computer Science + AI & Data Science
 - **Researchers**:
   - Corey Black, Master’s student in the School of Information
   - Vincent Kong, Undergraduate student in Computer Science (Graduated 2023)
