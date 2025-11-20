@@ -77,12 +77,32 @@ apply_geo_filter <- function(df, input) {
     return(df)
   }
 
+  # Convert display name to code using census_level_input_to_data mapping
+  # This is needed because data columns contain codes (e.g., "25" for county_fips) not display names (e.g., "Dane")
+  census_level <- census_input_to_data[[lvl]]
+  filter_val <- val  # Default to original value
+  
+  if (!is.null(census_level) && !is.null(census_level_input_to_data[["data"]][[census_level]])) {
+    code_mapping <- census_level_input_to_data[["data"]][[census_level]]
+    if (val %in% names(code_mapping)) {
+      full_code <- code_mapping[[val]]
+      # For counties, extract the county portion (last 3 digits) since county_fips stores just the county code
+      # Remove leading zeros since the data stores county codes without leading zeros (e.g., "25" not "025")
+      if (lvl == "Census County" && nchar(full_code) >= 3) {
+        county_portion <- substr(full_code, nchar(full_code) - 2, nchar(full_code))
+        filter_val <- as.character(as.numeric(county_portion))  # Remove leading zeros
+      } else {
+        filter_val <- full_code
+      }
+    }
+  }
+
   # Heuristics for common column names in raw survey rows
   patterns <- switch(lvl,
-    "Census State"  = c("^state$", "state_name"),
-    "Census County" = c("^county$", "county_name"),
+    "Census State"  = c("^state$", "state_name", "state_fips"),
+    "Census County" = c("^county$", "county_name", "county_fips"),
     "Zipcode"       = c("^zip", "zipcode", "postal"),
-    "Census Tract"  = c("tract"),
+    "Census Tract"  = c("tract", "census_tract"),
     "State Lower"   = c("assembly", "state_lower", "lower"),
     "State Upper"   = c("senate", "state_upper", "upper"),
     "Congress"      = c("congress"),
@@ -96,7 +116,8 @@ apply_geo_filter <- function(df, input) {
   }
 
   # Compare as strings to be robust against numeric/character mismatches
-  df %>% dplyr::filter(as.character(.data[[col]]) == as.character(val))
+  # Use filter_val (the code) instead of val (the display name)
+  df %>% dplyr::filter(as.character(.data[[col]]) == as.character(filter_val))
 }
 # -------------------------------------------------------------------------------
 

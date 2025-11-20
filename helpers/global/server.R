@@ -12,7 +12,8 @@ server <- function(input, output, session) {
   survey_data <- eventReactive(input$run_report, {
     req(input$survey, input$demographic)
     name <- input$survey
-    read.csv(paste0(survey_data_loc, input_to_data_survey_desc[[name]], "/", input_to_data_survey_desc[[name]], ".csv"))[, -1]
+    rdata_path <- paste0(survey_data_loc, input_to_data_survey_desc[[name]], "/", input_to_data_survey_desc[[name]], ".RData")
+    readRDS(rdata_path)
   })
   
   census_data <- reactive({
