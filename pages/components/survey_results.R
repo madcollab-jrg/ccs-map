@@ -77,12 +77,32 @@ apply_geo_filter <- function(df, input) {
     return(df)
   }
 
+  # Convert display name to code using census_level_input_to_data mapping
+  # This is needed because data columns contain codes (e.g., "25" for county_fips) not display names (e.g., "Dane")
+  census_level <- census_input_to_data[[lvl]]
+  filter_val <- val  # Default to original value
+  
+  if (!is.null(census_level) && !is.null(census_level_input_to_data[["data"]][[census_level]])) {
+    code_mapping <- census_level_input_to_data[["data"]][[census_level]]
+    if (val %in% names(code_mapping)) {
+      full_code <- code_mapping[[val]]
+      # For counties, extract the county portion (last 3 digits) since county_fips stores just the county code
+      # Remove leading zeros since the data stores county codes without leading zeros (e.g., "25" not "025")
+      if (lvl == "Census County" && nchar(full_code) >= 3) {
+        county_portion <- substr(full_code, nchar(full_code) - 2, nchar(full_code))
+        filter_val <- as.character(as.numeric(county_portion))  # Remove leading zeros
+      } else {
+        filter_val <- full_code
+      }
+    }
+  }
+
   # Heuristics for common column names in raw survey rows
   patterns <- switch(lvl,
-    "Census State"  = c("^state$", "state_name"),
-    "Census County" = c("^county$", "county_name"),
+    "Census State"  = c("^state$", "state_name", "state_fips"),
+    "Census County" = c("^county$", "county_name", "county_fips"),
     "Zipcode"       = c("^zip", "zipcode", "postal"),
-    "Census Tract"  = c("tract"),
+    "Census Tract"  = c("tract", "census_tract"),
     "State Lower"   = c("assembly", "state_lower", "lower"),
     "State Upper"   = c("senate", "state_upper", "upper"),
     "Congress"      = c("congress"),
@@ -96,7 +116,8 @@ apply_geo_filter <- function(df, input) {
   }
 
   # Compare as strings to be robust against numeric/character mismatches
-  df %>% dplyr::filter(as.character(.data[[col]]) == as.character(val))
+  # Use filter_val (the code) instead of val (the display name)
+  df %>% dplyr::filter(as.character(.data[[col]]) == as.character(filter_val))
 }
 # -------------------------------------------------------------------------------
 
@@ -209,6 +230,17 @@ resulting_graphics <- function(
       # --- NEW: apply the SAME geography selection as the table (Step 3)
       data <- apply_geo_filter(data, input)
 
+      # Check if data has sufficient rows after filtering
+      if (is.null(data) || nrow(data) == 0) {
+        toggle_loader(FALSE)
+        output$survey_results <- renderPlotly(error_plot("No data available for the selected geographic filter. Please try a different geography."))
+        output$demographic_table <- DT::renderDataTable({
+          DT::datatable(data.frame(Message = "No data available after filtering"))
+        })
+        enable("run_report")
+        return(NULL)
+      }
+
       # data needed to make graphics by survey
       data_for_visualization <- NA
       print(input$survey)
@@ -245,6 +277,41 @@ resulting_graphics <- function(
 
       demographic_desc <- tolower(input$demographic)
 
+      # Check if data_for_visualization has sufficient rows
+      if (is.null(data_for_visualization) || nrow(data_for_visualization) == 0) {
+        toggle_loader(FALSE)
+        output$survey_results <- renderPlotly(error_plot("No data available for visualization after filtering. Please try different filters."))
+        output$demographic_table <- DT::renderDataTable({
+          DT::datatable(data.frame(Message = "No data available after filtering"))
+        })
+        enable("run_report")
+        return(NULL)
+      }
+
+      # Map demographic description to actual variable name for validation
+      demographic_var <- switch(demographic_desc,
+        "income" = income_var,
+        "education" = edu_var,
+        "age" = age_var,
+        "gender" = gender_var,
+        "race" = race_var
+      )
+      
+      # Check if there's sufficient data for the selected demographic variable
+      if (demographic_var %in% names(data_for_visualization)) {
+        valid_demo_count <- sum(!is.na(data_for_visualization[[demographic_var]]) & 
+                                data_for_visualization[[demographic_var]] != "")
+        if (valid_demo_count == 0) {
+          toggle_loader(FALSE)
+          output$survey_results <- renderPlotly(error_plot("No data available for the selected demographic category after filtering."))
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "No data available for selected demographic"))
+          })
+          enable("run_report")
+          return(NULL)
+        }
+      }
+
       if (q_type == "matrix") {
         q_subtype <- question_subtype()
         tryCatch(
@@ -256,7 +323,11 @@ resulting_graphics <- function(
               "gender" = matrix_questions(data_for_visualization, gender_var, q_subtype),
               "race" = matrix_questions(data_for_visualization, race_var, q_subtype)
             )
-            output$survey_results <- renderPlotly(plot)
+            if (!is.null(plot)) {
+              output$survey_results <- renderPlotly(plot)
+            } else {
+              output$survey_results <- renderPlotly(error_plot("Unable to generate plot. Not enough data for this question type."))
+            }
             # Hide table for non-open-ended questions
             output$demographic_table <- DT::renderDataTable({
               DT::datatable(data.frame(Message = "Table not available for this question type"))
@@ -264,7 +335,8 @@ resulting_graphics <- function(
             enable("run_report")
           },
           error = function(e) {
-            output$survey_results <- renderPlotly(error_plot("No plots available"))
+            toggle_loader(FALSE)
+            output$survey_results <- renderPlotly(error_plot(paste("Error generating plot:", e$message)))
             output$demographic_table <- DT::renderDataTable({
               DT::datatable(data.frame(Message = "Error loading data"))
             })
@@ -331,14 +403,18 @@ resulting_graphics <- function(
               # visualization_results$topic_results
               # visualization_results$demographic_summaries
             } else {
-              plot <- NULL
+              plot <- error_plot("Not enough data available for visualization. Need at least 5 responses with valid text after filtering.")
               output$demographic_table <- DT::renderDataTable({
-                DT::datatable(data.frame(Message = "No data available"))
+                DT::datatable(data.frame(Message = "Not enough data available for analysis"))
               })
             }
 
             toggle_loader(FALSE)
-            output$survey_results <- renderPlotly(plot)
+            if (!is.null(plot)) {
+              output$survey_results <- renderPlotly(plot)
+            } else {
+              output$survey_results <- renderPlotly(error_plot("Unable to generate plot. Please check your data filters."))
+            }
             enable("run_report")
           },
           error = function(e) {
@@ -361,7 +437,11 @@ resulting_graphics <- function(
               "race" = multi_choice_questions(data_for_visualization, race_var, NA, race_color_mapping, race_options)
             )
             toggle_loader(FALSE)
-            output$survey_results <- renderPlotly(plot)
+            if (!is.null(plot)) {
+              output$survey_results <- renderPlotly(plot)
+            } else {
+              output$survey_results <- renderPlotly(error_plot("Unable to generate plot. Not enough data for this question type."))
+            }
             # Hide table for non-open-ended questions
             output$demographic_table <- DT::renderDataTable({
               DT::datatable(data.frame(Message = "Table not available for this question type"))
@@ -370,7 +450,7 @@ resulting_graphics <- function(
           },
           error = function(e) {
             toggle_loader(FALSE)
-            output$survey_results <- renderPlotly(error_plot("No plots available"))
+            output$survey_results <- renderPlotly(error_plot(paste("Error generating plot:", e$message)))
             output$demographic_table <- DT::renderDataTable({
               DT::datatable(data.frame(Message = "Error loading data"))
             })
@@ -388,7 +468,11 @@ resulting_graphics <- function(
               "race" = select_box_questions(data_for_visualization, race_var, NA, race_color_mapping, race_options)
             )
             toggle_loader(FALSE)
-            output$survey_results <- renderPlotly(plot)
+            if (!is.null(plot)) {
+              output$survey_results <- renderPlotly(plot)
+            } else {
+              output$survey_results <- renderPlotly(error_plot("Unable to generate plot. Not enough data for this question type."))
+            }
             # Hide table for non-open-ended questions
             output$demographic_table <- DT::renderDataTable({
               DT::datatable(data.frame(Message = "Table not available for this question type"))
@@ -397,7 +481,7 @@ resulting_graphics <- function(
           },
           error = function(e) {
             toggle_loader(FALSE)
-            output$survey_results <- renderPlotly(error_plot("No plots available"))
+            output$survey_results <- renderPlotly(error_plot(paste("Error generating plot:", e$message)))
             output$demographic_table <- DT::renderDataTable({
               DT::datatable(data.frame(Message = "Error loading data"))
             })
@@ -406,20 +490,34 @@ resulting_graphics <- function(
         )
       } else if (q_type == "combined") {
         print("you are in combined")
-        plot <- switch(demographic_desc,
-          "income" = combined_multi_choice_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
-          "education" = combined_multi_choice_questions(data_for_visualization, edu_var, NA, edu_color_mapping, edu_options),
-          "age" = combined_multi_choice_questions(data_for_visualization, age_var, NA, age_color_mapping, age_options),
-          "gender" = combined_multi_choice_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
-          "race" = combined_multi_choice_questions(data_for_visualization, race_var, NA, race_color_mapping, race_options)
-        )
-        toggle_loader(FALSE)
-        output$survey_results <- renderPlotly(plot)
-        # Hide table for non-open-ended questions
-        output$demographic_table <- DT::renderDataTable({
-          DT::datatable(data.frame(Message = "Table not available for this question type"))
+        tryCatch({
+          plot <- switch(demographic_desc,
+            "income" = combined_multi_choice_questions(data_for_visualization, income_var, NA, income_color_mapping, income_options),
+            "education" = combined_multi_choice_questions(data_for_visualization, edu_var, NA, edu_color_mapping, edu_options),
+            "age" = combined_multi_choice_questions(data_for_visualization, age_var, NA, age_color_mapping, age_options),
+            "gender" = combined_multi_choice_questions(data_for_visualization, gender_var, NA, gender_color_mapping, gender_options),
+            "race" = combined_multi_choice_questions(data_for_visualization, race_var, NA, race_color_mapping, race_options)
+          )
+          toggle_loader(FALSE)
+          if (!is.null(plot)) {
+            output$survey_results <- renderPlotly(plot)
+          } else {
+            output$survey_results <- renderPlotly(error_plot("Unable to generate plot. Not enough data for this question type."))
+          }
+          # Hide table for non-open-ended questions
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Table not available for this question type"))
+          })
+          enable("run_report")
+        },
+        error = function(e) {
+          toggle_loader(FALSE)
+          output$survey_results <- renderPlotly(error_plot(paste("Error generating plot:", e$message)))
+          output$demographic_table <- DT::renderDataTable({
+            DT::datatable(data.frame(Message = "Error loading data"))
+          })
+          enable("run_report")
         })
-        enable("run_report")
       }
     } else {
       enable("run_report")
